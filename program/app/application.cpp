@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 05-10-2014
+///		Date update	: 14-10-2014
 ///		Comment		:
 /// ============================================================================
 #include <QDebug>
@@ -20,7 +20,7 @@
 
 //namespace ew = espira::widgets;
 
-namespace template_qt
+namespace vcamdb
 {
 		bool application::_is_logic_initialized = false;
 /// ############################################################################
@@ -278,4 +278,4 @@ namespace template_qt
 
 /// ############################################################################
 
-}//namespace template_qt
+}//namespace vcamdb

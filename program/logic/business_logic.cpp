@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 05-10-2014
+///		Date update	: 14-10-2014
 ///		Comment		:
 /// ============================================================================
 #include <QDebug>
@@ -11,7 +11,7 @@
 #include "application.h"
 #include "business_logic.h"
 
-namespace template_qt
+namespace vcamdb
 {
 
 /// ############################################################################
@@ -133,4 +133,4 @@ namespace template_qt
 
 /// ############################################################################
 
-}//namespace template_qt
+}//namespace vcamdb

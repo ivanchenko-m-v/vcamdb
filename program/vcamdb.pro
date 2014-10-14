@@ -4,7 +4,7 @@
 #           Project version     :
 #           Author              :   M. Ivanchenko
 #           Date create         :   05-10-2014
-#           Date update         :   05-10-2014
+#           Date update         :   14-10-2014
 #           Comment             :
 # ============================================================================
 QT       += core gui

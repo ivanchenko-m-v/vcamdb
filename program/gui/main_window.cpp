@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 05-10-2014
+///		Date update	: 14-10-2014
 ///		Comment		:
 /// ============================================================================
 #include <QApplication>
@@ -11,7 +11,7 @@
 #include "main_window.h"
 #include "widget_central.h"
 
-namespace template_qt
+namespace vcamdb
 {
 
 /// ############################################################################
@@ -92,4 +92,4 @@ namespace template_qt
 
 /// ############################################################################
 
-}//namespace template_qt
+}//namespace vcamdb
