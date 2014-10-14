@@ -33,7 +33,7 @@ namespace vcamdb
 	///	widget_central( )
     /// ------------------------------------------------------------------------
     widget_central::widget_central(QWidget *parent) :
-        QWidget(parent)
+        QTabWidget(parent)
     {
         this->initialize( );
     }
@@ -53,6 +53,10 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     void widget_central::initialize( )
     {
+        this->addTab( new QWidget, QObject::tr( "videocams" ) );
+        this->addTab( new QWidget, QObject::tr( "videocams violations" ) );
+        this->setTabPosition( QTabWidget::West );
+
         this->init_layout( );
 
         this->init_connections( );

@@ -8,7 +8,7 @@
 #ifndef __WIDGET_CENTRAL_H__
 #define __WIDGET_CENTRAL_H__
 
-#include <QWidget>
+#include <QTabWidget>
 #include <QPushButton>
 #include <QToolButton>
 #include <QAction>
@@ -20,7 +20,7 @@ namespace vcamdb
 /// ############################################################################
 ///			class widget_central
 /// ############################################################################
-    class widget_central : public QWidget
+    class widget_central : public QTabWidget
     {
     Q_OBJECT
     /// ========================================================================

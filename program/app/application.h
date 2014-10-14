@@ -11,6 +11,7 @@
 #include <QTranslator>
 
 #include "application_params.h"
+#include "application_log.h"
 #include "business_logic.h"
 
 namespace vcamdb
@@ -66,6 +67,8 @@ namespace vcamdb
 	public:
 	/// ------------------------------------------------------------------------
 		static business_logic& the_business_logic( );
+	/// ------------------------------------------------------------------------
+		static espira::utils::application_log& the_app_log( );
     /// ------------------------------------------------------------------------
         static application* program_instance( )
         {
@@ -95,7 +98,7 @@ namespace vcamdb
 		QTranslator _translator;
 		static bool _is_logic_initialized;
 
-        espira::utils::application_params _params;
+        espira::utils::application_params   _params;
 
 	};//class application
 

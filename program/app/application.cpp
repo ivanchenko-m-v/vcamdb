@@ -72,6 +72,15 @@ namespace vcamdb
 
         return logic;
     }
+	/// -----------------------------------------------------------------------
+	///	the_app_log( )
+    /// -----------------------------------------------------------------------
+	espira::utils::application_log& application::the_app_log( )
+	{
+		static espira::utils::application_log app_log;
+
+        return app_log;
+	}
 
     /// ------------------------------------------------------------------------
     ///	authorize( )

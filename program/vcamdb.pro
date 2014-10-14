@@ -21,6 +21,7 @@ SOURCES += \
     app/main.cpp \
     app/application.cpp \
     app/application_params.cpp \
+    app/application_log.cpp \
     logic/business_logic.cpp \
     gui/main_window.cpp \
     gui/widget_central.cpp \
@@ -28,11 +29,12 @@ SOURCES += \
     qt_sqlite/qt_sqlite_connection.cpp \
     qt_sqlite/qt_sqlite_command.cpp \
     qt_sqlite/qt_data_row.cpp \
-    qt_sqlite/qt_data_parameter.cpp \
+    qt_sqlite/qt_data_parameter.cpp
 
 HEADERS  += \
-    app/application_params.h \
     app/application.h \
+    app/application_params.h \
+    app/application_log.h \
     logic/business_logic.h \
     gui/main_window.h \
     gui/widget_central.h \
@@ -40,7 +42,7 @@ HEADERS  += \
     qt_sqlite/qt_sqlite_connection.h \
     qt_sqlite/qt_sqlite_command.h \
     qt_sqlite/qt_data_row.h \
-    qt_sqlite/qt_data_parameter.h \
+    qt_sqlite/qt_data_parameter.h
 
 INCLUDEPATH += ./app \
 				./dbmodule \

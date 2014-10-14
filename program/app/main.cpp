@@ -13,7 +13,7 @@
 /// ----------------------------------------------------------------------------
 int main( int argc, char *argv[] )
 {
-    template_qt::application app( argc, argv );
+    vcamdb::application app( argc, argv );
 
     /*
     app.authorize( );
@@ -23,7 +23,7 @@ int main( int argc, char *argv[] )
         return -1;
     }
     */
-    template_qt::main_window w;
+    vcamdb::main_window w;
     //w.append_title_text( app.authorized_mediator( ).mediator( ) );
     w.show( );
 
