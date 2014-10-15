@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 14-10-2014
+///		Date update	: 15-10-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __VERTICAL_BOX_H__
@@ -77,9 +77,6 @@ namespace widgets
     ///			FIELDS
     /// ========================================================================
     private:
-        const int _MAX_STRETCH_ = 1000;
-        const int _MIN_STRETCH_ = 1;
-
         QWidget *_widget;
         QString _x_lbl;
 

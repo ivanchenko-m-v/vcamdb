@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 14-10-2014
+///		Date update	: 15-10-2014
 ///		Comment		:
 /// ============================================================================
 
@@ -58,6 +58,9 @@ namespace widgets
     /// ------------------------------------------------------------------------
     void horizontal_box::init_layout( )
     {
+        const int _MAX_STRETCH_ = 1000;
+        const int _MIN_STRETCH_ = 1;
+
         QHBoxLayout *layout = new QHBoxLayout;
 
         if( this->_widget == 0 )

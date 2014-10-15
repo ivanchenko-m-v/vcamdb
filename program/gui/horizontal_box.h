@@ -77,9 +77,6 @@ namespace widgets
     ///			FIELDS
     /// ========================================================================
     private:
-        const int _MAX_STRETCH_ = 1000;
-        const int _MIN_STRETCH_ = 1;
-
         QWidget *_widget;
         QString _x_lbl;
 
