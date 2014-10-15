@@ -22,27 +22,59 @@ SOURCES += \
     app/application.cpp \
     app/application_params.cpp \
     app/application_log.cpp \
-    logic/business_logic.cpp \
-    gui/main_window.cpp \
-    gui/widget_central.cpp \
     qt_sqlite/qt_sqlite_dbvalue.cpp \
     qt_sqlite/qt_sqlite_connection.cpp \
     qt_sqlite/qt_sqlite_command.cpp \
     qt_sqlite/qt_data_row.cpp \
-    qt_sqlite/qt_data_parameter.cpp
+    qt_sqlite/qt_data_parameter.cpp \
+    logic/business_logic.cpp \
+    gui/main_window.cpp \
+    gui/widget_central.cpp \
+    gui/widget_cam_selection.cpp \
+    gui/widget_tab_object.cpp \
+    gui/widget_tab_violation.cpp \
+    gui/widget_violation.cpp \
+    gui/listview_volation.cpp \
+    gui/listview_cam_selection.cpp \
+    gui/delegate_line_edit.cpp \
+    gui/vertical_box.cpp \
+    gui/horizontal_box.cpp \
+    logic/data_model_cam_selection.cpp \
+    logic/data_model_violation.cpp \
+    logic/data_model_camera.cpp \
+    gui/listview_camera.cpp \
+    gui/listview_camera_object.cpp \
+    logic/data_model_camera_object.cpp \
+    gui/widget_object_to_cam.cpp
 
 HEADERS  += \
     app/application.h \
     app/application_params.h \
     app/application_log.h \
-    logic/business_logic.h \
-    gui/main_window.h \
-    gui/widget_central.h \
     qt_sqlite/qt_sqlite_dbvalue.h \
     qt_sqlite/qt_sqlite_connection.h \
     qt_sqlite/qt_sqlite_command.h \
     qt_sqlite/qt_data_row.h \
-    qt_sqlite/qt_data_parameter.h
+    qt_sqlite/qt_data_parameter.h \
+    logic/business_logic.h \
+    gui/main_window.h \
+    gui/widget_central.h \
+    gui/widget_cam_selection.h \
+    gui/widget_tab_violation.h \
+    gui/widget_tab_object.h \
+    gui/widget_violation.h \
+    gui/listview_volation.h \
+    gui/listview_cam_selection.h \
+    gui/delegate_line_edit.h \
+    gui/vertical_box.h \
+    gui/horizontal_box.h \
+    logic/data_model_cam_selection.h \
+    logic/data_model_violation.h \
+    logic/data_model_camera.h \
+    gui/listview_camera.h \
+    gui/listview_camera_object.h \
+    logic/data_model_camera_object.h \
+    gui/widget_object_to_cam.h
 
 INCLUDEPATH += ./app \
 				./dbmodule \

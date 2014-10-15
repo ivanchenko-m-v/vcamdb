@@ -1,7 +1,7 @@
 /// $Header
 /// ============================================================================
 ///		Author		: M. Ivanchenko
-///		Date create	: 05-10-2014
+///		Date create	: 14-10-2014
 ///		Date update	: 14-10-2014
 ///		Comment		:
 /// ============================================================================
@@ -17,14 +17,16 @@
 #include "application.h"
 #include "business_logic.h"
 
-#include "widget_central.h"
-#include "widget_tab_object.h"
-#include "widget_tab_violation.h"
+#include "widget_violation.h"
+
+#include "vertical_box.h"
+
+namespace ew = espira::widgets;
 
 namespace vcamdb
 {
 /// ############################################################################
-///			class widget_central
+///			class widget_violation
 /// ############################################################################
 
     /// ========================================================================
@@ -32,17 +34,17 @@ namespace vcamdb
     /// ========================================================================
 
     /// ------------------------------------------------------------------------
-	///	widget_central( )
+    ///	widget_violation( )
     /// ------------------------------------------------------------------------
-    widget_central::widget_central(QWidget *parent) :
-        QTabWidget(parent)
+    widget_violation::widget_violation(QWidget *parent) :
+        QWidget(parent)
     {
         this->initialize( );
     }
     /// ------------------------------------------------------------------------
-    ///	~widget_central( )
+    ///	~widget_violation( )
     /// ------------------------------------------------------------------------
-    widget_central::~widget_central( )
+    widget_violation::~widget_violation( )
     {
 
     }
@@ -53,12 +55,8 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// initialize( )
     /// ------------------------------------------------------------------------
-    void widget_central::initialize( )
+    void widget_violation::initialize( )
     {
-        this->addTab( new widget_tab_object, QObject::tr( "videocams" ) );
-        this->addTab( new widget_tab_violation, QObject::tr( "videocams violations" ) );
-        this->setTabPosition( QTabWidget::West );
-
         this->init_layout( );
 
         this->init_connections( );
@@ -69,33 +67,25 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// init_layout( )
     /// ------------------------------------------------------------------------
-    void widget_central::init_layout( )
+    void widget_violation::init_layout( )
     {
-        /*
-        QGridLayout *gl = new QGridLayout;
+        QVBoxLayout *layout = new QVBoxLayout;
+        layout->setSpacing( 5 );
+        layout->setMargin( 0 );
 
-        //column 0
-        gl->addWidget( this->init_search_card( ), 0, 0 );
-        gl->addWidget( this->init_buttons_search( ), 1, 0 );
-        //column 1
-        gl->addWidget( this->init_listview_request( ), 0, 1 );
-        gl->addWidget( this->init_buttons_listview( ), 1, 1 );
-        gl->addWidget( this->init_view_card( ), 2, 0, 2, 2 );
+        layout->addStretch( 1000 );
+        layout->addWidget( this->init_1st_line( ) );
+        layout->addWidget( this->init_2nd_line( ) );
+        layout->addWidget( this->init_3rd_line( ) );
+        layout->addWidget( this->init_buttons( ) );
 
-        gl->setColumnStretch( 0, 20 );
-        gl->setColumnStretch( 1, 800 );
-
-        gl->setRowStretch( 0, 500 );
-        gl->setRowStretch( 2, 500 );
-
-        this->setLayout( gl );
-        */
+        this->setLayout( layout );
     }
 
     /// ------------------------------------------------------------------------
     /// init_connections( )
     /// ------------------------------------------------------------------------
-    void widget_central::init_connections( )
+    void widget_violation::init_connections( )
     {
         /*
         //_btn_find_request
@@ -151,11 +141,193 @@ namespace vcamdb
                      */
     }
 
+    /// ------------------------------------------------------------------------
+    /// init_1st_line( )
+    /// ------------------------------------------------------------------------
+    QWidget* widget_violation::init_1st_line( )
+    {
+        QHBoxLayout *layout = new QHBoxLayout;
+
+        //
+        //_cbx_cam_name
+        //
+        this->_cbx_cam_name = new QComboBox;
+        layout->addWidget(
+                    new ew::vertical_box( this->_cbx_cam_name,
+                                          QObject::tr( "camera name:" ),
+                                          this
+                                        )
+                         );
+        //
+        //_lbl_cam_address
+        //
+        this->_lbl_cam_address = new QLabel( "-" );
+        layout->addWidget(
+                    new ew::vertical_box( this->_lbl_cam_address,
+                                          QObject::tr( "camera address:" ),
+                                          this
+                                        )
+                         );
+        //
+        //_cbx_violation_type
+        //
+        this->_cbx_violation_type = new QComboBox;
+        layout->addWidget(
+                    new ew::vertical_box( this->_cbx_violation_type,
+                                          QObject::tr( "violation type:" ),
+                                          this
+                                        )
+                         );
+
+
+        QWidget *w = new QWidget( this );
+        w->setLayout( layout );
+
+        return w;
+    }
+
+    /// ------------------------------------------------------------------------
+    /// init_2nd_line( )
+    /// ------------------------------------------------------------------------
+    QWidget* widget_violation::init_2nd_line( )
+    {
+        QHBoxLayout *layout = new QHBoxLayout;
+
+        //
+        //_cbx_object_type
+        //
+        this->_cbx_object_type = new QComboBox;
+        layout->addWidget(
+                    new ew::vertical_box( this->_cbx_object_type,
+                                          QObject::tr( "object\'s type:" ),
+                                          this
+                                        )
+                         );
+        //
+        //_cbx_object_name
+        //
+        this->_cbx_object_name = new QComboBox;
+        layout->addWidget(
+                    new ew::vertical_box( this->_cbx_object_name,
+                                          QObject::tr( "object\'s name:" ),
+                                          this
+                                        )
+                         );
+        //
+        //_lbl_id_object
+        //
+        this->_lbl_id_object = new QLabel( "-" );
+        layout->addWidget(
+                    new ew::vertical_box( this->_lbl_id_object,
+                                          QObject::tr( "object\'s ID:" ),
+                                          this
+                                        )
+                         );
+
+        QWidget *w = new QWidget( this );
+        w->setLayout( layout );
+
+        return w;
+    }
+
+    /// ------------------------------------------------------------------------
+    /// init_3rd_line( )
+    /// ------------------------------------------------------------------------
+    QWidget* widget_violation::init_3rd_line( )
+    {
+        QHBoxLayout *layout = new QHBoxLayout;
+
+        //
+        //_dte_violation
+        //
+        this->_dte_violation = new QDateEdit;
+        this->_dte_violation->setCalendarPopup( true );
+        this->_dte_violation->setDate( QDate::currentDate( ) );
+        this->_dte_violation->setDisplayFormat( "dd-MM-yyyy" );
+        layout->addWidget(
+                    new ew::vertical_box( this->_dte_violation,
+                                          QObject::tr( "violation\'s date:" ),
+                                          this
+                                        )
+                         );
+        //
+        //_txt_url
+        //
+        this->_txt_url = new QLineEdit;
+        layout->addWidget(
+                    new ew::vertical_box( this->_txt_url,
+                                          QObject::tr( "URL to violation\'s facts:" ),
+                                          this
+                                        )
+                         );
+
+        QWidget *w = new QWidget( this );
+        w->setLayout( layout );
+
+        return w;
+    }
+
+    /// ------------------------------------------------------------------------
+    /// init_buttons( )
+    /// ------------------------------------------------------------------------
+    QWidget* widget_violation::init_buttons( )
+    {
+        QHBoxLayout *hl = new QHBoxLayout;
+        hl->setMargin( 5 );
+        hl->setSpacing( 5 );
+
+        hl->addStretch( 1000 );
+
+        //
+        //_btn_new
+        //
+        this->_btn_new = new QPushButton;
+        this->_btn_new->setIcon(
+                        *( new QIcon( ":/image/images/32x32/document-new.png" ) )
+                                 );
+        this->_btn_new->setToolTip( QObject::tr( "insert new violation\'s data into DB" ) );
+        hl->addWidget( this->_btn_new );
+
+        //
+        //_btn_edit
+        //
+        this->_btn_edit = new QPushButton;
+        this->_btn_edit->setIcon(
+                        *( new QIcon( ":/image/images/32x32/document-edit.png" ) )
+                                 );
+        this->_btn_edit->setToolTip( QObject::tr( "edit selected violation in the list" ) );
+        hl->addWidget( this->_btn_edit );
+
+        //
+        //_btn_del
+        //
+        this->_btn_del = new QPushButton;
+        this->_btn_del->setIcon(
+                        *( new QIcon( ":/image/images/32x32/document-close.png" ) )
+                                 );
+        this->_btn_del->setToolTip( QObject::tr( "delete  selected violation in the list from DB" ) );
+        hl->addWidget( this->_btn_del );
+
+        //
+        //_btn_save
+        //
+        this->_btn_save = new QPushButton;
+        this->_btn_save->setIcon(
+                        *( new QIcon( ":/image/images/32x32/media-floppy.png" ) )
+                                 );
+        this->_btn_save->setToolTip( QObject::tr( "save new or edited violation in the DB" ) );
+        hl->addWidget( this->_btn_save );
+
+        QWidget *widget = new QWidget( this );
+        widget->setLayout( hl );
+
+        return widget;
+    }
 /*
     /// ------------------------------------------------------------------------
     /// init_search_card( )
     /// ------------------------------------------------------------------------
-    QWidget* widget_central::init_search_card( )
+    QWidget* widget_violation::init_search_card( )
     {
         this->_w_search = new widget_search_card( this );
 
@@ -165,7 +337,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// init_view_card( )
     /// ------------------------------------------------------------------------
-    QWidget* widget_central::init_view_card( )
+    QWidget* widget_violation::init_view_card( )
     {
         this->_w_view = new widget_card_view( this );
 
@@ -175,7 +347,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// init_listview_request( )
     /// ------------------------------------------------------------------------
-    QWidget* widget_central::init_listview_request( )
+    QWidget* widget_violation::init_listview_request( )
     {
         QWidget *widget = new QWidget( this );
 
@@ -200,7 +372,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// init_buttons_search( )
     /// ------------------------------------------------------------------------
-    QWidget* widget_central::init_buttons_search( )
+    QWidget* widget_violation::init_buttons_search( )
     {
         QWidget *widget = new QWidget( this );
 
@@ -242,7 +414,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// init_buttons_listview( )
     /// ------------------------------------------------------------------------
-    QWidget* widget_central::init_buttons_listview( )
+    QWidget* widget_violation::init_buttons_listview( )
     {
         QWidget *widget = new QWidget( this );
 
@@ -305,7 +477,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// init_stat_menu( )
     /// ------------------------------------------------------------------------
-    void widget_central::init_stat_menu( )
+    void widget_violation::init_stat_menu( )
     {
         this->_mnu_stat = new QMenu( );
         this->_act_report = this->_mnu_stat->addAction( tr("Report") );
@@ -319,7 +491,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// keyPressEvent ( QKeyEvent * event )
     /// ------------------------------------------------------------------------
-    void widget_central::keyPressEvent( QKeyEvent * event )
+    void widget_violation::keyPressEvent( QKeyEvent * event )
     {
         /*
         if( event->key( ) == Qt::Key_N )
@@ -340,7 +512,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_add_request( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_add_request( )
+    void widget_violation::slot_add_request( )
     {
         dialog_request_data w_data_add;
         w_data_add.exec( );
@@ -349,7 +521,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_edit_request( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_edit_request( )
+    void widget_violation::slot_edit_request( )
     {
         data_request *request =
             const_cast<data_request*>( this->_lv_request->current_request( ) );
@@ -370,7 +542,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_del_request( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_del_request( )
+    void widget_violation::slot_del_request( )
     {
         const data_request *r = this->_lv_request->current_request( );
         if( !r )
@@ -399,7 +571,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_id_request_edit( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_id_request_edit( )
+    void widget_violation::slot_id_request_edit( )
     {
         const data_request *request = this->_lv_request->current_request( );
         if( !request )
@@ -414,7 +586,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_print_request( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_print_request( )
+    void widget_violation::slot_print_request( )
     {
 		const data_request *r = this->_lv_request->current_request( );
 		if( !r )
@@ -440,7 +612,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
 	///	slot_print_preview_paint_requested( QPrinter *p ) const
     /// ------------------------------------------------------------------------
-    void widget_central::slot_print_preview_paint_requested( QPrinter *p ) const
+    void widget_violation::slot_print_preview_paint_requested( QPrinter *p ) const
 	{
 		//get request
 		const data_request *r = this->_lv_request->current_request( );
@@ -459,7 +631,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_stat_report( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_stat_report( )
+    void widget_violation::slot_stat_report( )
     {
         dialog_period dlg;
         if( dlg.exec( ) != QDialog::Accepted )
@@ -472,7 +644,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_stat_diagram( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_stat_diagram( )
+    void widget_violation::slot_stat_diagram( )
     {
         dialog_period dlg;
         if( dlg.exec( ) != QDialog::Accepted )

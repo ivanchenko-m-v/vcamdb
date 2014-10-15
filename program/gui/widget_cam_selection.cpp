@@ -1,30 +1,27 @@
 /// $Header
 /// ============================================================================
 ///		Author		: M. Ivanchenko
-///		Date create	: 05-10-2014
+///		Date create	: 14-10-2014
 ///		Date update	: 14-10-2014
 ///		Comment		:
 /// ============================================================================
 #include <QLabel>
 #include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QGridLayout>
 #include <QMessageBox>
 #include <QKeyEvent>
-#include <QPrinter>
-#include <QPrintPreviewDialog>
 
 #include "application.h"
 #include "business_logic.h"
 
-#include "widget_central.h"
-#include "widget_tab_object.h"
-#include "widget_tab_violation.h"
+#include "widget_cam_selection.h"
+#include "vertical_box.h"
+
+namespace ew=espira::widgets;
 
 namespace vcamdb
 {
 /// ############################################################################
-///			class widget_central
+///			class widget_cam_selection
 /// ############################################################################
 
     /// ========================================================================
@@ -32,17 +29,17 @@ namespace vcamdb
     /// ========================================================================
 
     /// ------------------------------------------------------------------------
-	///	widget_central( )
+    ///	widget_cam_selection( )
     /// ------------------------------------------------------------------------
-    widget_central::widget_central(QWidget *parent) :
-        QTabWidget(parent)
+    widget_cam_selection::widget_cam_selection(QWidget *parent) :
+        QWidget(parent)
     {
         this->initialize( );
     }
     /// ------------------------------------------------------------------------
-    ///	~widget_central( )
+    ///	~widget_cam_selection( )
     /// ------------------------------------------------------------------------
-    widget_central::~widget_central( )
+    widget_cam_selection::~widget_cam_selection( )
     {
 
     }
@@ -53,49 +50,102 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// initialize( )
     /// ------------------------------------------------------------------------
-    void widget_central::initialize( )
+    void widget_cam_selection::initialize( )
     {
-        this->addTab( new widget_tab_object, QObject::tr( "videocams" ) );
-        this->addTab( new widget_tab_violation, QObject::tr( "videocams violations" ) );
-        this->setTabPosition( QTabWidget::West );
-
         this->init_layout( );
 
         this->init_connections( );
-
-        //this->_w_search->setFocus( );
     }
 
     /// ------------------------------------------------------------------------
     /// init_layout( )
     /// ------------------------------------------------------------------------
-    void widget_central::init_layout( )
+    void widget_cam_selection::init_layout( )
     {
-        /*
+        QVBoxLayout *layout = new QVBoxLayout;
+
+        //
+        //_txt_address
+        //
+        this->_txt_address = new QLineEdit;
+        layout->addWidget(
+                        new ew::vertical_box(
+                                            this->_txt_address,
+                                            QObject::tr( "object\'s address" ),
+                                            this
+                                            )
+                     );
+
+        //
+        //_txt_cam_name
+        //
+        this->_txt_cam_name = new QLineEdit;
+        layout->addWidget(
+                        new ew::vertical_box(
+                                            this->_txt_cam_name,
+                                            QObject::tr( "camera\'s name" ),
+                                            this
+                                            )
+                     );
+        //
+        //dates period
+        //
+        layout->addWidget( this->init_period( ) );
+        //stretch
+        layout->addStretch( 1000 );
+
+        this->setLayout( layout );
+    }
+
+    /// ------------------------------------------------------------------------
+    /// init_period( )
+    /// ------------------------------------------------------------------------
+    QWidget* widget_cam_selection::init_period( )
+    {
         QGridLayout *gl = new QGridLayout;
+        gl->setMargin( 0 );
+        gl->setSpacing( 0 );
 
-        //column 0
-        gl->addWidget( this->init_search_card( ), 0, 0 );
-        gl->addWidget( this->init_buttons_search( ), 1, 0 );
-        //column 1
-        gl->addWidget( this->init_listview_request( ), 0, 1 );
-        gl->addWidget( this->init_buttons_listview( ), 1, 1 );
-        gl->addWidget( this->init_view_card( ), 2, 0, 2, 2 );
+        //
+        //_dte_from
+        //
+        this->_dte_from = new QDateEdit( this );
+        this->_dte_from->setCalendarPopup( true );
+        this->_dte_from->setDisplayFormat("dd-MM-yyyy");
+        this->_dte_from->setDate( QDate::currentDate( ) );
+        gl->addWidget(
+                        new ew::vertical_box( this->_dte_from,
+                                              QObject::tr( "from:" ),
+                                              this
+                                            ),
+                        1, 0
+                     );
+        //
+        //_dte_to
+        //
+        this->_dte_to = new QDateEdit( this );
+        this->_dte_to->setCalendarPopup( true );
+        this->_dte_to->setDisplayFormat("dd-MM-yyyy");
+        this->_dte_to->setDate( QDate::currentDate( ) );
+        gl->addWidget(
+                        new ew::vertical_box( this->_dte_to,
+                                              QObject::tr( "to:" ),
+                                              this
+                                            ),
+                        1, 2
+                     );
+        gl->setColumnStretch( 3, 200 );
 
-        gl->setColumnStretch( 0, 20 );
-        gl->setColumnStretch( 1, 800 );
+        QWidget *widget = new QWidget( this );
+        widget->setLayout(gl);
 
-        gl->setRowStretch( 0, 500 );
-        gl->setRowStretch( 2, 500 );
-
-        this->setLayout( gl );
-        */
+        return widget;
     }
 
     /// ------------------------------------------------------------------------
     /// init_connections( )
     /// ------------------------------------------------------------------------
-    void widget_central::init_connections( )
+    void widget_cam_selection::init_connections( )
     {
         /*
         //_btn_find_request
@@ -155,7 +205,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// init_search_card( )
     /// ------------------------------------------------------------------------
-    QWidget* widget_central::init_search_card( )
+    QWidget* widget_cam_selection::init_search_card( )
     {
         this->_w_search = new widget_search_card( this );
 
@@ -165,7 +215,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// init_view_card( )
     /// ------------------------------------------------------------------------
-    QWidget* widget_central::init_view_card( )
+    QWidget* widget_cam_selection::init_view_card( )
     {
         this->_w_view = new widget_card_view( this );
 
@@ -175,7 +225,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// init_listview_request( )
     /// ------------------------------------------------------------------------
-    QWidget* widget_central::init_listview_request( )
+    QWidget* widget_cam_selection::init_listview_request( )
     {
         QWidget *widget = new QWidget( this );
 
@@ -200,7 +250,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// init_buttons_search( )
     /// ------------------------------------------------------------------------
-    QWidget* widget_central::init_buttons_search( )
+    QWidget* widget_cam_selection::init_buttons_search( )
     {
         QWidget *widget = new QWidget( this );
 
@@ -242,7 +292,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// init_buttons_listview( )
     /// ------------------------------------------------------------------------
-    QWidget* widget_central::init_buttons_listview( )
+    QWidget* widget_cam_selection::init_buttons_listview( )
     {
         QWidget *widget = new QWidget( this );
 
@@ -305,7 +355,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// init_stat_menu( )
     /// ------------------------------------------------------------------------
-    void widget_central::init_stat_menu( )
+    void widget_cam_selection::init_stat_menu( )
     {
         this->_mnu_stat = new QMenu( );
         this->_act_report = this->_mnu_stat->addAction( tr("Report") );
@@ -319,7 +369,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// keyPressEvent ( QKeyEvent * event )
     /// ------------------------------------------------------------------------
-    void widget_central::keyPressEvent( QKeyEvent * event )
+    void widget_cam_selection::keyPressEvent( QKeyEvent * event )
     {
         /*
         if( event->key( ) == Qt::Key_N )
@@ -340,7 +390,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_add_request( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_add_request( )
+    void widget_cam_selection::slot_add_request( )
     {
         dialog_request_data w_data_add;
         w_data_add.exec( );
@@ -349,7 +399,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_edit_request( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_edit_request( )
+    void widget_cam_selection::slot_edit_request( )
     {
         data_request *request =
             const_cast<data_request*>( this->_lv_request->current_request( ) );
@@ -370,7 +420,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_del_request( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_del_request( )
+    void widget_cam_selection::slot_del_request( )
     {
         const data_request *r = this->_lv_request->current_request( );
         if( !r )
@@ -399,7 +449,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_id_request_edit( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_id_request_edit( )
+    void widget_cam_selection::slot_id_request_edit( )
     {
         const data_request *request = this->_lv_request->current_request( );
         if( !request )
@@ -414,7 +464,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_print_request( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_print_request( )
+    void widget_cam_selection::slot_print_request( )
     {
 		const data_request *r = this->_lv_request->current_request( );
 		if( !r )
@@ -440,7 +490,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
 	///	slot_print_preview_paint_requested( QPrinter *p ) const
     /// ------------------------------------------------------------------------
-    void widget_central::slot_print_preview_paint_requested( QPrinter *p ) const
+    void widget_cam_selection::slot_print_preview_paint_requested( QPrinter *p ) const
 	{
 		//get request
 		const data_request *r = this->_lv_request->current_request( );
@@ -459,7 +509,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_stat_report( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_stat_report( )
+    void widget_cam_selection::slot_stat_report( )
     {
         dialog_period dlg;
         if( dlg.exec( ) != QDialog::Accepted )
@@ -472,7 +522,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_stat_diagram( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_stat_diagram( )
+    void widget_cam_selection::slot_stat_diagram( )
     {
         dialog_period dlg;
         if( dlg.exec( ) != QDialog::Accepted )

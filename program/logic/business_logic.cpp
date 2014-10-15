@@ -11,6 +11,11 @@
 #include "application.h"
 #include "business_logic.h"
 
+#include "data_model_cam_selection.h"
+#include "data_model_violation.h"
+#include "data_model_camera.h"
+#include "data_model_camera_object.h"
+
 namespace vcamdb
 {
 
@@ -38,36 +43,18 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     void business_logic::free_memory( )
     {
-        /*
-        if( this->_model_ad )
+        if( this->_model_cam_selection )
         {
-            delete _model_ad;
+            delete _model_cam_selection;
         }
-        if( this->_model_mr )
+        if( this->_model_violation )
         {
-            delete _model_mr;
+            delete _model_violation;
         }
-        if( this->_model_mediator )
+        if( this->_model_camera )
         {
-            delete _model_mediator;
+            delete _model_camera;
         }
-        if( this->_model_request )
-        {
-            delete _model_request;
-        }
-        if( this->_model_request_category )
-        {
-            delete _model_request_category;
-        }
-        if( this->_model_address )
-        {
-            delete _model_address;
-        }
-        if( this->_model_declarant_type )
-        {
-            delete _model_declarant_type;
-        }
-        */
     }
 
 	/// ------------------------------------------------------------------------
@@ -114,21 +101,45 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     void business_logic::init_data_models( )
     {
-        /*
-        this->init_model_ad( );
+        this->init_model_cam_selection( );
 
-        this->init_model_mr( );
+        this->init_model_violation( );
 
-        this->init_model_mediator( );
+        this->init_model_camera( );
 
-        this->init_model_request( );
+        this->init_model_camera_object( );
+    }
 
-        this->init_model_request_category( );
+    /// ------------------------------------------------------------------------
+    ///	init_model_cam_selection( )
+    /// ------------------------------------------------------------------------
+    void business_logic::init_model_cam_selection( )
+    {
+        this->_model_cam_selection = new data_model_cam_selection;
+    }
 
-        this->init_model_address( );
+    /// ------------------------------------------------------------------------
+    ///	init_model_violation( )
+    /// ------------------------------------------------------------------------
+    void business_logic::init_model_violation( )
+    {
+        this->_model_violation = new data_model_violation;
+    }
 
-        this->init_model_declarant_type( );
-        */
+    /// ------------------------------------------------------------------------
+    ///	init_model_camera( )
+    /// ------------------------------------------------------------------------
+    void business_logic::init_model_camera( )
+    {
+        this->_model_camera = new data_model_camera;
+    }
+
+    /// ------------------------------------------------------------------------
+    ///	init_model_camera_object( )
+    /// ------------------------------------------------------------------------
+    void business_logic::init_model_camera_object( )
+    {
+        this->_model_camera_object = new data_model_camera_object;
     }
 
 /// ############################################################################

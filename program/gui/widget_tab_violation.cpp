@@ -1,30 +1,32 @@
 /// $Header
 /// ============================================================================
 ///		Author		: M. Ivanchenko
-///		Date create	: 05-10-2014
+///		Date create	: 14-10-2014
 ///		Date update	: 14-10-2014
 ///		Comment		:
 /// ============================================================================
-#include <QLabel>
+#include <QSplitter>
+#include <QSizePolicy>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGridLayout>
 #include <QMessageBox>
 #include <QKeyEvent>
-#include <QPrinter>
-#include <QPrintPreviewDialog>
 
 #include "application.h"
 #include "business_logic.h"
 
-#include "widget_central.h"
-#include "widget_tab_object.h"
 #include "widget_tab_violation.h"
+
+#include "widget_cam_selection.h"
+#include "listview_cam_selection.h"
+#include "listview_volation.h"
+#include "widget_violation.h"
 
 namespace vcamdb
 {
 /// ############################################################################
-///			class widget_central
+///			class widget_tab_violation
 /// ############################################################################
 
     /// ========================================================================
@@ -32,17 +34,17 @@ namespace vcamdb
     /// ========================================================================
 
     /// ------------------------------------------------------------------------
-	///	widget_central( )
+    ///	widget_tab_violation( )
     /// ------------------------------------------------------------------------
-    widget_central::widget_central(QWidget *parent) :
-        QTabWidget(parent)
+    widget_tab_violation::widget_tab_violation(QWidget *parent) :
+        QWidget(parent)
     {
         this->initialize( );
     }
     /// ------------------------------------------------------------------------
-    ///	~widget_central( )
+    ///	~widget_tab_violation( )
     /// ------------------------------------------------------------------------
-    widget_central::~widget_central( )
+    widget_tab_violation::~widget_tab_violation( )
     {
 
     }
@@ -53,12 +55,8 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// initialize( )
     /// ------------------------------------------------------------------------
-    void widget_central::initialize( )
+    void widget_tab_violation::initialize( )
     {
-        this->addTab( new widget_tab_object, QObject::tr( "videocams" ) );
-        this->addTab( new widget_tab_violation, QObject::tr( "videocams violations" ) );
-        this->setTabPosition( QTabWidget::West );
-
         this->init_layout( );
 
         this->init_connections( );
@@ -69,33 +67,24 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// init_layout( )
     /// ------------------------------------------------------------------------
-    void widget_central::init_layout( )
+    void widget_tab_violation::init_layout( )
     {
-        /*
-        QGridLayout *gl = new QGridLayout;
+        QSplitter *splitter = new QSplitter( this );
+        splitter->addWidget( this->init_cam_selection_view( ) );
+        splitter->addWidget( this->init_violations_view( ) );
+        splitter->setStretchFactor( 0, 50 );
+        splitter->setStretchFactor( 1, 5000 );
 
-        //column 0
-        gl->addWidget( this->init_search_card( ), 0, 0 );
-        gl->addWidget( this->init_buttons_search( ), 1, 0 );
-        //column 1
-        gl->addWidget( this->init_listview_request( ), 0, 1 );
-        gl->addWidget( this->init_buttons_listview( ), 1, 1 );
-        gl->addWidget( this->init_view_card( ), 2, 0, 2, 2 );
+        QVBoxLayout *layout = new QVBoxLayout;
+        layout->addWidget( splitter );
 
-        gl->setColumnStretch( 0, 20 );
-        gl->setColumnStretch( 1, 800 );
-
-        gl->setRowStretch( 0, 500 );
-        gl->setRowStretch( 2, 500 );
-
-        this->setLayout( gl );
-        */
-    }
+        this->setLayout( layout );
+     }
 
     /// ------------------------------------------------------------------------
     /// init_connections( )
     /// ------------------------------------------------------------------------
-    void widget_central::init_connections( )
+    void widget_tab_violation::init_connections( )
     {
         /*
         //_btn_find_request
@@ -151,167 +140,73 @@ namespace vcamdb
                      */
     }
 
-/*
     /// ------------------------------------------------------------------------
-    /// init_search_card( )
+    /// init_selection_card( )
     /// ------------------------------------------------------------------------
-    QWidget* widget_central::init_search_card( )
+    QWidget* widget_tab_violation::init_cam_selection_view( )
     {
-        this->_w_search = new widget_search_card( this );
+        QVBoxLayout *layout = new QVBoxLayout;
 
-        return this->_w_search;
-    }
+        //
+        //_w_cam_selection
+        //
+        this->_w_cam_selection = new widget_cam_selection( this );
+        layout->addWidget( this->_w_cam_selection, 200 );
+        //
+        //_lv_cams
+        //
+        this->_lv_cams = new listview_cam_selection( this );
+        layout->addWidget( this->_lv_cams, 800 );
 
-    /// ------------------------------------------------------------------------
-    /// init_view_card( )
-    /// ------------------------------------------------------------------------
-    QWidget* widget_central::init_view_card( )
-    {
-        this->_w_view = new widget_card_view( this );
-
-        return this->_w_view;
-    }
-
-    /// ------------------------------------------------------------------------
-    /// init_listview_request( )
-    /// ------------------------------------------------------------------------
-    QWidget* widget_central::init_listview_request( )
-    {
-        QWidget *widget = new QWidget( this );
-
-        QVBoxLayout *vl = new QVBoxLayout;
-        vl->setMargin( 5 );
-        vl->setSpacing( 0 );
-
-        QLabel *lbl = new QLabel( this->tr( "request list:" ), this );
-
-        vl->addWidget( lbl );
-
-        this->_lv_request = new listview_request( this );
-        vl->addWidget( this->_lv_request );
-
-       // vl->addStretch( 1000 );
-
-        widget->setLayout( vl );
+        QWidget  *widget = new QWidget( this );
+        widget->setLayout( layout );
 
         return widget;
     }
 
     /// ------------------------------------------------------------------------
-    /// init_buttons_search( )
+    /// init_violations_view( )
     /// ------------------------------------------------------------------------
-    QWidget* widget_central::init_buttons_search( )
+    QWidget* widget_tab_violation::init_violations_view( )
     {
-        QWidget *widget = new QWidget( this );
+        QVBoxLayout *layout = new QVBoxLayout;
 
-        QHBoxLayout *hl = new QHBoxLayout;
-        hl->setMargin( 5 );
-        hl->setSpacing( 5 );
+        //
+        //_lv_violations
+        //
+        this->_lv_violations = new listview_violation( this );
+        layout->addWidget( this->_lv_violations, 5000 );
+        layout->addStretch( );
+        //
+        //_w_violation
+        //
+        this->_w_violation = new widget_violation( this );
+        layout->addWidget( this->_w_violation );
 
-        hl->addStretch( 1000 );
-
-        //_btn_find_request
-        this->_btn_find_request = new QPushButton;
-        this->_btn_find_request->setIcon(
-                        *( new QIcon( ":/image/images/32x32/edit-find.png" ) )
-                                 );
-        this->_btn_find_request->setToolTip( QObject::tr( "find requests" ) );
-        hl->addWidget( this->_btn_find_request );
-
-        //_btn_clear_search_criteria
-        this->_btn_clear_search_criteria = new QPushButton;
-        this->_btn_clear_search_criteria->setIcon(
-                        *( new QIcon( ":/image/images/32x32/edit-clear.png" ) )
-                                 );
-        this->_btn_clear_search_criteria->setToolTip( QObject::tr( "clear search criteria" ) );
-        hl->addWidget( this->_btn_clear_search_criteria );
-
-        //_btn_add_request
-        this->_btn_add_request = new QPushButton;
-        this->_btn_add_request->setIcon(
-                        *( new QIcon( ":/image/images/32x32/document-new.png" ) )
-                                 );
-        this->_btn_add_request->setToolTip( QObject::tr( "add declarant\'s request" ) );
-        hl->addWidget( this->_btn_add_request );
-
-        widget->setLayout( hl );
+        QWidget  *widget = new QWidget( this );
+        widget->setLayout( layout );
 
         return widget;
-    }
+        /*
+        QGridLayout *layout = new QGridLayout;
 
-    /// ------------------------------------------------------------------------
-    /// init_buttons_listview( )
-    /// ------------------------------------------------------------------------
-    QWidget* widget_central::init_buttons_listview( )
-    {
-        QWidget *widget = new QWidget( this );
+        //
+        //_lv_violations
+        //
+        this->_lv_violations = new listview_violation( this );
+        layout->addWidget( this->_lv_violations, 0, 0 );
+         //
+        //_w_violation
+        //
+        this->_w_violation = new widget_violation( this );
+        layout->addWidget( this->_w_violation, 2, 0 );
 
-        QHBoxLayout *hl = new QHBoxLayout;
-        hl->setMargin( 5 );
-        hl->setSpacing( 5 );
-
-        hl->addStretch( 1000 );
-
-        //_btn_print_request
-        this->_btn_print_request = new QPushButton;
-        this->_btn_print_request->setIcon(
-                        *( new QIcon( ":/image/images/32x32/document-print.png" ) )
-                                 );
-        this->_btn_print_request->setToolTip( QObject::tr( "print request" ) );
-        hl->addWidget( this->_btn_print_request );
-
-        //_btn_edit_request
-        this->_btn_edit_request = new QPushButton;
-        this->_btn_edit_request->setIcon(
-                        *( new QIcon( ":/image/images/32x32/document-edit.png" ) )
-                                 );
-        this->_btn_edit_request->setToolTip( QObject::tr( "edit request" ) );
-        hl->addWidget( this->_btn_edit_request );
-
-        //_btn_edit_id_request
-        this->_btn_edit_id_request = new QPushButton;
-        this->_btn_edit_id_request->setIcon(
-                        *( new QIcon( ":/image/images/32x32/id-request-edit.png" ) )
-                                 );
-        this->_btn_edit_id_request->setToolTip( QObject::tr( "edit id of the request" ) );
-        hl->addWidget( this->_btn_edit_id_request );
-
-        //_btn_del_request
-        this->_btn_del_request = new QPushButton;
-        this->_btn_del_request->setIcon(
-                        *( new QIcon( ":/image/images/32x32/document-close.png" ) )
-                                 );
-        this->_btn_del_request->setToolTip( QObject::tr( "delete request" ) );
-        hl->addWidget( this->_btn_del_request );
-
-        hl->addStretch( 50 );
-
-        //_btn_stat
-        this->_btn_stat = new QToolButton;
-        this->_btn_stat->setIcon(
-                        *( new QIcon( ":/image/images/32x32/office-chart-pie.png" ) )
-                                 );
-        this->_btn_stat->setToolTip( QObject::tr( "statistics" ) );
-        this->_btn_stat->setPopupMode( QToolButton::MenuButtonPopup );
-        this->init_stat_menu( );
-        this->_btn_stat->setMenu( this->_mnu_stat );
-        hl->addWidget( this->_btn_stat );
-
-        widget->setLayout( hl );
+        QWidget  *widget = new QWidget( this );
+        widget->setLayout( layout );
 
         return widget;
+        */
     }
-
-    /// ------------------------------------------------------------------------
-    /// init_stat_menu( )
-    /// ------------------------------------------------------------------------
-    void widget_central::init_stat_menu( )
-    {
-        this->_mnu_stat = new QMenu( );
-        this->_act_report = this->_mnu_stat->addAction( tr("Report") );
-        this->_act_diagram = this->_mnu_stat->addAction( tr("Diagaram") );
-    }
-*/
 
     /// ========================================================================
     ///		EVENTS
@@ -319,7 +214,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// keyPressEvent ( QKeyEvent * event )
     /// ------------------------------------------------------------------------
-    void widget_central::keyPressEvent( QKeyEvent * event )
+    void widget_tab_violation::keyPressEvent( QKeyEvent * event )
     {
         /*
         if( event->key( ) == Qt::Key_N )
@@ -340,7 +235,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_add_request( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_add_request( )
+    void widget_tab_violation::slot_add_request( )
     {
         dialog_request_data w_data_add;
         w_data_add.exec( );
@@ -349,7 +244,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_edit_request( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_edit_request( )
+    void widget_tab_violation::slot_edit_request( )
     {
         data_request *request =
             const_cast<data_request*>( this->_lv_request->current_request( ) );
@@ -370,7 +265,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_del_request( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_del_request( )
+    void widget_tab_violation::slot_del_request( )
     {
         const data_request *r = this->_lv_request->current_request( );
         if( !r )
@@ -399,7 +294,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_id_request_edit( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_id_request_edit( )
+    void widget_tab_violation::slot_id_request_edit( )
     {
         const data_request *request = this->_lv_request->current_request( );
         if( !request )
@@ -414,7 +309,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_print_request( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_print_request( )
+    void widget_tab_violation::slot_print_request( )
     {
 		const data_request *r = this->_lv_request->current_request( );
 		if( !r )
@@ -440,7 +335,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
 	///	slot_print_preview_paint_requested( QPrinter *p ) const
     /// ------------------------------------------------------------------------
-    void widget_central::slot_print_preview_paint_requested( QPrinter *p ) const
+    void widget_tab_violation::slot_print_preview_paint_requested( QPrinter *p ) const
 	{
 		//get request
 		const data_request *r = this->_lv_request->current_request( );
@@ -459,7 +354,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_stat_report( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_stat_report( )
+    void widget_tab_violation::slot_stat_report( )
     {
         dialog_period dlg;
         if( dlg.exec( ) != QDialog::Accepted )
@@ -472,7 +367,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// slot_stat_diagram( )
     /// ------------------------------------------------------------------------
-    void widget_central::slot_stat_diagram( )
+    void widget_tab_violation::slot_stat_diagram( )
     {
         dialog_period dlg;
         if( dlg.exec( ) != QDialog::Accepted )

@@ -189,8 +189,7 @@ namespace vcamdb
 	void application::load_config( )
 	{
         this->_params.parse_cfg_file(
-                    //QApplication::applicationDirPath( )+"/app_template_qt.cfg"
-                    QDir::currentPath( )+"/app_template_qt.cfg"
+                     QDir::currentPath( )+"/app_vcamdb.cfg"
                     );
     }
 
@@ -221,7 +220,7 @@ namespace vcamdb
             //если его нет - сообщение
             QMessageBox::warning(
                                  0, tr("warning"),
-                                 tr("Database file wasn\'t selected")
+                                 tr("Database file havn\'t been selected")
                                 );
         }
 
@@ -248,8 +247,10 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     void application::init_db( )
     {
+        /*
         this->find_db_file( );
         application::the_business_logic( ).db_path( this->_params.parameter("db_path") );
+        */
     }
 
     /// ========================================================================

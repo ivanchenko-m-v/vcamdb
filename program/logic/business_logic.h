@@ -13,6 +13,10 @@
 namespace vcamdb
 {
 
+class data_model_cam_selection;
+class data_model_violation;
+class data_model_camera;
+class data_model_camera_object;
 /// ############################################################################
 ///			class business_logic
 /// ############################################################################
@@ -28,7 +32,11 @@ namespace vcamdb
 	public:
 	/// ------------------------------------------------------------------------
 		business_logic( ) :
-            _db_path("")
+            _db_path(""),
+            _model_cam_selection(0),
+            _model_violation(0),
+            _model_camera(0),
+            _model_camera_object(0)
 		{ }
 
 	/// ========================================================================
@@ -41,29 +49,18 @@ namespace vcamdb
 
         void db_path( const QString& db_path)
         { this->_db_path = db_path; }
-        /*
     /// ------------------------------------------------------------------------
-        data_model_ad* model_ad( ) const
-        { return this->_model_ad; }
+        data_model_cam_selection* model_cam_selection( ) const
+        { return this->_model_cam_selection; }
     /// ------------------------------------------------------------------------
-        data_model_mr* model_mr( ) const
-        { return this->_model_mr; }
+        data_model_violation* model_violation( ) const
+        { return this->_model_violation; }
     /// ------------------------------------------------------------------------
-        data_model_mediator* model_mediator( ) const
-        { return this->_model_mediator; }
+        data_model_camera* model_camera( ) const
+        { return this->_model_camera; }
     /// ------------------------------------------------------------------------
-        data_model_request* model_request( ) const
-        { return this->_model_request; }
-    /// ------------------------------------------------------------------------
-        data_model_request_category* model_request_type( ) const
-        { return this->_model_request_category; }
-    /// ------------------------------------------------------------------------
-        data_model_address* model_address( ) const
-        { return this->_model_address; }
-    /// ------------------------------------------------------------------------
-        data_model_declarant_type* model_declarant_type( ) const
-        { return this->_model_declarant_type; }
-        */
+        data_model_camera_object* model_camera_object( ) const
+        { return this->_model_camera_object; }
 
     /// ========================================================================
 	///		FUNCTIONS
@@ -71,23 +68,14 @@ namespace vcamdb
 	private:
 	/// ------------------------------------------------------------------------
         void init_data_models( );
-        /*
 	/// ------------------------------------------------------------------------
-        void init_model_ad( );
-	/// ------------------------------------------------------------------------
-        void init_model_mr( );
+        void init_model_cam_selection( );
     /// ------------------------------------------------------------------------
-        void init_model_mediator( );
-	/// ------------------------------------------------------------------------
-        void init_model_request( );
-	/// ------------------------------------------------------------------------
-        void init_model_request_category( );
-	/// ------------------------------------------------------------------------
-        void init_model_address( );
+        void init_model_violation( );
     /// ------------------------------------------------------------------------
-        void init_model_declarant_type( );
-    ///
-    ///*/
+        void init_model_camera( );
+    /// ------------------------------------------------------------------------
+        void init_model_camera_object( );
     /// ------------------------------------------------------------------------
         void free_memory( );
 
@@ -110,15 +98,11 @@ namespace vcamdb
     /// ========================================================================
     private:
         QString _db_path;
-/*
-        data_model_ad               *_model_ad;
-        data_model_mr               *_model_mr;
-        data_model_mediator         *_model_mediator;
-        data_model_request          *_model_request;
-        data_model_request_category *_model_request_category;
-        data_model_address          *_model_address;
-        data_model_declarant_type   *_model_declarant_type;
-        */
+
+        data_model_cam_selection    *_model_cam_selection;
+        data_model_violation        *_model_violation;
+        data_model_camera           *_model_camera;
+        data_model_camera_object    *_model_camera_object;
 
 	};//class business_logic
 

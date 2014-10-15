@@ -55,7 +55,7 @@ namespace vcamdb
     ///-------------------------------------------------------------------------
     void main_window::initialize( )
 	{
-        this->setWindowTitle( tr("template_qt application") );
+        this->setWindowTitle( tr("ogh videocams application") );
 		this->setMinimumSize( 940, 705 );
 		this->window_center( );
 		//_workspace
