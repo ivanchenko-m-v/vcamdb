@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 14-10-2014
+///		Date update	: 02-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QDebug>
@@ -15,6 +15,9 @@
 #include "data_model_violation.h"
 #include "data_model_camera.h"
 #include "data_model_camera_object.h"
+#include "data_model_object_type.h"
+
+#include "data_adapter_object_type.h"
 
 namespace vcamdb
 {
@@ -54,6 +57,14 @@ namespace vcamdb
         if( this->_model_camera )
         {
             delete _model_camera;
+        }
+        if( this->_model_camera_object )
+        {
+            delete _model_camera_object;
+        }
+        if( this->_model_object_type )
+        {
+            delete _model_object_type;
         }
     }
 
@@ -108,6 +119,8 @@ namespace vcamdb
         this->init_model_camera( );
 
         this->init_model_camera_object( );
+
+        this->init_model_object_type( );
     }
 
     /// ------------------------------------------------------------------------
@@ -142,6 +155,58 @@ namespace vcamdb
         this->_model_camera_object = new data_model_camera_object;
     }
 
+    /// ------------------------------------------------------------------------
+    ///	init_model_object_type( )
+    /// ------------------------------------------------------------------------
+    void business_logic::init_model_object_type( )
+    {
+        this->_model_object_type = new data_model_object_type;
+        this->object_type_select( );
+    }
+
+    /// ------------------------------------------------------------------------
+    ///	object_type_select( )
+    /// ------------------------------------------------------------------------
+    void business_logic::object_type_select( )
+    {
+        data_object_type_collection *p_coll = 0;
+        try
+        {
+            data_adapter_object_type adap;
+            //select data
+            p_coll = adap.select( );
+            //refresh data model
+            this->_model_object_type->refresh( p_coll );
+        }
+        catch( std::exception &ex )
+        {
+            if( p_coll )
+            {
+                delete p_coll;
+                p_coll = 0;
+            }
+            QString s_msg(
+                            "business_logic::object_type_select( )"
+                            ":\n\t" + QString::fromUtf8( ex.what( ) )
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+        catch( ... )
+        {
+            if( p_coll )
+            {
+                delete p_coll;
+                p_coll = 0;
+            }
+            QString s_msg(
+                        "business_logic::object_type_select( )"
+                        ":\n\t unknown error while object types select"
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+    }
 /// ############################################################################
 
 }//namespace vcamdb

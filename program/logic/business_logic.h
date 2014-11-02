@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 14-10-2014
+///		Date update	: 02-11-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __BUSINESS_LOGIC_H__
@@ -17,6 +17,7 @@ class data_model_cam_selection;
 class data_model_violation;
 class data_model_camera;
 class data_model_camera_object;
+class data_model_object_type;
 /// ############################################################################
 ///			class business_logic
 /// ############################################################################
@@ -36,7 +37,8 @@ class data_model_camera_object;
             _model_cam_selection(0),
             _model_violation(0),
             _model_camera(0),
-            _model_camera_object(0)
+            _model_camera_object(0),
+            _model_object_type(0)
 		{ }
 
 	/// ========================================================================
@@ -61,6 +63,9 @@ class data_model_camera_object;
     /// ------------------------------------------------------------------------
         data_model_camera_object* model_camera_object( ) const
         { return this->_model_camera_object; }
+    /// ------------------------------------------------------------------------
+        data_model_object_type* model_object_type( ) const
+        { return this->_model_object_type; }
 
     /// ========================================================================
 	///		FUNCTIONS
@@ -77,6 +82,8 @@ class data_model_camera_object;
     /// ------------------------------------------------------------------------
         void init_model_camera_object( );
     /// ------------------------------------------------------------------------
+        void init_model_object_type( );
+    /// ------------------------------------------------------------------------
         void free_memory( );
 
 	public:
@@ -84,6 +91,9 @@ class data_model_camera_object;
 		void init( );
 	/// ------------------------------------------------------------------------
 		void exit( );
+
+    /// ------------------------------------------------------------------------
+        void object_type_select( );
 
 	/// ========================================================================
 	///		OPERATORS
@@ -103,6 +113,7 @@ class data_model_camera_object;
         data_model_violation        *_model_violation;
         data_model_camera           *_model_camera;
         data_model_camera_object    *_model_camera_object;
+        data_model_object_type      *_model_object_type;
 
 	};//class business_logic
 

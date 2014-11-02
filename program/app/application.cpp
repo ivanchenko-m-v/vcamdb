@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 14-10-2014
+///		Date update	: 02-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QDebug>
@@ -207,7 +207,7 @@ namespace vcamdb
         QString s_file = QFileDialog::getOpenFileName(
                                            0,tr("select db file"),
                                            QApplication::applicationDirPath( ),
-                                           QString("*.sqlite3")
+                                           QString("*.sqlite;;*.sqlite3")
                                                         );
 
         if( s_file.length( ) )
@@ -247,10 +247,8 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     void application::init_db( )
     {
-        /*
         this->find_db_file( );
         application::the_business_logic( ).db_path( this->_params.parameter("db_path") );
-        */
     }
 
     /// ========================================================================

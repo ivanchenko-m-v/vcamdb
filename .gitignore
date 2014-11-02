@@ -1,5 +1,9 @@
 build
 build/* 
+data
+data/*
+*.sqlite
+*.sqlite*
 *.pro.user
 .directory
 */.directory

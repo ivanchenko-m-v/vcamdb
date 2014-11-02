@@ -1,42 +1,42 @@
 /// $Header
 /// ============================================================================
 ///		Author		: M. Ivanchenko
-///		Date create	: 14-10-2014
+///		Date create	: 02-11-2014
 ///		Date update	: 02-11-2014
 ///		Comment		:
 /// ============================================================================
-#ifndef __WIDGET_VIOLATION_H__
-#define __WIDGET_VIOLATION_H__
+#ifndef __COMBOBOX_OBJECT_TYPE_H__
+#define __COMBOBOX_OBJECT_TYPE_H__
 
-#include <QWidget>
-#include <QLabel>
-#include <QLineEdit>
 #include <QComboBox>
-#include <QDateEdit>
-#include <QPushButton>
 
 namespace vcamdb
 {
 
-class combobox_object_type;
 /// ############################################################################
-///			class widget_violation
+///			class combobox_object_type
 /// ############################################################################
-    class widget_violation : public QWidget
-    {
-    Q_OBJECT
+    class combobox_object_type : public QComboBox
+	{
+        Q_OBJECT
     /// ========================================================================
     ///		CONSTRUCTORS/DESTRUCTOR
     /// ========================================================================
     private:
         /// --------------------------------------------------------------------
-        widget_violation( const widget_violation &rhs );
+        combobox_object_type( const combobox_object_type &rhs );
 
 	public:
         /// --------------------------------------------------------------------
-        explicit widget_violation( QWidget *parent = 0 );
+        explicit combobox_object_type(QWidget *parent = 0);
         /// --------------------------------------------------------------------
-        virtual ~widget_violation( );
+        virtual ~combobox_object_type( );
+
+    /// ========================================================================
+    ///		PROPERTIES
+    /// ========================================================================
+        /// --------------------------------------------------------------------
+        QString object_type( );
 
     /// ========================================================================
     ///		FUNCTIONS
@@ -44,13 +44,9 @@ class combobox_object_type;
     private:
         /// --------------------------------------------------------------------
         void initialize( );
-        void init_layout( );
-        void init_connections( );
-
-        QWidget* init_1st_line( );
-        QWidget* init_2nd_line( );
-        QWidget* init_3rd_line( );
-        QWidget* init_buttons( );
+	public:
+        /// --------------------------------------------------------------------
+        void set_object_type( const QString &object_type );
 
     /// ========================================================================
     ///		PROPERTIES
@@ -64,42 +60,18 @@ class combobox_object_type;
     /// ========================================================================
     private:
         /// --------------------------------------------------------------------
-        widget_violation& operator=( const widget_violation &rhs );
+        combobox_object_type& operator=( const combobox_object_type &rhs );
 
-    /// ========================================================================
-    ///		EVENTS
-    /// ========================================================================
-	protected:
-        virtual void keyPressEvent ( QKeyEvent * event );
-
-    /// ========================================================================
-    ///		SLOTS
-    /// ========================================================================
-    public slots:
-        /// --------------------------------------------------------------------
+	public:
 
     /// ========================================================================
     ///			FIELDS
     /// ========================================================================
     private:
-        QComboBox               *_cbx_cam_name;
-        QLabel                  *_lbl_cam_address;
-        QComboBox               *_cbx_violation_type;
-        combobox_object_type    *_cbx_object_type;
-        QComboBox               *_cbx_object_name;
-        QLabel                  *_lbl_id_object;
-        QDateEdit               *_dte_violation;
-        QLineEdit               *_txt_url;
 
-        QPushButton     *_btn_new; //clear all input fields and let it editing
-        QPushButton     *_btn_edit;//lets input fields  editing
-        QPushButton     *_btn_del; //delete selected violation
-        QPushButton     *_btn_save;//save new and edited violation results
-
-    };//class widget_violation
+    };//class combobox_object_type
 /// ############################################################################
 /// ----------------------------------------------------------------------------
 
 }//namespace vcamdb
-
-#endif // __WIDGET_VIOLATION_H__
+#endif // __COMBOBOX_OBJECT_TYPE_H__

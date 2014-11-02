@@ -45,7 +45,10 @@ SOURCES += \
     gui/listview_camera.cpp \
     gui/listview_camera_object.cpp \
     logic/data_model_camera_object.cpp \
-    gui/widget_object_to_cam.cpp
+    gui/widget_object_to_cam.cpp \
+    logic/data_model_object_type.cpp \
+    dbmodule/data_adapter_object_type.cpp \
+    gui/combobox_object_type.cpp
 
 HEADERS  += \
     app/application.h \
@@ -74,7 +77,10 @@ HEADERS  += \
     gui/listview_camera.h \
     gui/listview_camera_object.h \
     logic/data_model_camera_object.h \
-    gui/widget_object_to_cam.h
+    gui/widget_object_to_cam.h \
+    logic/data_model_object_type.h \
+    dbmodule/data_adapter_object_type.h \
+    gui/combobox_object_type.h
 
 INCLUDEPATH += ./app \
 				./dbmodule \
