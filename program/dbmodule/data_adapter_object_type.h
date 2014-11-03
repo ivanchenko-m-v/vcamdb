@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 31-10-2014
-///		Date update	: 02-11-2014
+///		Date update	: 03-11-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __DATA_ADAPTER_OBJECT_TYPE_H__
@@ -101,16 +101,16 @@ namespace vcamdb
         const QString& object_type( ) const
         { return this->_x_type; }
 
-        void object_type( const QString &x_ad )
-        { this->_x_type = x_ad; }
+        void object_type( const QString &x_type )
+        { this->_x_type = x_type; }
 
     /// ------------------------------------------------------------------------
     ///	description
         const QString& description( ) const
         { return this->_x_description; }
 
-        void description( const QString &x_ad_abbreviation )
-        { this->_x_description = x_ad_abbreviation; }
+        void description( const QString &x_description )
+        { this->_x_description = x_description; }
 
     /// ========================================================================
     ///		OPERATORS

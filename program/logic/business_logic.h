@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 02-11-2014
+///		Date update	: 03-11-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __BUSINESS_LOGIC_H__
@@ -18,6 +18,8 @@ class data_model_violation;
 class data_model_camera;
 class data_model_camera_object;
 class data_model_object_type;
+
+class data_camera_collection;
 /// ############################################################################
 ///			class business_logic
 /// ############################################################################
@@ -94,6 +96,8 @@ class data_model_object_type;
 
     /// ------------------------------------------------------------------------
         void object_type_select( );
+        /// ------------------------------------------------------------------------
+        data_camera_collection* camera_select(const QString &s_filter);
 
 	/// ========================================================================
 	///		OPERATORS

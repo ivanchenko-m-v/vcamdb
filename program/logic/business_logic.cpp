@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 02-11-2014
+///		Date update	: 03-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QDebug>
@@ -18,6 +18,7 @@
 #include "data_model_object_type.h"
 
 #include "data_adapter_object_type.h"
+#include "data_adapter_camera.h"
 
 namespace vcamdb
 {
@@ -164,6 +165,11 @@ namespace vcamdb
         this->object_type_select( );
     }
 
+///|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+///
+/// BLOCK object_type
+///
+///|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     /// ------------------------------------------------------------------------
     ///	object_type_select( )
     /// ------------------------------------------------------------------------
@@ -201,12 +207,69 @@ namespace vcamdb
             }
             QString s_msg(
                         "business_logic::object_type_select( )"
-                        ":\n\t unknown error while object types select"
+                        ":\n\t unknown error while OBJECT_TYPE select"
                          );
             qDebug( ) << s_msg;
             QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
         }
     }
+
+///|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+///
+/// BLOCK camera
+///
+///|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    /// ------------------------------------------------------------------------
+    ///	camera_select( )
+    /// ------------------------------------------------------------------------
+    data_camera_collection* business_logic::camera_select( const QString &s_filter )
+    {
+        const int MIN_FILTER_LENGTH = 5;
+        data_camera_collection *p_coll = 0;
+
+        if( s_filter.length( ) < MIN_FILTER_LENGTH )
+        {
+            return p_coll;
+        }
+
+        try
+        {
+            data_adapter_camera adap;
+            //select data
+            p_coll = adap.select( s_filter );
+        }
+        catch( std::exception &ex )
+        {
+            if( p_coll )
+            {
+                delete p_coll;
+                p_coll = 0;
+            }
+            QString s_msg(
+                            "business_logic::camera_select( )"
+                            ":\n\t" + QString::fromUtf8( ex.what( ) )
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+        catch( ... )
+        {
+            if( p_coll )
+            {
+                delete p_coll;
+                p_coll = 0;
+            }
+            QString s_msg(
+                        "business_logic::camera_select( )"
+                        ":\n\t unknown error while CAMERA select"
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+
+        return p_coll;
+    }
+
 /// ############################################################################
 
 }//namespace vcamdb

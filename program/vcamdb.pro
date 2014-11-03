@@ -48,7 +48,9 @@ SOURCES += \
     gui/widget_object_to_cam.cpp \
     logic/data_model_object_type.cpp \
     dbmodule/data_adapter_object_type.cpp \
-    gui/combobox_object_type.cpp
+    gui/combobox_object_type.cpp \
+    dbmodule/data_adapter_camera.cpp \
+    gui/combobox_camera_search.cpp
 
 HEADERS  += \
     app/application.h \
@@ -80,7 +82,9 @@ HEADERS  += \
     gui/widget_object_to_cam.h \
     logic/data_model_object_type.h \
     dbmodule/data_adapter_object_type.h \
-    gui/combobox_object_type.h
+    gui/combobox_object_type.h \
+    dbmodule/data_adapter_camera.h \
+    gui/combobox_camera_search.h
 
 INCLUDEPATH += ./app \
 				./dbmodule \

@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 02-11-2014
+///		Date update	: 03-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QLabel>
@@ -22,6 +22,7 @@
 #include "vertical_box.h"
 
 #include "combobox_object_type.h"
+#include "combobox_camera_search.h"
 
 namespace ew = espira::widgets;
 
@@ -141,6 +142,10 @@ namespace vcamdb
                      this, SLOT( slot_stat_diagram( ) )
                      );
                      */
+        this->connect(
+                    this->_cbx_cam_name, SIGNAL(currentIndexChanged(int)),
+                    this, SLOT(slot_set_camera_address(int))
+                     );
     }
 
     /// ------------------------------------------------------------------------
@@ -153,7 +158,7 @@ namespace vcamdb
         //
         //_cbx_cam_name
         //
-        this->_cbx_cam_name = new QComboBox;
+        this->_cbx_cam_name = new combobox_camera_search;
         layout->addWidget(
                     new ew::vertical_box( this->_cbx_cam_name,
                                           QObject::tr( "camera name:" ),
@@ -510,6 +515,21 @@ namespace vcamdb
     /// ========================================================================
     ///		SLOTS
     /// ========================================================================
+    /// ------------------------------------------------------------------------
+    /// slot_set_camera_address(int current_cam_index)
+    /// ------------------------------------------------------------------------
+    void widget_violation::slot_set_camera_address( int current_cam_index )
+    {
+        if( current_cam_index < 0 )
+        {
+            this->_lbl_cam_address->setText( "-" );
+            return;
+        }
+        this->_lbl_cam_address->setText(
+                    this->_cbx_cam_name->camera_address( current_cam_index )
+                                       );
+    }
+
 /*
     /// ------------------------------------------------------------------------
     /// slot_add_request( )
