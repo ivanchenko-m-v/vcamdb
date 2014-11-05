@@ -1,51 +1,51 @@
 /// $Header
 /// ============================================================================
 ///		Author		: M. Ivanchenko
-///		Date create	: 31-10-2014
+///		Date create	: 04-11-2014
 ///		Date update	: 04-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QDebug>
 
-#include "data_model_object_type.h"
-#include "data_adapter_object_type.h"
+#include "data_model_violation_type.h"
+#include "data_adapter_violation_type.h"
 
 namespace vcamdb
 {
 
 /// ############################################################################
-///			class data_model_object_type
+///			class data_model_violation_type
 /// ############################################################################
 
 	/// ========================================================================
 	///		CONSTRUCTORS/DESTRUCTOR
 	/// ========================================================================
 	/// ------------------------------------------------------------------------
-    ///	data_model_object_type( )
+    ///	data_model_violation_type( )
 	/// ------------------------------------------------------------------------
-    data_model_object_type::data_model_object_type( QObject *pobj/* = 0*/ ) :
+    data_model_violation_type::data_model_violation_type( QObject *pobj/* = 0*/ ) :
 		QAbstractTableModel( pobj )
 	{
 		this->initialize( );
 	}
 
 	/// ------------------------------------------------------------------------
-    ///	~data_model_object_type( )
+    ///	~data_model_violation_type( )
 	/// ------------------------------------------------------------------------
-    data_model_object_type::~data_model_object_type( )
+    data_model_violation_type::~data_model_violation_type( )
 	{
 		this->clear( );
 
-        qDebug( ) << "data_model_object_type cleared correctly";
+        qDebug( ) << "data_model_violation_type cleared correctly";
 	}
 
 	/// ========================================================================
 	///		PROPERTIES
 	/// ========================================================================
 	/// ------------------------------------------------------------------------
-    ///	object_type( int i_row )
+    ///	violation_type( int i_row )
 	/// ------------------------------------------------------------------------
-    const data_object_type* data_model_object_type::object_type( int i_row ) const
+    const data_violation_type* data_model_violation_type::violation_type( int i_row ) const
 	{
 		if( i_row < 0 || i_row >= this->_list.size( ) )
 		{
@@ -60,7 +60,7 @@ namespace vcamdb
 	/// ------------------------------------------------------------------------
 	///	clear( )
 	/// ------------------------------------------------------------------------
-    void data_model_object_type::clear( )
+    void data_model_violation_type::clear( )
 	{
         if( !this->_list.size( ) )
         {
@@ -73,7 +73,7 @@ namespace vcamdb
 	/// ------------------------------------------------------------------------
 	///	initialize( )
 	/// ------------------------------------------------------------------------
-    void data_model_object_type::initialize( )
+    void data_model_violation_type::initialize( )
 	{
 		this->init_columns_header( );
 	}
@@ -81,7 +81,7 @@ namespace vcamdb
 	/// ------------------------------------------------------------------------
 	///	refresh( const QVector<QVector<QVariant> > &data )
 	/// ------------------------------------------------------------------------
-    void data_model_object_type::refresh(const QVector<QVector<QVariant> > &data)
+    void data_model_violation_type::refresh(const QVector<QVector<QVariant> > &data)
 	{
 		this->clear( );
 
@@ -95,16 +95,16 @@ namespace vcamdb
 		QVector<QVector<QVariant> >::const_iterator iter;
 		for( iter = data.constBegin( ); iter != data.end( ); ++iter )
 		{
-            data_object_type *request = new data_object_type( *iter );
+            data_violation_type *request = new data_violation_type( *iter );
 			this->_list.append( request );
 		}
 		this->endInsertRows( );
 	}
 
 	/// ------------------------------------------------------------------------
-    ///	refresh( data_object_type_collection *data )
+    ///	refresh( data_violation_type_collection *data )
 	/// ------------------------------------------------------------------------
-    void data_model_object_type::refresh( data_object_type_collection *data )
+    void data_model_violation_type::refresh( data_violation_type_collection *data )
 	{
 		this->clear( );
 
@@ -122,13 +122,13 @@ namespace vcamdb
     }
 
 	/// ------------------------------------------------------------------------
-    ///	insert(const data_object_type &request)
+    ///	insert(const data_violation_type &request)
 	/// ------------------------------------------------------------------------
-    void data_model_object_type::insert( const data_object_type &record )
+    void data_model_violation_type::insert( const data_violation_type &record )
     {
 		this->beginInsertRows( QModelIndex( ), this->_list.size( ), this->_list.size( ) );
 
-        data_object_type *pr = new data_object_type( record );
+        data_violation_type *pr = new data_violation_type( record );
 		this->_list.append( pr );
 
         this->endInsertRows( );
@@ -138,7 +138,7 @@ namespace vcamdb
 	/// virtual
 	///	data( )
 	/// ------------------------------------------------------------------------
-    QVariant data_model_object_type::data(
+    QVariant data_model_violation_type::data(
 										const QModelIndex &index,
 										int /*role //= Qt::DisplayRole*/
 									   ) const
@@ -147,7 +147,7 @@ namespace vcamdb
 		{
 			return QVariant( );
 		}
-        data_object_type *record = this->_list.at( index.row( ) );
+        data_violation_type *record = this->_list.at( index.row( ) );
         if( !record )
         {
             return QVariant( );
@@ -155,9 +155,9 @@ namespace vcamdb
 
 		switch( index.column( ) )
 		{
-            case data_object_type::num_field_type:
-                return record->object_type( );
-            case data_object_type::num_field_description:
+            case data_violation_type::num_field_type:
+                return record->violation_type( );
+            case data_violation_type::num_field_description:
                 return record->description( );
 			default:
 				return QVariant( );
@@ -169,7 +169,7 @@ namespace vcamdb
 	/// virtual
 	///	setData( )
 	/// ------------------------------------------------------------------------
-    bool data_model_object_type::setData(
+    bool data_model_violation_type::setData(
 										const QModelIndex &/*index*/,
 										const QVariant &/*value*/,
 										int /*role //= Qt::EditRole*/
@@ -182,7 +182,7 @@ namespace vcamdb
 	/// virtual
 	///	flags( )
 	/// ------------------------------------------------------------------------
-    Qt::ItemFlags data_model_object_type::flags(const QModelIndex &/*index*/) const
+    Qt::ItemFlags data_model_violation_type::flags(const QModelIndex &/*index*/) const
 	{
 		return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 	}
@@ -191,7 +191,7 @@ namespace vcamdb
 	/// virtual
 	///	insertRows( )
 	/// ------------------------------------------------------------------------
-    bool data_model_object_type::insertRows(
+    bool data_model_violation_type::insertRows(
 								int row, int count,
 								const QModelIndex &parent //= QModelIndex( )
 										 )
@@ -204,7 +204,7 @@ namespace vcamdb
 
 		for( int i = 0; i < count; i++ )
 		{
-            data_object_type* request = new data_object_type;
+            data_violation_type* request = new data_violation_type;
 			this->_list.insert( row + i, request );
 		}
 
@@ -217,16 +217,16 @@ namespace vcamdb
 	/// virtual
 	///	insertRows( )
 	/// ------------------------------------------------------------------------
-    bool data_model_object_type::removeRows(
+    bool data_model_violation_type::removeRows(
 								int row, int count,
 								const QModelIndex &parent //= QModelIndex( )
 										 )
 	{
-		this->beginRemoveRows( parent, row, row + count - 1 );
+        this->beginRemoveRows( parent, row, row + count - 1 );
 
 		for( int i = 0; i < count; ++i )
 		{
-            data_object_type *item = this->_list.takeAt( row );
+            data_violation_type *item = this->_list.takeAt( row );
 			delete item;
 		}
 

@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 03-11-2014
+///		Date update	: 04-11-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __BUSINESS_LOGIC_H__
@@ -18,6 +18,7 @@ class data_model_violation;
 class data_model_camera;
 class data_model_camera_object;
 class data_model_object_type;
+class data_model_violation_type;
 
 class data_camera_collection;
 /// ############################################################################
@@ -40,7 +41,8 @@ class data_camera_collection;
             _model_violation(0),
             _model_camera(0),
             _model_camera_object(0),
-            _model_object_type(0)
+            _model_object_type(0),
+            _model_violation_type(0)
 		{ }
 
 	/// ========================================================================
@@ -68,6 +70,9 @@ class data_camera_collection;
     /// ------------------------------------------------------------------------
         data_model_object_type* model_object_type( ) const
         { return this->_model_object_type; }
+    /// ------------------------------------------------------------------------
+        data_model_violation_type* model_violation_type( ) const
+        { return this->_model_violation_type; }
 
     /// ========================================================================
 	///		FUNCTIONS
@@ -86,6 +91,8 @@ class data_camera_collection;
     /// ------------------------------------------------------------------------
         void init_model_object_type( );
     /// ------------------------------------------------------------------------
+        void init_model_violation_type( );
+    /// ------------------------------------------------------------------------
         void free_memory( );
 
 	public:
@@ -96,7 +103,9 @@ class data_camera_collection;
 
     /// ------------------------------------------------------------------------
         void object_type_select( );
-        /// ------------------------------------------------------------------------
+    /// ------------------------------------------------------------------------
+        void violation_type_select( );
+    /// ------------------------------------------------------------------------
         data_camera_collection* camera_select(const QString &s_filter);
 
 	/// ========================================================================
@@ -118,6 +127,7 @@ class data_camera_collection;
         data_model_camera           *_model_camera;
         data_model_camera_object    *_model_camera_object;
         data_model_object_type      *_model_object_type;
+        data_model_violation_type   *_model_violation_type;
 
 	};//class business_logic
 

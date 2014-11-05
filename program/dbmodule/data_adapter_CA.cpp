@@ -1,8 +1,8 @@
 ///$Header
 /// ============================================================================
 ///		Author		: M. Ivanchenko
-///		Date create	: 03-11-2014
-///		Date update	: 04-11-2014
+///		Date create	: 05-11-2014
+///		Date update	: 05-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <stdexcept>
@@ -15,58 +15,47 @@
 #include "application.h"
 #include "business_logic.h"
 
-#include "data_adapter_camera.h"
+#include "data_adapter_CA.h"
 #include "qt_sqlite_command.h"
 
 namespace vcamdb
 {
-    const QString data_adapter_camera::_s_sql_insert(
-                                "INSERT INTO TABLE_CAM "
-                                "(CAM_ID, CAM_NAME, CAM_ADDRESS, "
-                                "CAM_TYPE, INSPECTED_FLAG, OVERVIEW_TYPE, "
-                                "RELATED_AMOUNT, SELECTION, LAST_MODIFIED,"
-                                "USER_LAST_CHANGE) "
-                                "   VALUES(:x_id, :x_name, :x_address,"
-                                          ":x_type, :x_flag, :x_overview_type, "
-                                          ":n_amount, :x_selection,"
-                                          ":x_date, :x_user);"
-									);
-    const QString data_adapter_camera::_s_sql_update(
-                                "UPDATE TABLE_CAM"
-                                "   SET CAM_ID=:x_id_new, "
-                                       "CAM_NAME=:x_name, "
-                                       "CAM_ADDRESS=:x_address, "
-                                       "CAM_TYPE=:x_type, "
-                                       "INSPECTED_FLAG=:x_flag, "
-                                       "OVERVIEW_TYPE=:x_overview_type, "
-                                       "RELATED_AMOUNT=:n_amount, "
-                                       "SELECTION=:x_selection, "
-                                       "LAST_MODIFIED=:x_date, "
-                                       "USER_LAST_CHANGE=:x_user "
-                                "WHERE OBJECT_TYPE=:x_id_old;"
-									);
-    const QString data_adapter_camera::_s_sql_delete(
-                                "DELETE FROM TABLE_CAM "
-                                "WHERE CAM_ID=:x_id;"
-									);
-    const QString data_adapter_camera::_s_sql_select(
-                                "SELECT CAM_ID, CAM_NAME, CAM_ADDRESS, "
-                                    "CAM_TYPE, INSPECTED_FLAG, OVERVIEW_TYPE, "
-                                    "RELATED_AMOUNT, SELECTION, LAST_MODIFIED,"
-                                    "USER_LAST_CHANGE "
-                                "FROM TABLE_CAM "
-									);
 /// ############################################################################
-///			class data_adapter_camera
+///			class data_adapter_CA
 /// ############################################################################
 
+    const QString data_adapter_CA::_s_sql_insert(
+                                "INSERT INTO TABLE_CONTAINER_AREA "
+                                "(ID_CONTAINER_AREA, YARD_ID, OBJECT_ADDRESS, "
+                                "OKRUG, DISTRICT_NAME) "
+                                "   VALUES(:n_id, :n_yard_id, :x_address, "
+                                          ":x_okrug, :x_district);"
+                                                );
+    const QString data_adapter_CA::_s_sql_update(
+                                "UPDATE TABLE_CONTAINER_AREA"
+                                "   SET ID_CONTAINER_AREA=:n_id_new, "
+                                       "YARD_ID=:n_yard_id, "
+                                       "OBJECT_ADDRESS=:x_address, "
+                                       "OKRUG=:x_okrug, "
+                                       "DISTRICT_NAME=:x_district "
+                                "WHERE ID_CONTAINER_AREA=:x_id_old;"
+									);
+    const QString data_adapter_CA::_s_sql_delete(
+                                "DELETE FROM TABLE_CONTAINER_AREA "
+                                "WHERE ID_CONTAINER_AREA=:n_id;"
+									);
+    const QString data_adapter_CA::_s_sql_select(
+                                "SELECT ID_CONTAINER_AREA, YARD_ID, OBJECT_ADDRESS, "
+                                    "OKRUG, DISTRICT_NAME "
+                                "FROM TABLE_CONTAINER_AREA "
+									);
     /// ========================================================================
     ///		CONSTRUCTORS/DESTRUCTOR
     /// ========================================================================
 	///------------------------------------------------------------------------
-    ///	~data_adapter_camera( )
+    ///	~data_adapter_CA( )
     ///------------------------------------------------------------------------
-    data_adapter_camera::~data_adapter_camera( )
+    data_adapter_CA::~data_adapter_CA( )
 	{
 	}
 
@@ -84,7 +73,7 @@ namespace vcamdb
 	///------------------------------------------------------------------------
 	///	throw_error( const char* s_msg ) const
     ///------------------------------------------------------------------------
-    void data_adapter_camera::throw_error( const char* s_msg ) const
+    void data_adapter_CA::throw_error( const char* s_msg ) const
 	{
 		QString sMsg( QObject::tr( s_msg ) );
 
@@ -94,76 +83,62 @@ namespace vcamdb
     ///------------------------------------------------------------------------
     ///	make_params_insert
     ///------------------------------------------------------------------------
-    void data_adapter_camera::make_params_insert(
+    void data_adapter_CA::make_params_insert(
                                             espira::db::qt_sqlite_command *pcmd,
-                                            const data_camera &r
+                                            const data_CA &r
                         ) const
     {
         using namespace espira::db;
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.cam_id( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.cam_name( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.cam_address( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.cam_type( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.flag( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.overview_type( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_int( r.related_amount( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.selection( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.date_last_modified( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.user_modified( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_int( r.id_ca( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_int( r.id_yard( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.address( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.okrug( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.district( ) ) );
     }
     ///------------------------------------------------------------------------
     ///	make_params_update
     ///------------------------------------------------------------------------
-    void data_adapter_camera::make_params_update(
+    void data_adapter_CA::make_params_update(
                                             espira::db::qt_sqlite_command *pcmd,
-                                            const data_camera &old_rec,
-                                            const data_camera &new_rec
+                                            const data_CA &old_rec,
+                                            const data_CA &new_rec
                            ) const
     {
         using namespace espira::db;
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.cam_id( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.cam_name( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.cam_address( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.cam_type( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.flag( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.overview_type( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_int( new_rec.related_amount( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.selection( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.date_last_modified( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.user_modified( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( old_rec.cam_id( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_int( new_rec.id_ca( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_int( new_rec.id_yard( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.address( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.okrug( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.district( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_int( old_rec.id_ca( ) ) );
     }
 
     ///------------------------------------------------------------------------
     ///	make_params_delete
     ///------------------------------------------------------------------------
-    void data_adapter_camera::make_params_delete(
+    void data_adapter_CA::make_params_delete(
                                             espira::db::qt_sqlite_command *pcmd,
-                                            const data_camera &r
+                                            const data_CA &r
                         ) const
     {
         using namespace espira::db;
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.cam_id( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_int( r.id_ca( ) ) );
     }
 
     ///------------------------------------------------------------------------
     ///	make_select_filter
     ///------------------------------------------------------------------------
-    QString data_adapter_camera::make_select_filter( const QString &s_filter ) const
+    QString data_adapter_CA::make_select_filter( const QString &s_filter ) const
     {
         if( !s_filter.length( ) )
         {
             return QString(";");
         }
         QString s_where(" WHERE ");
-        s_where += "(CAM_NAME='"+s_filter+"')OR";
-        s_where += "(CAM_NAME LIKE '"+s_filter+"%')OR";
-        s_where += "(CAM_NAME LIKE '%"+s_filter+"%')OR";
-        s_where += "(CAM_NAME LIKE '%"+s_filter+"')OR";
-        s_where += "(CAM_ADDRESS LIKE '"+s_filter+"%')OR";
-        s_where += "(CAM_ADDRESS LIKE '%"+s_filter+"%')OR";
-        s_where += "(CAM_ADDRESS LIKE '%"+s_filter+"') ";
-        s_where += "ORDER BY CAM_NAME;";
+        s_where += "(OBJECT_ADDRESS LIKE '"+s_filter+"%')OR";
+        s_where += "(OBJECT_ADDRESS LIKE '%"+s_filter+"%')OR";
+        s_where += "(OBJECT_ADDRESS LIKE '%"+s_filter+"') ";
+        s_where += "ORDER BY OBJECT_ADDRESS;";
 
         return s_where;
     }
@@ -171,11 +146,11 @@ namespace vcamdb
     ///------------------------------------------------------------------------
     ///	select( const QString &s_filter/* = QString( )*/ ) const
     ///------------------------------------------------------------------------
-    data_camera_collection*
-        data_adapter_camera::select(const QString &s_filter/*=QString( )*/) const
+    data_CA_collection*
+        data_adapter_CA::select(const QString &s_filter/*=QString( )*/) const
 	{
 		//make select query
-        QString s_qry( data_adapter_camera::_s_sql_select );
+        QString s_qry( data_adapter_CA::_s_sql_select );
         s_qry += this->make_select_filter( s_filter );
 
         qDebug()<<"preparing: " <<s_qry;
@@ -183,7 +158,7 @@ namespace vcamdb
 		//run query
         espira::db::qt_sqlite_connection cnn;
         espira::db::qt_sqlite_command *pcmd = 0;
-        data_camera_collection *cam_coll = 0;
+        data_CA_collection *cam_coll = 0;
         try
         {
             const QString &db_path = application::the_business_logic( ).db_path( );
@@ -205,12 +180,12 @@ namespace vcamdb
             espira::db::qt_data_row_collection &rows = pcmd->result( );
             if( rows.size( ) )
             {
-                cam_coll = new data_camera_collection;
+                cam_coll = new data_CA_collection;
                 espira::db::qt_data_row_collection::iterator iter = rows.begin( );
                 for( ;iter < rows.end(); ++iter )
                 {
                     espira::db::qt_data_row *r = *iter;
-                    cam_coll->append( new data_camera( r ) );
+                    cam_coll->append( new data_CA( r ) );
                 }
             }
 
@@ -241,9 +216,9 @@ namespace vcamdb
 	}
 
 	///------------------------------------------------------------------------
-    ///	insert( const data_camera &record ) const
+    ///	insert( const data_CA &record ) const
     ///------------------------------------------------------------------------
-    void data_adapter_camera::insert( const data_camera &record ) const
+    void data_adapter_CA::insert( const data_CA &record ) const
 	{
         espira::db::qt_sqlite_connection cnn;
         espira::db::qt_sqlite_command *pcmd = 0;
@@ -254,7 +229,7 @@ namespace vcamdb
             //cnn open
             cnn.open( );
             //create command
-            pcmd = cnn.create_command( data_adapter_camera::_s_sql_insert );
+            pcmd = cnn.create_command( data_adapter_CA::_s_sql_insert );
             //add parameters
             this->make_params_insert( pcmd, record );
             //open cmd
@@ -285,11 +260,11 @@ namespace vcamdb
     }
 
 	///------------------------------------------------------------------------
-    ///	update( const data_camera &ad ) const
+    ///	update( const data_CA &ad ) const
 	///
-    void data_adapter_camera::update(
-                                            const data_camera &old_record,
-                                            const data_camera &new_record
+    void data_adapter_CA::update(
+                                            const data_CA &old_record,
+                                            const data_CA &new_record
                                     ) const
 	{
         espira::db::qt_sqlite_connection cnn;
@@ -301,7 +276,7 @@ namespace vcamdb
             //cnn open
             cnn.open( );
             //create command
-            pcmd = cnn.create_command( data_adapter_camera::_s_sql_update );
+            pcmd = cnn.create_command( data_adapter_CA::_s_sql_update );
             //add parameters
             this->make_params_update( pcmd, old_record, new_record );
             //open cmd
@@ -332,9 +307,9 @@ namespace vcamdb
     }
 
 	///------------------------------------------------------------------------
-    ///	del( const data_camera &ad ) const
+    ///	del( const data_CA &ad ) const
 	///
-    void data_adapter_camera::del( const data_camera &record ) const
+    void data_adapter_CA::del( const data_CA &record ) const
 	{
         espira::db::qt_sqlite_connection cnn;
         espira::db::qt_sqlite_command *pcmd = 0;
@@ -345,7 +320,7 @@ namespace vcamdb
             //cnn open
             cnn.open( );
             //create command
-            pcmd = cnn.create_command( data_adapter_camera::_s_sql_delete );
+            pcmd = cnn.create_command( data_adapter_CA::_s_sql_delete );
             //add parameters
             this->make_params_delete( pcmd, record );
             //open cmd

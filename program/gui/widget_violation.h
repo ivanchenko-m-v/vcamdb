@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 03-11-2014
+///		Date update	: 04-11-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __WIDGET_VIOLATION_H__
@@ -20,6 +20,8 @@ namespace vcamdb
 
 class combobox_object_type;
 class combobox_camera_search;
+class combobox_violation_type;
+
 /// ############################################################################
 ///			class widget_violation
 /// ############################################################################
@@ -86,7 +88,7 @@ class combobox_camera_search;
     private:
         combobox_camera_search  *_cbx_cam_name;
         QLabel                  *_lbl_cam_address;
-        QComboBox               *_cbx_violation_type;
+        combobox_violation_type *_cbx_violation_type;
         combobox_object_type    *_cbx_object_type;
         QComboBox               *_cbx_object_name;
         QLabel                  *_lbl_id_object;

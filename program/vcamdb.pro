@@ -4,7 +4,7 @@
 #           Project version     :
 #           Author              :   M. Ivanchenko
 #           Date create         :   05-10-2014
-#           Date update         :   14-10-2014
+#           Date update         :   03-11-2014
 #           Comment             :
 # ============================================================================
 QT       += core gui
@@ -50,7 +50,13 @@ SOURCES += \
     dbmodule/data_adapter_object_type.cpp \
     gui/combobox_object_type.cpp \
     dbmodule/data_adapter_camera.cpp \
-    gui/combobox_camera_search.cpp
+    gui/combobox_camera_search.cpp \
+    dbmodule/data_adapter_violation_type.cpp \
+    logic/data_model_violation_type.cpp \
+    gui/combobox_violation_type.cpp \
+    dbmodule/data_adapter_DT.cpp \
+    dbmodule/data_adapter_CA.cpp \
+    dbmodule/data_adapter_ODH.cpp
 
 HEADERS  += \
     app/application.h \
@@ -84,7 +90,13 @@ HEADERS  += \
     dbmodule/data_adapter_object_type.h \
     gui/combobox_object_type.h \
     dbmodule/data_adapter_camera.h \
-    gui/combobox_camera_search.h
+    gui/combobox_camera_search.h \
+    dbmodule/data_adapter_violation_type.h \
+    logic/data_model_violation_type.h \
+    gui/combobox_violation_type.h \
+    dbmodule/data_adapter_DT.h \
+    dbmodule/data_adapter_CA.h \
+    dbmodule/data_adapter_ODH.h
 
 INCLUDEPATH += ./app \
 				./dbmodule \
