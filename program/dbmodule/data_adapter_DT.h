@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 04-11-2014
-///		Date update	: 05-11-2014
+///		Date update	: 09-11-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __DATA_ADAPTER_DT_H__
@@ -19,13 +19,15 @@
 #include "qt_sqlite_connection.h"
 #include "qt_data_row.h"
 
+#include "data_violation_object.h"
+
 namespace vcamdb
 {
 
 /// ############################################################################
 ///			class data_DT
 /// ############################################################################
-    class data_DT
+    class data_DT : public data_violation_object
 	{
     public:
         enum field_data_DT : int
@@ -95,7 +97,7 @@ namespace vcamdb
             this->_x_address = (*p_row)[num_field_address].toString( );
         }
     /// ------------------------------------------------------------------------
-        ~data_DT( )
+        virtual ~data_DT( )
 		{
             qDebug( ) << "deleted : " << this->_n_id << " " +
                                          this->_x_address;
@@ -121,6 +123,13 @@ namespace vcamdb
     /// ========================================================================
 	public:
     /// ------------------------------------------------------------------------
+    ///	id_object( )
+        virtual int id_object( ) const
+        {
+            return this->_n_id;
+        }
+
+    /// ------------------------------------------------------------------------
     ///	id_dt
         int id_dt( ) const
         { return this->_n_id; }
@@ -130,27 +139,34 @@ namespace vcamdb
 
     /// ------------------------------------------------------------------------
     ///	okrug
-        const QString& okrug( ) const
+        virtual const QString& okrug( ) const
         { return this->_x_okrug; }
 
         void okrug( const QString &x_okrug )
         { this->_x_okrug = x_okrug; }
 
     /// ------------------------------------------------------------------------
-    ///	prefekt
-        const QString& prefekt( ) const
+    ///	prefekture
+        virtual const QString& prefekture( ) const
         { return this->_x_prefekt; }
 
-        void prefekt( const QString &x_prefekt )
+        void prefekture( const QString &x_prefekt )
         { this->_x_prefekt = x_prefekt; }
 
     /// ------------------------------------------------------------------------
     ///	district
-        const QString& district( ) const
+        virtual const QString& district( ) const
         { return this->_x_district; }
 
         void district( const QString &x_district )
         { this->_x_district = x_district; }
+
+    /// ------------------------------------------------------------------------
+    ///	object_name
+        virtual const QString& object_name( ) const
+        {
+            return this->_x_address;
+        }
 
     /// ------------------------------------------------------------------------
     ///	yard_owner

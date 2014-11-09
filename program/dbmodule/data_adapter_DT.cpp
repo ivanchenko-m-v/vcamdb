@@ -92,7 +92,7 @@ namespace vcamdb
         using namespace espira::db;
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_int( r.id_dt( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.okrug( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.prefekt( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.prefekture( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.district( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.yard_owner( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.address( ) ) );
@@ -109,7 +109,7 @@ namespace vcamdb
         using namespace espira::db;
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_int( new_rec.id_dt( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.okrug( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.prefekt( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.prefekture( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.district( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.yard_owner( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.address( ) ) );

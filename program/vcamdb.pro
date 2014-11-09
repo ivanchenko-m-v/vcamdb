@@ -56,7 +56,8 @@ SOURCES += \
     gui/combobox_violation_type.cpp \
     dbmodule/data_adapter_DT.cpp \
     dbmodule/data_adapter_CA.cpp \
-    dbmodule/data_adapter_ODH.cpp
+    dbmodule/data_adapter_ODH.cpp \
+    gui/combobox_violation_object.cpp
 
 HEADERS  += \
     app/application.h \
@@ -96,7 +97,9 @@ HEADERS  += \
     gui/combobox_violation_type.h \
     dbmodule/data_adapter_DT.h \
     dbmodule/data_adapter_CA.h \
-    dbmodule/data_adapter_ODH.h
+    dbmodule/data_adapter_ODH.h \
+    dbmodule/data_violation_object.h \
+    gui/combobox_violation_object.h
 
 INCLUDEPATH += ./app \
 				./dbmodule \

@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 04-11-2014
+///		Date update	: 09-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QLabel>
@@ -24,6 +24,7 @@
 #include "combobox_object_type.h"
 #include "combobox_camera_search.h"
 #include "combobox_violation_type.h"
+#include "combobox_violation_object.h"
 
 namespace ew = espira::widgets;
 
@@ -214,7 +215,7 @@ namespace vcamdb
         //
         //_cbx_object_name
         //
-        this->_cbx_object_name = new QComboBox;
+        this->_cbx_object_name = new combobox_violation_object;
         layout->addWidget(
                     new ew::vertical_box( this->_cbx_object_name,
                                           QObject::tr( "object\'s name:" ),
