@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 04-11-2014
-///		Date update	: 04-11-2014
+///		Date update	: 10-11-2014
 ///		Comment		:
 /// ============================================================================
 #include "combobox_violation_type.h"
@@ -81,6 +81,8 @@ namespace vcamdb
             const data_violation_type *rec = list.at( i );
             this->addItem( rec->violation_type( ), rec->violation_type( ) );
         }
+
+        this->setEditable( true );
     }
 
     /// ------------------------------------------------------------------------

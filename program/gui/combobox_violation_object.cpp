@@ -2,15 +2,13 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 09-11-2014
-///		Date update	: 09-11-2014
+///		Date update	: 10-11-2014
 ///		Comment		:
 /// ============================================================================
 #include "combobox_violation_object.h"
 
 #include "application.h"
 #include "business_logic.h"
-
-#include "data_violation_object.h"
 
 namespace vcamdb
 {
@@ -43,10 +41,21 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     ///	camera( ) get
     /// ------------------------------------------------------------------------
-    const data_violation_object* combobox_violation_object::violation_object( ) const
+    const data_violation_object* combobox_violation_object::violation_object( )
     {
-        return 0;
+        int index = this->currentIndex( );
+        if( index < 0 || index >= this->count( ) )
+        {
+            return 0;
+        }
+        QVariant val = this->itemData( index );
+        if( !val.isValid( ) )
+        {
+            return 0;
+        }
+        return this->_objects.find( val.toInt( ) );
     }
+
     /// ------------------------------------------------------------------------
     ///	camera( ) set
     /// ------------------------------------------------------------------------
@@ -57,13 +66,18 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     ///	camera_address( int index ) get
     /// ------------------------------------------------------------------------
-    const QString& combobox_violation_object::object_id( int index ) const
+    int combobox_violation_object::object_id( int index ) const
     {
         if( index < 0 || index >= this->count( ) )
         {
-            return QString( "-" );
+            return -1;
         }
-        return this->itemData( index ).toString( );
+        QVariant val = this->itemData( index );
+        if( !val.isValid( ) )
+        {
+            return -1;
+        }
+        return val.toInt( );
     }
 
     /// ========================================================================
@@ -80,30 +94,43 @@ namespace vcamdb
     }
 
     /// ------------------------------------------------------------------------
+    ///	clear_data( )
+    /// ------------------------------------------------------------------------
+    void combobox_violation_object::clear_data( )
+    {
+        //empty text list
+        this->clear( );
+        //remove previous data
+        this->_objects.free( );
+    }
+
+
+    /// ------------------------------------------------------------------------
     ///	refresh( )
     /// ------------------------------------------------------------------------
-    void combobox_violation_object::refresh( const QString &text )
+    void combobox_violation_object::refresh(const QString &violation_type, const QString &text )
     {
         this->clear( );
 
         business_logic &logic = application::the_business_logic( );
-        /*
-        this->_coll_cameras = logic.camera_select( text );
-        if( !_coll_cameras )
+        data_violation_object_collection *p_coll = logic.violation_object_select( violation_type, text );
+        if( !p_coll )
         {
             return;
         }
 
-        data_violation_object_collection::iterator it = this->_coll_cameras->begin( );
-        for( ; it < this->_coll_cameras->end( ); ++it )
+        data_violation_object_collection::iterator it = p_coll->begin( );
+        for( ; it < p_coll->end( ); ++it )
         {
-            data_violation_object *cam = *it;
+            data_violation_object *vobj = *it;
 
-            if( !cam ) continue;
+            if( !vobj ) continue;
 
-            this->addItem( cam->cam_name( ), cam->cam_address( ) );
+            this->addItem( vobj->object_name( ), vobj->id_object( ) );
+            this->_objects.append( vobj );
         }
-        */
+
+        p_coll->free_data_pointer( );
     }
 
     /// ========================================================================
@@ -135,7 +162,10 @@ namespace vcamdb
 
             return;
         }
-        this->refresh( text );
+
+        //Посылаем сигнал для определения типа
+        //фиксируемого нарушения
+        emit violation_type_request( text );
 
         QComboBox::keyPressEvent( e );
     }

@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 14-10-2014
+///		Date update	: 10-11-2014
 ///		Comment		:
 /// ============================================================================
 
@@ -16,8 +16,8 @@
 namespace vcamdb
 {
 
-    //class data_request;
-    //class data_request_collection;
+    class data_violation;
+    class data_violation_collection;
 /// ############################################################################
 ///			class data_model_violation
 /// ############################################################################
@@ -39,7 +39,7 @@ namespace vcamdb
 	/// ========================================================================
 	public:
 	/// ------------------------------------------------------------------------
-        //const data_request* request( int i_row ) const;
+        const data_violation* violation( int i_row ) const;
 
 	/// ========================================================================
 	///		OPERATORS
@@ -57,17 +57,16 @@ namespace vcamdb
 	/// ------------------------------------------------------------------------
 		virtual void init_columns_header( void )
 		{
+            this -> _header.append( QObject::tr( "date_violation" ) );
             this -> _header.append( QObject::tr( "type_violation" ) );
             this -> _header.append( QObject::tr( "okrug" ) );
-            this -> _header.append( QObject::tr( "prefekt" ) );
-            this -> _header.append( QObject::tr( "rayion" ) );
+            this -> _header.append( QObject::tr( "district" ) );
             this -> _header.append( QObject::tr( "cam_name" ) );
             this -> _header.append( QObject::tr( "object_type" ) );
             this -> _header.append( QObject::tr( "object_ID" ) );
             this -> _header.append( QObject::tr( "object_name" ) );
-            this -> _header.append( QObject::tr( "date_violation" ) );
-            this -> _header.append( QObject::tr( "date_fix" ) );
             this -> _header.append( QObject::tr( "URL" ) );
+            this -> _header.append( QObject::tr( "user" ) );
         }
 
 	public:
@@ -76,17 +75,16 @@ namespace vcamdb
 	/// ------------------------------------------------------------------------
 		void refresh( const QVector<QVector<QVariant> > &data );
 	/// ------------------------------------------------------------------------
-        //void refresh( data_request_collection *data );
+        void refresh( data_violation_collection *data );
 	/// ------------------------------------------------------------------------
-        //void insert( const data_request &request );
+        void insert( const data_violation &request );
 	/// ------------------------------------------------------------------------
 	/// override
 		virtual int rowCount(
 								const QModelIndex &/*parent = QModelIndex( )*/
 							) const
 		{
-//			return this -> _list.size( );
-            return 10;
+            return this -> _list.size( );
         }
 	/// ------------------------------------------------------------------------
 	/// override
@@ -159,7 +157,7 @@ namespace vcamdb
 	///			FIELDS
 	/// ========================================================================
 	private:
-        //QList<data_request*>	_list;
+        QList<data_violation*>	_list;
 		QVector<QString>		_header;
 
     };//class data_model_violation

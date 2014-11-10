@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 09-11-2014
-///		Date update	: 09-11-2014
+///		Date update	: 10-11-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __COMBOBOX_VIOLATION_OBJECT_H__
@@ -11,10 +11,10 @@
 #include <QComboBox>
 #include <QKeyEvent>
 
+#include "data_violation_object.h"
+
 namespace vcamdb
 {
-
-class data_violation_object;
 
 /// ############################################################################
 ///			class combobox_violation_object
@@ -39,11 +39,11 @@ class data_violation_object;
     ///		PROPERTIES
     /// ========================================================================
         /// --------------------------------------------------------------------
-        const data_violation_object* violation_object( ) const;
+        const data_violation_object* violation_object( );
         /// --------------------------------------------------------------------
         void violation_object(  const data_violation_object *cam );
         /// --------------------------------------------------------------------
-        const QString &object_id(int index) const;
+        int object_id(int index) const;
 
     /// ========================================================================
     ///		FUNCTIONS
@@ -52,9 +52,11 @@ class data_violation_object;
         /// --------------------------------------------------------------------
         void initialize( );
         /// --------------------------------------------------------------------
-        void refresh( const QString &text );
+        void clear_data();
 
 	public:
+        /// --------------------------------------------------------------------
+        void refresh( const QString &violation_type, const QString &text );
 
     /// ========================================================================
     ///		OPERATORS
@@ -70,9 +72,16 @@ class data_violation_object;
         virtual void keyPressEvent( QKeyEvent * e );
 
     /// ========================================================================
+    ///		SIGNALS
+    /// ========================================================================
+    signals:
+        void violation_type_request( const QString &text );
+
+    /// ========================================================================
     ///			FIELDS
     /// ========================================================================
     private:
+        data_violation_object_collection _objects;
 
     };//class combobox_violation_object
 /// ############################################################################

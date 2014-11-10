@@ -1,8 +1,8 @@
 ///$Header
 /// ============================================================================
 ///		Author		: M. Ivanchenko
-///		Date create	: 04-11-2014
-///		Date update	: 09-11-2014
+///		Date create	: 10-11-2014
+///		Date update	: 10-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <stdexcept>
@@ -15,48 +15,76 @@
 #include "application.h"
 #include "business_logic.h"
 
-#include "data_adapter_DT.h"
+#include "data_adapter_violation.h"
 #include "qt_sqlite_command.h"
 
 namespace vcamdb
 {
-/// ############################################################################
-///			class data_adapter_DT
-/// ############################################################################
+//ID_VIOLATION INTEGER NOT NULL,
+//VIOLATION_TYPE VARCHAR(256),
+//OKRUG VARCHAR(256),
+//PREF VARCHAR(256),
+//DISTRICT VARCHAR(256),
+//CAM_NAME VARCHAR(256),
+//OBJECT_TYPE VARCHAR(256),
+//OBJECT_ID VARCHAR(256),
+//OBJECT_NAME VARCHAR(256),
+//VIOLATION_DATE VARCHAR(256),
+//RECORD_DATE VARCHAR(256),
+//URL VARCHAR(256),
+//USER_CREATED VARCHAR(256)
 
-    const QString data_adapter_DT::_s_sql_insert(
-                                "INSERT INTO TABLE_DT "
-                                "(ID_DT, OKRUG, PREF, "
-                                "DISTRICT, YARD_OWNER_NAME, OBJECT_ADDRESS) "
-                                "   VALUES(:n_id, :x_okrug, :x_pref,"
-                                          ":x_district, :x_yard_owner, :x_address);"
-                                                );
-    const QString data_adapter_DT::_s_sql_update(
-                                "UPDATE TABLE_DT"
-                                "   SET ID_DT=:n_id_new, "
+    const QString data_adapter_violation::_s_sql_insert(
+                                "INSERT INTO TABLE_VIOLATION "
+                                "(ID_VIOLATION, VIOLATION_TYPE, OKRUG, "
+                                "PREF, DISTRICT, CAM_NAME, "
+                                "OBJECT_TYPE, OBJECT_ID, OBJECT_NAME,"
+                                "VIOLATION_DATE, RECORD_DATE, URL,"
+                                "USER_CREATED) "
+                                "   SELECT MAX(ID_VIOLATION)+1, :x_type, :x_okrug,"
+                                          ":x_pref, :x_district, :x_cam_name, "
+                                          ":x_obj_type, :x_obj_id, :x_obj_name,"
+                                          ":x_dt, :x_dt_rec, :x_url, :x_user "
+                                    "FROM TABLE_VIOLATION;"
+									);
+    const QString data_adapter_violation::_s_sql_update(
+                                "UPDATE TABLE_VIOLATION"
+                                "   SET VIOLATION_TYPE=:x_type, "
                                        "OKRUG=:x_okrug, "
                                        "PREF=:x_pref, "
-                                       "DISTRICT=:x_district, "
-                                       "YARD_OWNER_NAME=:x_yard_owner, "
-                                       "OBJECT_ADDRESS=:x_address "
-                                "WHERE ID_DT=:n_id_old;"
+                                       "CAM_NAME=:x_cam_name, "
+                                       "OBJECT_TYPE=:x_obj_type, "
+                                       "OBJECT_ID=:x_obj_id, "
+                                       "OBJECT_NAME=:x_obj_name, "
+                                       "VIOLATION_DATE=:x_dt, "
+                                       "RECORD_DATE=:x_dt_rec, "
+                                       "URL=:x_url, "
+                                       "USER_CREATED=:x_user "
+                                "WHERE ID_VIOLATION=:x_id_old;"
 									);
-    const QString data_adapter_DT::_s_sql_delete(
-                                "DELETE FROM TABLE_DT "
-                                "WHERE ID_DT=:n_id;"
+    const QString data_adapter_violation::_s_sql_delete(
+                                "DELETE FROM TABLE_VIOLATION "
+                                "WHERE ID_VIOLATION=:x_id;"
 									);
-    const QString data_adapter_DT::_s_sql_select(
-                                "SELECT ID_DT, OKRUG, PREF, "
-                                    "DISTRICT, YARD_OWNER_NAME, OBJECT_ADDRESS "
-                                "FROM TABLE_DT "
+    const QString data_adapter_violation::_s_sql_select(
+                                "SELECT ID_VIOLATION, VIOLATION_TYPE, OKRUG, "
+                                    "PREF, DISTRICT, CAM_NAME, "
+                                    "OBJECT_TYPE, OBJECT_ID, OBJECT_NAME,"
+                                    "VIOLATION_DATE, RECORD_DATE, URL, "
+                                    "USER_CREATED "
+                                "FROM TABLE_VIOLATION "
 									);
+/// ############################################################################
+///			class data_adapter_violation
+/// ############################################################################
+
     /// ========================================================================
     ///		CONSTRUCTORS/DESTRUCTOR
     /// ========================================================================
 	///------------------------------------------------------------------------
-    ///	~data_adapter_DT( )
+    ///	~data_adapter_violation( )
     ///------------------------------------------------------------------------
-    data_adapter_DT::~data_adapter_DT( )
+    data_adapter_violation::~data_adapter_violation( )
 	{
 	}
 
@@ -74,7 +102,7 @@ namespace vcamdb
 	///------------------------------------------------------------------------
 	///	throw_error( const char* s_msg ) const
     ///------------------------------------------------------------------------
-    void data_adapter_DT::throw_error( const char* s_msg ) const
+    void data_adapter_violation::throw_error( const char* s_msg ) const
 	{
 		QString sMsg( QObject::tr( s_msg ) );
 
@@ -84,68 +112,72 @@ namespace vcamdb
     ///------------------------------------------------------------------------
     ///	make_params_insert
     ///------------------------------------------------------------------------
-    void data_adapter_DT::make_params_insert(
+    void data_adapter_violation::make_params_insert(
                                             espira::db::qt_sqlite_command *pcmd,
-                                            const data_DT &r
-                        ) const
+                                            const data_violation &r
+                                                   ) const
     {
         using namespace espira::db;
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_int( r.id_dt( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.violation_type( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.okrug( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.prefekture( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.district( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.yard_owner( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.address( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.cam_name( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.object_type( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.object_id( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.object_name( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.date_violation( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.date_record( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.URL( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.user( ) ) );
     }
     ///------------------------------------------------------------------------
     ///	make_params_update
     ///------------------------------------------------------------------------
-    void data_adapter_DT::make_params_update(
+    void data_adapter_violation::make_params_update(
                                             espira::db::qt_sqlite_command *pcmd,
-                                            const data_DT &old_rec,
-                                            const data_DT &new_rec
-                           ) const
+                                            const data_violation &r
+                                                   ) const
     {
         using namespace espira::db;
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_int( new_rec.id_dt( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.okrug( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.prefekture( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.district( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.yard_owner( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( new_rec.address( ) ) );
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_int( old_rec.id_dt( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.violation_type( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.okrug( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.prefekture( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.district( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.cam_name( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.object_type( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.object_id( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.object_name( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.date_violation( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.date_record( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.URL( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.user( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_int( r.id_violation( ) ) );
     }
 
     ///------------------------------------------------------------------------
     ///	make_params_delete
     ///------------------------------------------------------------------------
-    void data_adapter_DT::make_params_delete(
+    void data_adapter_violation::make_params_delete(
                                             espira::db::qt_sqlite_command *pcmd,
-                                            const data_DT &r
+                                            const data_violation &r
                         ) const
     {
         using namespace espira::db;
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_int( r.id_dt( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_int( r.id_violation( ) ) );
     }
 
     ///------------------------------------------------------------------------
     ///	make_select_filter
     ///------------------------------------------------------------------------
-    QString data_adapter_DT::make_select_filter( const QString &s_filter ) const
+    QString data_adapter_violation::make_select_filter( const QString &s_filter ) const
     {
         if( !s_filter.length( ) )
         {
             return QString(";");
         }
         QString s_where(" WHERE ");
-        s_where += "((instr(OBJECT_ADDRESS,'" + s_filter + "')>0)OR";
-        s_where += "(instr(OBJECT_ADDRESS,'" + s_filter.toUpper( ) + "')>0)OR";
-        s_where += "(instr(OBJECT_ADDRESS,'" +
-                     s_filter.right(s_filter.length( ) - 1 ).
-                                        prepend( s_filter[0].toUpper( ) ) +
-                    "')>0)) ";
-
-        s_where += "ORDER BY OBJECT_ADDRESS;";
+        s_where += "(USER_CREATED='"+s_filter+"');";
 
         return s_where;
     }
@@ -153,19 +185,22 @@ namespace vcamdb
     ///------------------------------------------------------------------------
     ///	select( const QString &s_filter/* = QString( )*/ ) const
     ///------------------------------------------------------------------------
-    data_violation_object_collection*
-                 data_adapter_DT::select(const QString &s_filter/*=QString( )*/) const
+    data_violation_collection*
+        data_adapter_violation::select(const QString &s_filter/*=QString( )*/) const
 	{
 		//make select query
-        QString s_qry( data_adapter_DT::_s_sql_select );
-        s_qry += this->make_select_filter( s_filter );
+        QString s_qry( data_adapter_violation::_s_sql_select );
+        if( s_filter.length( ) )
+        {
+            s_qry += this->make_select_filter( s_filter );
+        }
 
         qDebug()<<"preparing: " <<s_qry;
 
 		//run query
         espira::db::qt_sqlite_connection cnn;
         espira::db::qt_sqlite_command *pcmd = 0;
-        data_violation_object_collection *cam_coll = 0;
+        data_violation_collection *p_coll = 0;
         try
         {
             const QString &db_path = application::the_business_logic( ).db_path( );
@@ -187,12 +222,12 @@ namespace vcamdb
             espira::db::qt_data_row_collection &rows = pcmd->result( );
             if( rows.size( ) )
             {
-                cam_coll = new data_violation_object_collection;
+                p_coll = new data_violation_collection;
                 espira::db::qt_data_row_collection::iterator iter = rows.begin( );
                 for( ;iter < rows.end(); ++iter )
                 {
                     espira::db::qt_data_row *r = *iter;
-                    cam_coll->append( new data_DT( r ) );
+                    p_coll->append( new data_violation( r ) );
                 }
             }
 
@@ -206,10 +241,10 @@ namespace vcamdb
                 pcmd->close( );
                 pcmd = 0;
             }
-            if( cam_coll )
+            if( p_coll )
             {
-                cam_coll->free( );
-                delete cam_coll;
+                p_coll->free( );
+                delete p_coll;
             }
             cnn.close( );
 
@@ -219,13 +254,13 @@ namespace vcamdb
             this->throw_error( s_err.toStdString( ).c_str( ) );
         }
 
-        return cam_coll;
+        return p_coll;
 	}
 
 	///------------------------------------------------------------------------
-    ///	insert( const data_DT &record ) const
+    ///	insert( const data_violation &record ) const
     ///------------------------------------------------------------------------
-    void data_adapter_DT::insert( const data_DT &record ) const
+    void data_adapter_violation::insert( const data_violation &record ) const
 	{
         espira::db::qt_sqlite_connection cnn;
         espira::db::qt_sqlite_command *pcmd = 0;
@@ -236,7 +271,7 @@ namespace vcamdb
             //cnn open
             cnn.open( );
             //create command
-            pcmd = cnn.create_command( data_adapter_DT::_s_sql_insert );
+            pcmd = cnn.create_command( data_adapter_violation::_s_sql_insert );
             //add parameters
             this->make_params_insert( pcmd, record );
             //open cmd
@@ -267,12 +302,9 @@ namespace vcamdb
     }
 
 	///------------------------------------------------------------------------
-    ///	update( const data_DT &ad ) const
+    ///	update( const data_violation &ad ) const
 	///
-    void data_adapter_DT::update(
-                                            const data_DT &old_record,
-                                            const data_DT &new_record
-                                    ) const
+    void data_adapter_violation::update( const data_violation &record ) const
 	{
         espira::db::qt_sqlite_connection cnn;
         espira::db::qt_sqlite_command *pcmd = 0;
@@ -283,9 +315,9 @@ namespace vcamdb
             //cnn open
             cnn.open( );
             //create command
-            pcmd = cnn.create_command( data_adapter_DT::_s_sql_update );
+            pcmd = cnn.create_command( data_adapter_violation::_s_sql_update );
             //add parameters
-            this->make_params_update( pcmd, old_record, new_record );
+            this->make_params_update( pcmd, record );
             //open cmd
             pcmd->open( );
             //exec
@@ -314,9 +346,9 @@ namespace vcamdb
     }
 
 	///------------------------------------------------------------------------
-    ///	del( const data_DT &ad ) const
+    ///	del( const data_violation &ad ) const
 	///
-    void data_adapter_DT::del( const data_DT &record ) const
+    void data_adapter_violation::del( const data_violation &record ) const
 	{
         espira::db::qt_sqlite_connection cnn;
         espira::db::qt_sqlite_command *pcmd = 0;
@@ -327,7 +359,7 @@ namespace vcamdb
             //cnn open
             cnn.open( );
             //create command
-            pcmd = cnn.create_command( data_adapter_DT::_s_sql_delete );
+            pcmd = cnn.create_command( data_adapter_violation::_s_sql_delete );
             //add parameters
             this->make_params_delete( pcmd, record );
             //open cmd

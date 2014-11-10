@@ -4,7 +4,7 @@
 #           Project version     :
 #           Author              :   M. Ivanchenko
 #           Date create         :   05-10-2014
-#           Date update         :   03-11-2014
+#           Date update         :   10-11-2014
 #           Comment             :
 # ============================================================================
 QT       += core gui
@@ -57,7 +57,8 @@ SOURCES += \
     dbmodule/data_adapter_DT.cpp \
     dbmodule/data_adapter_CA.cpp \
     dbmodule/data_adapter_ODH.cpp \
-    gui/combobox_violation_object.cpp
+    gui/combobox_violation_object.cpp \
+    dbmodule/data_adapter_violation.cpp
 
 HEADERS  += \
     app/application.h \
@@ -99,7 +100,8 @@ HEADERS  += \
     dbmodule/data_adapter_CA.h \
     dbmodule/data_adapter_ODH.h \
     dbmodule/data_violation_object.h \
-    gui/combobox_violation_object.h
+    gui/combobox_violation_object.h \
+    dbmodule/data_adapter_violation.h
 
 INCLUDEPATH += ./app \
 				./dbmodule \

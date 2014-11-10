@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 14-10-2014
+///		Date update	: 10-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QLabel>
@@ -55,7 +55,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     void widget_central::initialize( )
     {
-        this->addTab( new widget_tab_object, QObject::tr( "videocams" ) );
+        //this->addTab( new widget_tab_object, QObject::tr( "videocams" ) );
         this->addTab( new widget_tab_violation, QObject::tr( "videocams violations" ) );
         this->setTabPosition( QTabWidget::West );
 

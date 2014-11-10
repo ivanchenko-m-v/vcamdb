@@ -27,7 +27,7 @@ namespace vcamdb
 /// ############################################################################
 ///			class data_ODH
 /// ############################################################################
-    class data_ODH : data_violation_object
+    class data_ODH : public data_violation_object
 	{
     public:
         enum field_data_ODH : int
@@ -143,14 +143,14 @@ namespace vcamdb
     ///	district
         virtual const QString& district( ) const
         {
-            return QString( "" );
+            return this->_x_district;
         }
 
     /// ------------------------------------------------------------------------
     ///	prefekture
         virtual const QString& prefekture( ) const
         {
-            return QString( "" );
+            return this->_x_pref;
         }
 
     /// ------------------------------------------------------------------------
@@ -213,119 +213,10 @@ namespace vcamdb
         QString _x_customer;    //CUSTOMER_NAME VARCHAR(256),
         QString _x_contractor;  //CONTRACTOR_NAME VARCHAR(256)
 
+        QString _x_pref;
+        QString _x_district;
+
     };//class data_ODH
-/// ############################################################################
-/// ----------------------------------------------------------------------------
-
-/// ############################################################################
-///			data_ODH_collection
-/// ############################################################################
-    class data_ODH_collection
-	{
-    /// ========================================================================
-    ///		CONSTRUCTORS/DESTRUCTOR
-    /// ========================================================================
-    /// ------------------------------------------------------------------------
-        data_ODH_collection( const data_ODH_collection &rhs );
-	public:
-    /// ------------------------------------------------------------------------
-        data_ODH_collection( ) :
-			_data( 0 )
-		{ }
-    /// ------------------------------------------------------------------------
-        virtual ~data_ODH_collection( )
-		{ this->free( ); }
-
-    /// ========================================================================
-    ///		FUNCTIONS
-    /// ========================================================================
-	public:
-    /// ------------------------------------------------------------------------
-		int size( ) const
-		{
-			if( !this->_data )
-			{
-				return 0;
-			}
-			return this->_data->size( );
-		}
-
-    /// ------------------------------------------------------------------------
-		void free_data_pointer( )
-		{
-			if( !this->_data )
-			{
-				return;
-			}
-			//free pointer to list
-			//but save pointers on list elements
-			delete _data;
-			this->_data = 0;
-		}
-
-    /// ------------------------------------------------------------------------
-		void free( )
-		{
-			if( !this->_data )
-			{
-				return;
-			}
-			while( this->_data->size( ) )
-			{
-				//get last element
-                data_ODH *r = this->_data->last( );
-				//remove last element from list
-				this->_data->removeLast( );
-				//delete last element
-				delete r;
-			}
-			delete _data;
-
-			this->_data = 0;
-		}
-
-    /// ------------------------------------------------------------------------
-        void append( data_ODH *r )
-		{
-			if( !this->_data )
-			{
-                this->_data = new QList<data_ODH *>;
-			}
-			this->_data->append( r );
-		}
-
-    /// ------------------------------------------------------------------------
-        QList<data_ODH *>* list( )
-		{ return this->_data; }
-
-    /// ------------------------------------------------------------------------
-        typedef QList<data_ODH *>::iterator iterator;
-    /// ------------------------------------------------------------------------
-        iterator begin( )
-        {
-            return this->_data->begin( );
-        }
-
-    /// ------------------------------------------------------------------------
-        iterator end( )
-        {
-            return this->_data->end( );
-        }
-
-    /// ========================================================================
-    ///		OPERATORS
-    /// ========================================================================
-	private:
-        data_ODH_collection& operator=(
-                                        const data_ODH_collection &rhs
-                                         );
-    /// ========================================================================
-    ///			FIELDS
-    /// ========================================================================
-	private:
-        QList<data_ODH *>	*_data;
-
-    };//class data_ODH_collection
 /// ############################################################################
 /// ----------------------------------------------------------------------------
 
@@ -377,7 +268,7 @@ namespace vcamdb
 
     public:
     /// ------------------------------------------------------------------------
-        data_ODH_collection*
+        data_violation_object_collection*
                             select( const QString &s_filter = QString( ) ) const;
     /// ------------------------------------------------------------------------
         void insert( const data_ODH &record ) const;

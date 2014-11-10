@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 04-11-2014
+///		Date update	: 10-11-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __BUSINESS_LOGIC_H__
@@ -21,6 +21,9 @@ class data_model_object_type;
 class data_model_violation_type;
 
 class data_camera_collection;
+class data_violation_object_collection;
+class data_violation;
+class data_violation_collection;
 /// ############################################################################
 ///			class business_logic
 /// ############################################################################
@@ -107,6 +110,26 @@ class data_camera_collection;
         void violation_type_select( );
     /// ------------------------------------------------------------------------
         data_camera_collection* camera_select(const QString &s_filter);
+    /// ------------------------------------------------------------------------
+        data_violation_object_collection*
+                               violation_object_select(
+                                                        const QString &s_type,
+                                                        const QString &s_filter
+                                                      );
+    /// ------------------------------------------------------------------------
+        data_violation_object_collection* CA_select( const QString &s_filter );
+    /// ------------------------------------------------------------------------
+        data_violation_object_collection* DT_select( const QString &s_filter );
+    /// ------------------------------------------------------------------------
+        data_violation_object_collection* ODH_select( const QString &s_filter );
+    /// ------------------------------------------------------------------------
+        void violation_insert( const data_violation &record );
+    /// ------------------------------------------------------------------------
+        void violation_update( const data_violation &record );
+    /// ------------------------------------------------------------------------
+        void violation_delete( const data_violation &record );
+    /// ------------------------------------------------------------------------
+        data_violation_collection* violation_select( );
 
 	/// ========================================================================
 	///		OPERATORS

@@ -2,11 +2,13 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 14-10-2014
+///		Date update	: 10-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QApplication>
 #include <QDesktopWidget>
+
+#include "application.h"
 
 #include "main_window.h"
 #include "widget_central.h"
@@ -55,7 +57,10 @@ namespace vcamdb
     ///-------------------------------------------------------------------------
     void main_window::initialize( )
 	{
-        this->setWindowTitle( tr("ogh videocams application") );
+        QString s_title( tr("ogh videocams application") );
+        s_title += "-[" + application::program_instance()->user( ) + "]";
+        this->setWindowTitle( s_title );
+
 		this->setMinimumSize( 940, 705 );
 		this->window_center( );
 		//_workspace

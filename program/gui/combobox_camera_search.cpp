@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 03-11-2014
-///		Date update	: 03-11-2014
+///		Date update	: 10-11-2014
 ///		Comment		:
 /// ============================================================================
 #include "combobox_camera_search.h"
@@ -52,13 +52,19 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     ///	camera_address( int index ) get
     /// ------------------------------------------------------------------------
-    const QString& combobox_camera_search::camera_address( int index ) const
+    QString combobox_camera_search::camera_address( int index ) const
     {
+        int n_count = this->count( );
         if( index < 0 || index >= this->count( ) )
         {
             return QString( "-" );
         }
-        return this->itemData( index ).toString( );
+        QVariant val = this->itemData( index );
+        if( !val.isValid( ) )
+        {
+            return QString( "-" );
+        }
+        return val.toString( );
     }
     /// ------------------------------------------------------------------------
     ///	camera( ) set
@@ -92,6 +98,7 @@ namespace vcamdb
         if( this->_coll_cameras != 0 )
         {
             delete _coll_cameras;
+            this->_coll_cameras = 0;
         }
     }
 

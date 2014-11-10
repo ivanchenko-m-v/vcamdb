@@ -2,13 +2,13 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 14-10-2014
+///		Date update	: 10-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QDebug>
 
 #include "data_model_violation.h"
-//#include "data_adapter_request.h"
+#include "data_adapter_violation.h"
 
 namespace vcamdb
 {
@@ -45,8 +45,7 @@ namespace vcamdb
 	/// ------------------------------------------------------------------------
 	///	request( int i_row )
 	/// ------------------------------------------------------------------------
-/*
-    const data_request* data_model_violation::request( int i_row ) const
+    const data_violation* data_model_violation::violation( int i_row ) const
 	{
 		if( i_row < 0 || i_row >= this->_list.size( ) )
 		{
@@ -54,7 +53,6 @@ namespace vcamdb
 		}
 		return this->_list.at( i_row );
 	}
-*/
 	/// ========================================================================
 	///		FUNCTIONS
 	/// ========================================================================
@@ -63,14 +61,12 @@ namespace vcamdb
 	/// ------------------------------------------------------------------------
     void data_model_violation::clear( )
 	{
-        /*
         if( !this->_list.size( ) )
         {
             return;
         }
 		this->removeRows( 0, this->_list.size( ) );
 		this->_list.clear( );
-        */
 	}
 
 	/// ------------------------------------------------------------------------
@@ -93,24 +89,21 @@ namespace vcamdb
 			//if no data
 			return;
 		}
-/*
 		this->beginInsertRows( QModelIndex( ), 0, data.count( ) - 1 );
 
 		QVector<QVector<QVariant> >::const_iterator iter;
 		for( iter = data.constBegin( ); iter != data.end( ); ++iter )
 		{
-			data_request *request = new data_request( *iter );
+            data_violation *request = new data_violation( *iter );
 			this->_list.append( request );
 		}
 		this->endInsertRows( );
-        */
 	}
 
 	/// ------------------------------------------------------------------------
-	///	refresh( data_request_collection *data )
+    ///	refresh( data_violation_collection *data )
 	/// ------------------------------------------------------------------------
- /*
-    void data_model_violation::refresh( data_request_collection *data )
+    void data_model_violation::refresh( data_violation_collection *data )
 	{
 		this->clear( );
 
@@ -126,22 +119,19 @@ namespace vcamdb
 
         this->endInsertRows( );
     }
-    */
 
 	/// ------------------------------------------------------------------------
-	///	insert(const data_request &request)
+    ///	insert(const data_violation &request)
 	/// ------------------------------------------------------------------------
-/*
-    void data_model_violation::insert( const data_request &request )
+    void data_model_violation::insert( const data_violation &request )
     {
 		this->beginInsertRows( QModelIndex( ), this->_list.size( ), this->_list.size( ) );
 
-        data_request *pr = new data_request( request );
+        data_violation *pr = new data_violation( request );
 		this->_list.append( pr );
 
         this->endInsertRows( );
     }
-    */
 
 	/// ------------------------------------------------------------------------
 	/// virtual
@@ -156,27 +146,34 @@ namespace vcamdb
 		{
 			return QVariant( );
 		}
-        //data_request* request = this->_list.at( index.row( ) );
-
+        data_violation* pv = this->_list.at( index.row( ) );
+        if( !pv )
+        {
+            return QVariant( );
+        }
 		switch( index.column( ) )
 		{
-        /*
             case 0:
-                return "PVN_jwdj";
+                return pv->date_violation( );
 			case 1:
-                return "Graivoronovsky,13-b";
-                */
-                /*
-            //case 3:
-				//return request->time_request( );
-			case 2:
-				return request->mr_title( );
-			case 3:
-				return request->request_category_title( );
-			case 4:
-				return request->declarant( );
-                */
-			default:
+                return pv->violation_type( );
+            case 2:
+                return pv->okrug( );
+            case 3:
+                return pv->district( );
+            case 4:
+                return pv->cam_name( );
+            case 5:
+                return pv->object_type( );
+            case 6:
+                return pv->object_id( );
+            case 7:
+                return pv->object_name( );
+            case 8:
+                return pv->URL( );
+            case 9:
+                return pv->user( );
+            default:
 				return QVariant( );
 		}
 		return QVariant( );
@@ -213,7 +210,6 @@ namespace vcamdb
 								const QModelIndex &parent //= QModelIndex( )
 										 )
 	{
-        /*
 		if( ( row < 0 ) || ( row > this->_list.size( ) ) )
 		{
 			return false;
@@ -222,12 +218,11 @@ namespace vcamdb
 
 		for( int i = 0; i < count; i++ )
 		{
-			data_request* request = new data_request;
+            data_violation* request = new data_violation;
 			this->_list.insert( row + i, request );
 		}
 
 		this->endInsertRows( );
-        */
 
 		return true;
 	}
@@ -241,17 +236,15 @@ namespace vcamdb
 								const QModelIndex &parent //= QModelIndex( )
 										 )
 	{
-        /*
 		this->beginRemoveRows( parent, row, row + count - 1 );
 
 		for( int i = 0; i < count; ++i )
 		{
-			data_request *item = this->_list.takeAt( row );
+            data_violation *item = this->_list.takeAt( row );
 			delete item;
 		}
 
 		this->endRemoveRows( );
-        */
 
 		return true;
 	}

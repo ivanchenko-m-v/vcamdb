@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-11-2014
-///		Date update	: 05-11-2014
+///		Date update	: 09-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <stdexcept>
@@ -135,9 +135,13 @@ namespace vcamdb
             return QString(";");
         }
         QString s_where(" WHERE ");
-        s_where += "(OBJECT_NAME LIKE '"+s_filter+"%')OR";
-        s_where += "(OBJECT_NAME LIKE '%"+s_filter+"%')OR";
-        s_where += "(OBJECT_NAME LIKE '%"+s_filter+"') ";
+        s_where += "((instr(OBJECT_NAME,'" + s_filter + "')>0)OR";
+        s_where += "(instr(OBJECT_NAME,'" + s_filter.toUpper( ) + "')>0)OR";
+        s_where += "(instr(OBJECT_NAME,'" +
+                     s_filter.right(s_filter.length( ) - 1 ).
+                                        prepend( s_filter[0].toUpper( ) ) +
+                    "')>0)) ";
+
         s_where += "ORDER BY OBJECT_NAME;";
 
         return s_where;
@@ -146,8 +150,8 @@ namespace vcamdb
     ///------------------------------------------------------------------------
     ///	select( const QString &s_filter/* = QString( )*/ ) const
     ///------------------------------------------------------------------------
-    data_ODH_collection*
-        data_adapter_ODH::select(const QString &s_filter/*=QString( )*/) const
+    data_violation_object_collection*
+                data_adapter_ODH::select(const QString &s_filter/*=QString( )*/) const
 	{
 		//make select query
         QString s_qry( data_adapter_ODH::_s_sql_select );
@@ -158,7 +162,7 @@ namespace vcamdb
 		//run query
         espira::db::qt_sqlite_connection cnn;
         espira::db::qt_sqlite_command *pcmd = 0;
-        data_ODH_collection *cam_coll = 0;
+        data_violation_object_collection *obj_coll = 0;
         try
         {
             const QString &db_path = application::the_business_logic( ).db_path( );
@@ -180,12 +184,12 @@ namespace vcamdb
             espira::db::qt_data_row_collection &rows = pcmd->result( );
             if( rows.size( ) )
             {
-                cam_coll = new data_ODH_collection;
+                obj_coll = new data_violation_object_collection;
                 espira::db::qt_data_row_collection::iterator iter = rows.begin( );
                 for( ;iter < rows.end(); ++iter )
                 {
                     espira::db::qt_data_row *r = *iter;
-                    cam_coll->append( new data_ODH( r ) );
+                    obj_coll->append( new data_ODH( r ) );
                 }
             }
 
@@ -199,10 +203,10 @@ namespace vcamdb
                 pcmd->close( );
                 pcmd = 0;
             }
-            if( cam_coll )
+            if( obj_coll )
             {
-                cam_coll->free( );
-                delete cam_coll;
+                obj_coll->free( );
+                delete obj_coll;
             }
             cnn.close( );
 
@@ -212,7 +216,7 @@ namespace vcamdb
             this->throw_error( s_err.toStdString( ).c_str( ) );
         }
 
-        return cam_coll;
+        return obj_coll;
 	}
 
 	///------------------------------------------------------------------------

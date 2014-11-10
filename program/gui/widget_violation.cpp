@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 09-11-2014
+///		Date update	: 10-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QLabel>
@@ -147,6 +147,18 @@ namespace vcamdb
         this->connect(
                     this->_cbx_cam_name, SIGNAL(currentIndexChanged(int)),
                     this, SLOT(slot_set_camera_address(int))
+                     );
+        this->connect(
+                    this->_cbx_object_name, SIGNAL(violation_type_request(QString)),
+                    this, SLOT( slot_refresh_violation_object( QString ) )
+                     );
+        this->connect(
+                    this->_cbx_object_name, SIGNAL(currentIndexChanged(int)),
+                    this, SLOT(slot_set_object_id(int))
+                     );
+        this->connect(
+                    this->_btn_save, SIGNAL( clicked( ) ),
+                    this, SLOT( save_data_violation( ) )
                      );
     }
 
@@ -318,6 +330,16 @@ namespace vcamdb
         hl->addWidget( this->_btn_del );
 
         //
+        //_btn_clear
+        //
+        this->_btn_clear = new QPushButton;
+        this->_btn_clear->setIcon(
+                          *( new QIcon( ":/image/images/32x32/edit-clear.png") )
+                                 );
+        this->_btn_clear->setToolTip( QObject::tr( "cancel editing and exit from edit mode" ) );
+        hl->addWidget( this->_btn_clear );
+
+        //
         //_btn_save
         //
         this->_btn_save = new QPushButton;
@@ -332,167 +354,106 @@ namespace vcamdb
 
         return widget;
     }
-/*
-    /// ------------------------------------------------------------------------
-    /// init_search_card( )
-    /// ------------------------------------------------------------------------
-    QWidget* widget_violation::init_search_card( )
-    {
-        this->_w_search = new widget_search_card( this );
 
-        return this->_w_search;
+    /// ------------------------------------------------------------------------
+    /// extract_violation( )
+    /// ------------------------------------------------------------------------
+    data_violation* widget_violation::extract_violation( )
+    {
+        data_violation *pv = new data_violation( this->_violation );
+
+        pv->violation_type( this->_cbx_violation_type->currentText( ) );
+        pv->cam_name( this->_cbx_cam_name->currentText( ) );
+        pv->object_type( this->_cbx_object_type->currentText( ) );
+        pv->object_name( this->_cbx_object_name->currentText( ) );
+        pv->object_id( this->_lbl_id_object->text( ) );
+        pv->date_violation( this->_dte_violation->date( ) );
+        pv->date_record( QDate::currentDate( ) );
+        pv->URL( this->_txt_url->text( ) );
+        pv->user( application::program_instance( )->user( ) );
+
+        const data_violation_object *pvo  = this->_cbx_object_name->violation_object( );
+        if( pvo )
+        {
+            pv->okrug( pvo->okrug( ) );
+            pv->prefekture( pvo->prefekture( ) );
+            pv->district( pvo->district( ) );
+        }
+
+        return pv;
     }
 
-    /// ------------------------------------------------------------------------
-    /// init_view_card( )
-    /// ------------------------------------------------------------------------
-    QWidget* widget_violation::init_view_card( )
+    void widget_violation::fill_controls( const data_violation &v )
     {
-        this->_w_view = new widget_card_view( this );
 
-        return this->_w_view;
     }
 
-    /// ------------------------------------------------------------------------
-    /// init_listview_request( )
-    /// ------------------------------------------------------------------------
-    QWidget* widget_violation::init_listview_request( )
+    bool widget_violation::data_valid( )
     {
-        QWidget *widget = new QWidget( this );
+        if( !this->camera_valid( ) ) return false;
 
-        QVBoxLayout *vl = new QVBoxLayout;
-        vl->setMargin( 5 );
-        vl->setSpacing( 0 );
+        if( !this->object_type_valid( ) ) return false;
 
-        QLabel *lbl = new QLabel( this->tr( "request list:" ), this );
+        if( !this->object_name_valid( ) ) return false;
 
-        vl->addWidget( lbl );
+        if( !this->URL_valid( ) ) return false;
 
-        this->_lv_request = new listview_request( this );
-        vl->addWidget( this->_lv_request );
-
-       // vl->addStretch( 1000 );
-
-        widget->setLayout( vl );
-
-        return widget;
+        return true;
     }
 
-    /// ------------------------------------------------------------------------
-    /// init_buttons_search( )
-    /// ------------------------------------------------------------------------
-    QWidget* widget_violation::init_buttons_search( )
+    bool widget_violation::camera_valid()
     {
-        QWidget *widget = new QWidget( this );
-
-        QHBoxLayout *hl = new QHBoxLayout;
-        hl->setMargin( 5 );
-        hl->setSpacing( 5 );
-
-        hl->addStretch( 1000 );
-
-        //_btn_find_request
-        this->_btn_find_request = new QPushButton;
-        this->_btn_find_request->setIcon(
-                        *( new QIcon( ":/image/images/32x32/edit-find.png" ) )
-                                 );
-        this->_btn_find_request->setToolTip( QObject::tr( "find requests" ) );
-        hl->addWidget( this->_btn_find_request );
-
-        //_btn_clear_search_criteria
-        this->_btn_clear_search_criteria = new QPushButton;
-        this->_btn_clear_search_criteria->setIcon(
-                        *( new QIcon( ":/image/images/32x32/edit-clear.png" ) )
-                                 );
-        this->_btn_clear_search_criteria->setToolTip( QObject::tr( "clear search criteria" ) );
-        hl->addWidget( this->_btn_clear_search_criteria );
-
-        //_btn_add_request
-        this->_btn_add_request = new QPushButton;
-        this->_btn_add_request->setIcon(
-                        *( new QIcon( ":/image/images/32x32/document-new.png" ) )
-                                 );
-        this->_btn_add_request->setToolTip( QObject::tr( "add declarant\'s request" ) );
-        hl->addWidget( this->_btn_add_request );
-
-        widget->setLayout( hl );
-
-        return widget;
+        if( this->_cbx_cam_name->currentIndex( ) < 0 )
+        {
+            QMessageBox::warning(
+                                this, tr( "warning" ),
+                                tr( "camera\'s name field must be filled" )
+                                );
+            return false;
+        }
+        return true;
     }
 
-    /// ------------------------------------------------------------------------
-    /// init_buttons_listview( )
-    /// ------------------------------------------------------------------------
-    QWidget* widget_violation::init_buttons_listview( )
+    bool widget_violation::object_type_valid()
     {
-        QWidget *widget = new QWidget( this );
-
-        QHBoxLayout *hl = new QHBoxLayout;
-        hl->setMargin( 5 );
-        hl->setSpacing( 5 );
-
-        hl->addStretch( 1000 );
-
-        //_btn_print_request
-        this->_btn_print_request = new QPushButton;
-        this->_btn_print_request->setIcon(
-                        *( new QIcon( ":/image/images/32x32/document-print.png" ) )
-                                 );
-        this->_btn_print_request->setToolTip( QObject::tr( "print request" ) );
-        hl->addWidget( this->_btn_print_request );
-
-        //_btn_edit_request
-        this->_btn_edit_request = new QPushButton;
-        this->_btn_edit_request->setIcon(
-                        *( new QIcon( ":/image/images/32x32/document-edit.png" ) )
-                                 );
-        this->_btn_edit_request->setToolTip( QObject::tr( "edit request" ) );
-        hl->addWidget( this->_btn_edit_request );
-
-        //_btn_edit_id_request
-        this->_btn_edit_id_request = new QPushButton;
-        this->_btn_edit_id_request->setIcon(
-                        *( new QIcon( ":/image/images/32x32/id-request-edit.png" ) )
-                                 );
-        this->_btn_edit_id_request->setToolTip( QObject::tr( "edit id of the request" ) );
-        hl->addWidget( this->_btn_edit_id_request );
-
-        //_btn_del_request
-        this->_btn_del_request = new QPushButton;
-        this->_btn_del_request->setIcon(
-                        *( new QIcon( ":/image/images/32x32/document-close.png" ) )
-                                 );
-        this->_btn_del_request->setToolTip( QObject::tr( "delete request" ) );
-        hl->addWidget( this->_btn_del_request );
-
-        hl->addStretch( 50 );
-
-        //_btn_stat
-        this->_btn_stat = new QToolButton;
-        this->_btn_stat->setIcon(
-                        *( new QIcon( ":/image/images/32x32/office-chart-pie.png" ) )
-                                 );
-        this->_btn_stat->setToolTip( QObject::tr( "statistics" ) );
-        this->_btn_stat->setPopupMode( QToolButton::MenuButtonPopup );
-        this->init_stat_menu( );
-        this->_btn_stat->setMenu( this->_mnu_stat );
-        hl->addWidget( this->_btn_stat );
-
-        widget->setLayout( hl );
-
-        return widget;
+        QString text_obj_type( this->_cbx_object_type->currentText( ).simplified( ).remove( ' ' ) );
+        if( !text_obj_type.length( ) )
+        {
+            QMessageBox::warning(
+                                this, tr( "warning" ),
+                                tr( "object\'s type field must be filled" )
+                                );
+            return false;
+        }
+        return true;
     }
 
-    /// ------------------------------------------------------------------------
-    /// init_stat_menu( )
-    /// ------------------------------------------------------------------------
-    void widget_violation::init_stat_menu( )
+    bool widget_violation::object_name_valid()
     {
-        this->_mnu_stat = new QMenu( );
-        this->_act_report = this->_mnu_stat->addAction( tr("Report") );
-        this->_act_diagram = this->_mnu_stat->addAction( tr("Diagaram") );
+        if( this->_cbx_object_name->currentIndex( ) < 0 )
+        {
+            QMessageBox::warning(
+                                this, tr( "warning" ),
+                                tr( "object\'s name field must be filled" )
+                                );
+            return false;
+        }
+        return true;
     }
-*/
+
+    bool widget_violation::URL_valid( )
+    {
+        const int MIN_URL_LENGTH = 4;
+        if( this->_txt_url->text( ).length( ) < MIN_URL_LENGTH )
+        {
+            QMessageBox::warning(
+                                this, tr( "warning" ),
+                                tr( "URL field must be filled" )
+                                );
+            return false;
+        }
+        return true;
+    }
 
     /// ========================================================================
     ///		EVENTS
@@ -529,7 +490,59 @@ namespace vcamdb
         }
         this->_lbl_cam_address->setText(
                     this->_cbx_cam_name->camera_address( current_cam_index )
-                                       );
+                    );
+    }
+
+    /// ------------------------------------------------------------------------
+    /// slot_refresh_violation_object(const QString &text)
+    /// ------------------------------------------------------------------------
+    void widget_violation::slot_refresh_violation_object(const QString &text)
+    {
+        QString s_type( this->_cbx_object_type->object_type( ) );
+        if( !s_type.length( ) )
+        {
+            QMessageBox::warning(
+                                    0, "warning",
+                                    tr( "Violation type must be selected!" )
+                                );
+        }
+        this->_cbx_object_name->refresh( s_type, text );
+    }
+
+    /// ------------------------------------------------------------------------
+    /// slot_set_object_id( int )
+    /// ------------------------------------------------------------------------
+    void widget_violation::slot_set_object_id( int current_object_index )
+    {
+        if( current_object_index < 0 )
+        {
+            this->_lbl_id_object->setText( "-" );
+            return;
+        }
+        this->_lbl_id_object->setText(
+
+                    QString::number(
+                        this->_cbx_object_name->object_id( current_object_index )
+                                   )
+                    );
+    }
+
+    /// ------------------------------------------------------------------------
+    /// save_data_violation( )
+    /// ------------------------------------------------------------------------
+    void widget_violation::save_data_violation( )
+    {
+        if( !this->data_valid( ) )
+        {
+            return;
+        }
+        data_violation *pv = this->extract_violation( );
+
+        if( pv )
+        {
+            application::the_business_logic( ).violation_insert( *pv );
+            delete pv;
+        }
     }
 
 /*

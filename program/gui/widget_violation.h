@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 09-11-2014
+///		Date update	: 10-11-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __WIDGET_VIOLATION_H__
@@ -14,6 +14,8 @@
 #include <QComboBox>
 #include <QDateEdit>
 #include <QPushButton>
+
+#include "data_adapter_violation.h"
 
 namespace vcamdb
 {
@@ -29,6 +31,13 @@ class combobox_violation_object;
     class widget_violation : public QWidget
     {
     Q_OBJECT
+    public:
+        enum widget_violation_mode : int
+        {
+            no_selection = 0,
+            view_item = 1,
+            edit_item = 2
+        };
     /// ========================================================================
     ///		CONSTRUCTORS/DESTRUCTOR
     /// ========================================================================
@@ -56,12 +65,28 @@ class combobox_violation_object;
         QWidget* init_3rd_line( );
         QWidget* init_buttons( );
 
+        /// --------------------------------------------------------------------
+        data_violation* extract_violation( );
+        void fill_controls( const data_violation &v );
+        bool data_valid( );
+        bool camera_valid( );
+        bool object_type_valid( );
+        bool object_name_valid( );
+        bool URL_valid( );
+
     /// ========================================================================
     ///		PROPERTIES
     /// ========================================================================
-    private:
-
 	public:
+        /// --------------------------------------------------------------------
+        const data_violation& violation( ) const
+        { return this->_violation; }
+
+        void violation( const data_violation& v )
+        {
+            this->_violation = v;
+            this->fill_controls( v );
+        }
 
     /// ========================================================================
     ///		OPERATORS
@@ -82,6 +107,10 @@ class combobox_violation_object;
     private slots:
         /// --------------------------------------------------------------------
         void slot_set_camera_address( int current_cam_index );
+        void slot_refresh_violation_object( const QString &text );
+        void slot_set_object_id( int );
+
+        void save_data_violation( );
 
     /// ========================================================================
     ///			FIELDS
@@ -99,8 +128,10 @@ class combobox_violation_object;
         QPushButton     *_btn_new; //clear all input fields and let it editing
         QPushButton     *_btn_edit;//lets input fields  editing
         QPushButton     *_btn_del; //delete selected violation
+        QPushButton     *_btn_clear;//clear editing fields and exit from edit mode
         QPushButton     *_btn_save;//save new and edited violation results
 
+        data_violation _violation;
     };//class widget_violation
 /// ############################################################################
 /// ----------------------------------------------------------------------------

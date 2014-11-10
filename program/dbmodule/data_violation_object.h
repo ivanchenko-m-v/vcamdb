@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 09-11-2014
-///		Date update	: 09-11-2014
+///		Date update	: 10-11-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __DATA_VIOLATION_OBJECT_H__
@@ -67,6 +67,10 @@ namespace vcamdb
     ///	object_name
         virtual const QString& object_name( ) const = 0;
 
+    /// ------------------------------------------------------------------------
+    ///	to_string
+        virtual QString to_string( ) const = 0;
+
     /// ========================================================================
     ///		OPERATORS
     /// ========================================================================
@@ -82,6 +86,138 @@ namespace vcamdb
 /// ############################################################################
 /// ----------------------------------------------------------------------------
 
+/// ############################################################################
+///			data_violation_object_collection
+/// ############################################################################
+    class data_violation_object_collection
+    {
+    /// ========================================================================
+    ///		CONSTRUCTORS/DESTRUCTOR
+    /// ========================================================================
+    /// ------------------------------------------------------------------------
+        data_violation_object_collection( const data_violation_object_collection &rhs );
+    public:
+    /// ------------------------------------------------------------------------
+        data_violation_object_collection( ) :
+            _data( 0 )
+        { }
+    /// ------------------------------------------------------------------------
+        virtual ~data_violation_object_collection( )
+        { this->free( ); }
+
+    /// ========================================================================
+    ///		FUNCTIONS
+    /// ========================================================================
+    public:
+    /// ------------------------------------------------------------------------
+        int size( ) const
+        {
+            if( !this->_data )
+            {
+                return 0;
+            }
+            return this->_data->size( );
+        }
+
+    /// ------------------------------------------------------------------------
+        void free_data_pointer( )
+        {
+            if( !this->_data )
+            {
+                return;
+            }
+            //free pointer to list
+            //but save pointers on list elements
+            delete _data;
+            this->_data = 0;
+        }
+
+    /// ------------------------------------------------------------------------
+        void free( )
+        {
+            if( !this->_data )
+            {
+                return;
+            }
+            while( this->_data->size( ) )
+            {
+                //get last element
+                data_violation_object *r = this->_data->last( );
+                //remove last element from list
+                this->_data->removeLast( );
+                //delete last element
+                delete r;
+            }
+            delete _data;
+
+            this->_data = 0;
+        }
+
+    /// ------------------------------------------------------------------------
+        void append( data_violation_object *r )
+        {
+            if( !this->_data )
+            {
+                this->_data = new QList<data_violation_object *>;
+            }
+            this->_data->append( r );
+        }
+
+        /// ------------------------------------------------------------------------
+        const data_violation_object* find( const int id_object )
+        {
+            data_violation_object *pvo = 0;
+            iterator it = this->begin( );
+            for( ; it < this->end( ); ++it )
+            {
+                data_violation_object *vobj = *it;
+
+                if( !vobj ) continue;
+
+                if( vobj->id_object( ) == id_object )
+                {
+                    pvo = vobj;
+                    break;
+                }
+            }
+
+            return pvo;
+        }
+
+    /// ------------------------------------------------------------------------
+        QList<data_violation_object *>* list( )
+        { return this->_data; }
+
+    /// ------------------------------------------------------------------------
+        typedef QList<data_violation_object *>::iterator iterator;
+    /// ------------------------------------------------------------------------
+        iterator begin( )
+        {
+            return this->_data->begin( );
+        }
+
+    /// ------------------------------------------------------------------------
+        iterator end( )
+        {
+            return this->_data->end( );
+        }
+
+    /// ========================================================================
+    ///		OPERATORS
+    /// ========================================================================
+    private:
+        data_violation_object_collection& operator=(
+                                        const data_violation_object_collection &rhs
+                                         );
+    /// ========================================================================
+    ///			FIELDS
+    /// ========================================================================
+    private:
+        QList<data_violation_object *>	*_data;
+
+    };//class data_violation_object_collection
+/// ############################################################################
+/// ----------------------------------------------------------------------------
 
 }//namespace vcamdb
 
