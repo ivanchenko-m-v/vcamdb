@@ -646,6 +646,11 @@ namespace vcamdb
                 //do not applied
                 s_filter.clear( );
             }
+            else if( !s_filter.length( ) )
+            {
+                //ненастроенный пользователь не должен видеть записи БД
+                s_filter = "abrakadabra1";
+            }
             //select data
             p_coll = adap.select( s_filter );
             //refresh data model
