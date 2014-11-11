@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 10-11-2014
+///		Date update	: 11-11-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __WIDGET_VIOLATION_H__
@@ -74,6 +74,14 @@ class combobox_violation_object;
         bool object_name_valid( );
         bool URL_valid( );
 
+        /// --------------------------------------------------------------------
+        void buttons_mode_default( );
+        void buttons_mode_view( );
+        void buttons_mode_edit( );
+        void controls_disable( );
+        void controls_enable( );
+        void controls_clear( );
+
     /// ========================================================================
     ///		PROPERTIES
     /// ========================================================================
@@ -110,7 +118,14 @@ class combobox_violation_object;
         void slot_refresh_violation_object( const QString &text );
         void slot_set_object_id( int );
 
+        void new_data_violation( );
+        void edit_data_violation( );
+        void clear_data_violation( );
+        void delete_data_violation( );
         void save_data_violation( );
+
+    public slots:
+        void enable_controls( widget_violation_mode mode );
 
     /// ========================================================================
     ///			FIELDS

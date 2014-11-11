@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 10-11-2014
+///		Date update	: 11-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QLabel>
@@ -66,6 +66,8 @@ namespace vcamdb
 
         this->init_connections( );
 
+        this->controls_disable( );
+
         //this->_w_search->setFocus( );
     }
 
@@ -92,58 +94,6 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     void widget_violation::init_connections( )
     {
-        /*
-        //_btn_find_request
-        this->connect(
-                    this->_btn_find_request, SIGNAL( clicked( ) ),
-                    this->_w_search, SLOT( find_requests( ) )
-                    );
-        //_btn_clear_search_criteria
-        this->connect(
-                    this->_btn_clear_search_criteria, SIGNAL( clicked( ) ),
-                    this->_w_search, SLOT( clear_search_criteria( ) )
-                    );
-        //_btn_add_request
-        this->connect(
-                    this->_btn_add_request, SIGNAL( clicked( ) ),
-                    this, SLOT( slot_add_request( ) )
-                    );
-        //_btn_print_request
-        this->connect(
-                    this->_btn_print_request, SIGNAL( clicked( ) ),
-                    this, SLOT( slot_print_request( ) )
-                    );
-        //_btn_edit_request
-        this->connect(
-                    this->_btn_edit_request, SIGNAL( clicked( ) ),
-                    this, SLOT( slot_edit_request( ) )
-                    );
-        //_btn_edit_id_request
-        this->connect(
-                    this->_btn_edit_id_request, SIGNAL( clicked( ) ),
-                    this, SLOT( slot_id_request_edit( ) )
-                    );
-        //_btn_del_request
-        this->connect(
-                    this->_btn_del_request, SIGNAL( clicked( ) ),
-                    this, SLOT( slot_del_request( ) )
-                    );
-        //_lv_request
-        this->connect(
-                     this->_lv_request, SIGNAL(current_request_changed(const data_request*)),
-                     this->_w_view, SLOT(change_view(const data_request*))
-                     );
-        //_act_report
-        this->connect(
-                     this->_act_report, SIGNAL( triggered( ) ),
-                     this, SLOT( slot_stat_report( ) )
-                     );
-        //_act_diagram
-        this->connect(
-                     this->_act_diagram, SIGNAL( triggered( ) ),
-                     this, SLOT( slot_stat_diagram( ) )
-                     );
-                     */
         this->connect(
                     this->_cbx_cam_name, SIGNAL(currentIndexChanged(int)),
                     this, SLOT(slot_set_camera_address(int))
@@ -159,6 +109,14 @@ namespace vcamdb
         this->connect(
                     this->_btn_save, SIGNAL( clicked( ) ),
                     this, SLOT( save_data_violation( ) )
+                     );
+        this->connect(
+                    this->_btn_new, SIGNAL( clicked( ) ),
+                    this, SLOT( new_data_violation( ) )
+                     );
+        this->connect(
+                    this->_btn_clear, SIGNAL( clicked( ) ),
+                    this, SLOT( clear_data_violation( ) )
                      );
     }
 
@@ -352,6 +310,8 @@ namespace vcamdb
         QWidget *widget = new QWidget( this );
         widget->setLayout( hl );
 
+        this->buttons_mode_default( );
+
         return widget;
     }
 
@@ -455,6 +415,120 @@ namespace vcamdb
         return true;
     }
 
+    /// ------------------------------------------------------------------------
+    /// buttons_mode_default( )
+    /// ------------------------------------------------------------------------
+    void widget_violation::buttons_mode_default( )
+    {
+        this->_btn_new->setEnabled( true );
+        this->_btn_edit->setEnabled( false );
+        this->_btn_save->setEnabled( false );
+        this->_btn_clear->setEnabled( false );
+        this->_btn_del->setEnabled( false );
+    }
+
+    /// ------------------------------------------------------------------------
+    /// buttons_mode_view( )
+    /// ------------------------------------------------------------------------
+    void widget_violation::buttons_mode_view()
+    {
+        this->_btn_new->setEnabled( false );
+        this->_btn_edit->setEnabled( true );
+        this->_btn_save->setEnabled( false );
+        this->_btn_clear->setEnabled( false );
+
+        const QString &s_user = application::program_instance( )->user( );
+        if( s_user.compare( "su" ) == 0 )
+        {
+            this->_btn_del->setEnabled( true );
+        }
+        else
+        {
+            this->_btn_del->setEnabled( false );
+        }
+    }
+
+    /// ------------------------------------------------------------------------
+    /// buttons_mode_edit( )
+    /// ------------------------------------------------------------------------
+    void widget_violation::buttons_mode_edit()
+    {
+        this->_btn_new->setEnabled( false );
+        this->_btn_edit->setEnabled( false );
+        this->_btn_save->setEnabled( true );
+        this->_btn_clear->setEnabled( true );
+        this->_btn_del->setEnabled( false );
+    }
+
+    /// ------------------------------------------------------------------------
+    /// controls_disable( )
+    /// ------------------------------------------------------------------------
+    void widget_violation::controls_disable( )
+    {
+        //_cbx_cam_name
+        this->_cbx_cam_name->setEnabled( false );
+        //_lbl_cam_address
+        this->_lbl_cam_address->setEnabled( false );
+        //_cbx_violation_type
+        this->_cbx_violation_type->setEnabled( false );
+        //_cbx_object_type
+        this->_cbx_object_type->setEnabled( false );
+        //_cbx_object_name
+        this->_cbx_object_name->setEnabled( false );
+        //_lbl_id_object
+        this->_lbl_id_object->setEnabled( false );
+        //_dte_violation
+        this->_dte_violation->setEnabled( false );
+        //_txt_url
+        this->_txt_url->setEnabled( false );
+    }
+
+    /// ------------------------------------------------------------------------
+    /// controls_enable( )
+    /// ------------------------------------------------------------------------
+    void widget_violation::controls_enable( )
+    {
+        //_cbx_cam_name
+        this->_cbx_cam_name->setEnabled( true );
+        //_lbl_cam_address
+        this->_lbl_cam_address->setEnabled( true );
+        //_cbx_violation_type
+        this->_cbx_violation_type->setEnabled( true );
+        //_cbx_object_type
+        this->_cbx_object_type->setEnabled( true );
+        //_cbx_object_name
+        this->_cbx_object_name->setEnabled( true );
+        //_lbl_id_object
+        this->_lbl_id_object->setEnabled( true );
+        //_dte_violation
+        this->_dte_violation->setEnabled( true );
+        //_txt_url
+        this->_txt_url->setEnabled( true );
+    }
+
+    /// ------------------------------------------------------------------------
+    /// controls_clear( )
+    /// ------------------------------------------------------------------------
+    void widget_violation::controls_clear( )
+    {
+        //_cbx_cam_name
+        this->_cbx_cam_name->clear( );
+         //_lbl_cam_address
+        this->_lbl_cam_address->clear( );
+        //_cbx_violation_type
+        this->_cbx_violation_type->setCurrentIndex( 0 );
+        //_cbx_object_type
+        this->_cbx_object_type->setCurrentIndex( 0 );
+        //_cbx_object_name
+        this->_cbx_object_name->clear( );
+        //_lbl_id_object
+        this->_lbl_id_object->clear( );
+        //_dte_violation
+        this->_dte_violation->clear( );
+        //_txt_url
+        this->_txt_url->clear( );
+    }
+
     /// ========================================================================
     ///		EVENTS
     /// ========================================================================
@@ -528,6 +602,42 @@ namespace vcamdb
     }
 
     /// ------------------------------------------------------------------------
+    /// new_data_violation( )
+    /// ------------------------------------------------------------------------
+    void widget_violation::new_data_violation( )
+    {
+        this->controls_clear( );
+        this->controls_enable( );
+        this->buttons_mode_edit( );
+    }
+
+    /// ------------------------------------------------------------------------
+    /// edit_data_violation( )
+    /// ------------------------------------------------------------------------
+    void widget_violation::edit_data_violation( )
+    {
+        this->controls_enable( );
+        this->buttons_mode_edit( );
+    }
+
+    /// ------------------------------------------------------------------------
+    /// clear_data_violation( )
+    /// ------------------------------------------------------------------------
+    void widget_violation::clear_data_violation( )
+    {
+        this->controls_disable( );
+        this->buttons_mode_default( );
+    }
+
+    /// ------------------------------------------------------------------------
+    /// delete_data_violation( )
+    /// ------------------------------------------------------------------------
+    void widget_violation::delete_data_violation( )
+    {
+
+    }
+
+    /// ------------------------------------------------------------------------
     /// save_data_violation( )
     /// ------------------------------------------------------------------------
     void widget_violation::save_data_violation( )
@@ -545,151 +655,29 @@ namespace vcamdb
         }
     }
 
-/*
     /// ------------------------------------------------------------------------
-    /// slot_add_request( )
+    /// set_buttons_mode( )
     /// ------------------------------------------------------------------------
-    void widget_violation::slot_add_request( )
+    void widget_violation::enable_controls(widget_violation::widget_violation_mode mode)
     {
-        dialog_request_data w_data_add;
-        w_data_add.exec( );
-    }
-
-    /// ------------------------------------------------------------------------
-    /// slot_edit_request( )
-    /// ------------------------------------------------------------------------
-    void widget_violation::slot_edit_request( )
-    {
-        data_request *request =
-            const_cast<data_request*>( this->_lv_request->current_request( ) );
-        if( !request )
+        switch( mode )
         {
-            return;
-        }
-        dialog_request_data w_data_edit( 0, dialog_request_data::mode_edit_request );
-        w_data_edit.request( *request );
-        int res = w_data_edit.exec( );
-        //update data model item
-        if( res == QDialog::Accepted )
-        {
-            *request = w_data_edit.request( );
-        }
-    }
+        case view_item:
+            this->buttons_mode_view( );
+            this->controls_disable( );
+            break;
+        case edit_item:
+            this->buttons_mode_edit( );
+            this->controls_enable( );
+            break;
 
-    /// ------------------------------------------------------------------------
-    /// slot_del_request( )
-    /// ------------------------------------------------------------------------
-    void widget_violation::slot_del_request( )
-    {
-        const data_request *r = this->_lv_request->current_request( );
-        if( !r )
-        {
-            return;
+        default:
+        case no_selection:
+            this->buttons_mode_default( );
+            this->controls_disable( );
+            break;
         }
-        int i_reply = QMessageBox::question(
-                                    0, tr("apply action"),
-                                    tr( "Press Yes if you're want delete request" ),
-                                    QMessageBox::No|QMessageBox::Yes
-                                           );
-        if( i_reply == QMessageBox::Yes)
-        {
-            business_logic &logic = application::the_business_logic( );
-            if( logic.request_delete( r->id_request( ) ) )
-            {
-                QMessageBox::information(
-                                         0, tr("info"),
-                                         r->id_request_string( ) +
-                                         tr(" request successful deleted from db")
-                                        );
-            }
-        }
-    }
 
-    /// ------------------------------------------------------------------------
-    /// slot_id_request_edit( )
-    /// ------------------------------------------------------------------------
-    void widget_violation::slot_id_request_edit( )
-    {
-        const data_request *request = this->_lv_request->current_request( );
-        if( !request )
-        {
-            return;
-        }
-        dialog_id_request dlg;
-        dlg.request( const_cast<data_request *>( request ) );
-        dlg.exec( );
     }
-
-    /// ------------------------------------------------------------------------
-    /// slot_print_request( )
-    /// ------------------------------------------------------------------------
-    void widget_violation::slot_print_request( )
-    {
-		const data_request *r = this->_lv_request->current_request( );
-		if( !r )
-		{
-            return;
-		}
-		QPrinter printer;
-		printer.setPageMargins( 15, 15, 15, 15, QPrinter::Millimeter );
-		printer.setOrientation( QPrinter::Portrait );
-		printer.setPaperSize( QPrinter::A4 );
-		printer.setPaperSource( QPrinter::Auto );
-
-		QPrintPreviewDialog ppvw_dlg( &printer );
-		ppvw_dlg.setWindowTitle( tr( "Request card info" ) );
-		ppvw_dlg.setWindowFlags( Qt::WindowMaximizeButtonHint|Qt::WindowCloseButtonHint );
-		this->connect(
-				&ppvw_dlg, SIGNAL( paintRequested( QPrinter* ) ),
-				this, SLOT( slot_print_preview_paint_requested( QPrinter* ) )
-					 );
-		ppvw_dlg.exec( );
-    }
-
-    /// ------------------------------------------------------------------------
-	///	slot_print_preview_paint_requested( QPrinter *p ) const
-    /// ------------------------------------------------------------------------
-    void widget_violation::slot_print_preview_paint_requested( QPrinter *p ) const
-	{
-		//get request
-		const data_request *r = this->_lv_request->current_request( );
-		if( !r )
-		{
-            return;
-		}
-		renderer_request rdr( p );
-		rdr.request( r );
-		//
-		rdr.begin( p );
-        rdr.draw_request( );
-        rdr.end( );
-    }
-
-    /// ------------------------------------------------------------------------
-    /// slot_stat_report( )
-    /// ------------------------------------------------------------------------
-    void widget_violation::slot_stat_report( )
-    {
-        dialog_period dlg;
-        if( dlg.exec( ) != QDialog::Accepted )
-        {
-            return;
-        }
-        QMessageBox::information(0, "slot_stat_report", "report" );
-    }
-
-    /// ------------------------------------------------------------------------
-    /// slot_stat_diagram( )
-    /// ------------------------------------------------------------------------
-    void widget_violation::slot_stat_diagram( )
-    {
-        dialog_period dlg;
-        if( dlg.exec( ) != QDialog::Accepted )
-        {
-            return;
-        }
-        QMessageBox::information(0, "slot_stat_diagram", "diagram" );
-    }
-    */
 
 }//namespace vcamdb
