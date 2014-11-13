@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 11-11-2014
+///		Date update	: 13-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QLabel>
@@ -68,7 +68,7 @@ namespace vcamdb
 
         this->controls_disable( );
 
-        //this->_w_search->setFocus( );
+        this->_cbx_cam_name->setFocus( );
     }
 
     /// ------------------------------------------------------------------------
@@ -345,6 +345,10 @@ namespace vcamdb
 
     void widget_violation::fill_controls( const data_violation &v )
     {
+        QMessageBox::information(
+                                    0, "fill_controls( const data_violation &v )",
+                                    v.to_string()
+                                );
 
     }
 
@@ -678,6 +682,27 @@ namespace vcamdb
             break;
         }
 
+    }
+
+    /// ------------------------------------------------------------------------
+    /// set_buttons_mode( )
+    /// ------------------------------------------------------------------------
+    void widget_violation::view_violation( const data_violation *v )
+    {
+        //установить в режим просмотра
+        this->buttons_mode_view( );
+        //установить элементы управления в режим просмотра
+        this->controls_disable( );
+        //очистить элементы управления
+        this->controls_clear( );
+        this->_violation.clear_data( );
+
+        //установить объект просмотра
+        if( v )
+        {
+            this->_violation = *v;
+            this->fill_controls( this->_violation );
+        }
     }
 
 }//namespace vcamdb

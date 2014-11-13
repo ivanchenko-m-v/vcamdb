@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 14-10-2014
+///		Date update	: 13-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QAbstractItemView>
@@ -50,10 +50,9 @@ namespace vcamdb
 	///		PROPERTIES
 	/// ========================================================================
 	/// -----------------------------------------------------------------------
-	///	current_request( )
+	///	current_violation( )
 	/// -----------------------------------------------------------------------
-/*
-    const data_request* listview_violation::current_request( )
+    const data_violation* listview_violation::current_violation( )
 	{
 		QModelIndex idx = this->selectionModel( )->currentIndex( );
 		if( !idx.isValid( ) )
@@ -62,9 +61,9 @@ namespace vcamdb
 		}
 
 		return application::the_business_logic( ).
-							model_request( )->request( idx.row( ) );
+							model_violation( )->violation( idx.row( ) );
 	}
-*/
+
 	/// ========================================================================
 	///		OPERATORS
 	/// ========================================================================
@@ -109,15 +108,15 @@ namespace vcamdb
 	/// ------------------------------------------------------------------------
     void listview_violation::init_connections( )
     {
-        /*
         if( this->selectionModel( ) )
         {
             this->connect(
-                       this->selectionModel( ), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
-                       this, SLOT( selected_item_changed( ) )
+                   this->selectionModel( ),
+                   SIGNAL( selectionChanged( QItemSelection, QItemSelection ) ),
+                   this,
+                   SLOT( selected_item_changed( ) )
                          );
         }
-        */
     }
 
 	/// ========================================================================
@@ -128,13 +127,11 @@ namespace vcamdb
 	/// ------------------------------------------------------------------------
     void listview_violation::selected_item_changed( )
     {
-        /*
-        const data_request *request = this->current_request( );
-        if( request )
+        const data_violation *violation = this->current_violation( );
+        if( violation )
         {
-            emit current_request_changed( request );
+            emit current_violation_changed( violation );
         }
-        */
     }
 
 	/// ========================================================================

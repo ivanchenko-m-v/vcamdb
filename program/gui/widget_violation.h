@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 11-11-2014
+///		Date update	: 13-11-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __WIDGET_VIOLATION_H__
@@ -87,14 +87,6 @@ class combobox_violation_object;
     /// ========================================================================
 	public:
         /// --------------------------------------------------------------------
-        const data_violation& violation( ) const
-        { return this->_violation; }
-
-        void violation( const data_violation& v )
-        {
-            this->_violation = v;
-            this->fill_controls( v );
-        }
 
     /// ========================================================================
     ///		OPERATORS
@@ -126,6 +118,7 @@ class combobox_violation_object;
 
     public slots:
         void enable_controls( widget_violation_mode mode );
+        void view_violation( const data_violation* );
 
     /// ========================================================================
     ///			FIELDS

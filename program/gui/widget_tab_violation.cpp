@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 14-10-2014
+///		Date update	: 13-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QSplitter>
@@ -61,7 +61,7 @@ namespace vcamdb
 
         this->init_connections( );
 
-        //this->_w_search->setFocus( );
+        this->_lv_violations->setFocus( );
     }
 
     /// ------------------------------------------------------------------------
@@ -86,58 +86,12 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     void widget_tab_violation::init_connections( )
     {
-        /*
-        //_btn_find_request
         this->connect(
-                    this->_btn_find_request, SIGNAL( clicked( ) ),
-                    this->_w_search, SLOT( find_requests( ) )
-                    );
-        //_btn_clear_search_criteria
-        this->connect(
-                    this->_btn_clear_search_criteria, SIGNAL( clicked( ) ),
-                    this->_w_search, SLOT( clear_search_criteria( ) )
-                    );
-        //_btn_add_request
-        this->connect(
-                    this->_btn_add_request, SIGNAL( clicked( ) ),
-                    this, SLOT( slot_add_request( ) )
-                    );
-        //_btn_print_request
-        this->connect(
-                    this->_btn_print_request, SIGNAL( clicked( ) ),
-                    this, SLOT( slot_print_request( ) )
-                    );
-        //_btn_edit_request
-        this->connect(
-                    this->_btn_edit_request, SIGNAL( clicked( ) ),
-                    this, SLOT( slot_edit_request( ) )
-                    );
-        //_btn_edit_id_request
-        this->connect(
-                    this->_btn_edit_id_request, SIGNAL( clicked( ) ),
-                    this, SLOT( slot_id_request_edit( ) )
-                    );
-        //_btn_del_request
-        this->connect(
-                    this->_btn_del_request, SIGNAL( clicked( ) ),
-                    this, SLOT( slot_del_request( ) )
-                    );
-        //_lv_request
-        this->connect(
-                     this->_lv_request, SIGNAL(current_request_changed(const data_request*)),
-                     this->_w_view, SLOT(change_view(const data_request*))
+                    this->_lv_violations,
+                    SIGNAL( current_violation_changed( const data_violation* ) ),
+                    this->_w_violation,
+                    SLOT( view_violation( const data_violation* ) )
                      );
-        //_act_report
-        this->connect(
-                     this->_act_report, SIGNAL( triggered( ) ),
-                     this, SLOT( slot_stat_report( ) )
-                     );
-        //_act_diagram
-        this->connect(
-                     this->_act_diagram, SIGNAL( triggered( ) ),
-                     this, SLOT( slot_stat_diagram( ) )
-                     );
-                     */
     }
 
     /// ------------------------------------------------------------------------

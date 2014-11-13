@@ -121,14 +121,31 @@ namespace vcamdb
     }
 
 	/// ------------------------------------------------------------------------
-    ///	insert(const data_violation &request)
+    ///	append(const data_violation &request)
 	/// ------------------------------------------------------------------------
-    void data_model_violation::insert( const data_violation &request )
+    void data_model_violation::append( const data_violation &request )
     {
+        //вставка в конец списка
 		this->beginInsertRows( QModelIndex( ), this->_list.size( ), this->_list.size( ) );
 
         data_violation *pr = new data_violation( request );
+        //вставка в конец списка
 		this->_list.append( pr );
+
+        this->endInsertRows( );
+    }
+
+	/// ------------------------------------------------------------------------
+    ///	prepend(const data_violation &request)
+	/// ------------------------------------------------------------------------
+    void data_model_violation::prepend( const data_violation &request )
+    {
+        //вставка в начало списка
+		this->beginInsertRows( QModelIndex( ), 0, 0 );
+
+        data_violation *pr = new data_violation( request );
+        //вставка в начало списка
+		this->_list.prepend( pr );
 
         this->endInsertRows( );
     }
