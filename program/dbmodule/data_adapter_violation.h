@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 10-11-2014
-///		Date update	: 10-11-2014
+///		Date update	: 13-11-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __DATA_ADAPTER_VIOLATION_H__
@@ -32,19 +32,21 @@ namespace vcamdb
         enum field_data_violation : int
         {
             num_field_id = 0,            //ID_VIOLATION INTEGER NOT NULL,
-            num_field_type = 1,          //VIOLATION_TYPE VARCHAR(256),
-            num_field_okrug = 2,         //OKRUG VARCHAR(256),
-            num_field_prefekt = 3,       //PREF VARCHAR(256),
-            num_field_district = 4,      //DISTRICT VARCHAR(256),
-            num_field_cam_name = 5,      //CAM_NAME VARCHAR(256),
-            num_field_object_type = 6,   //OBJECT_TYPE VARCHAR(256),
-            num_field_object_id = 7,     //OBJECT_ID VARCHAR(256),
-            num_field_object_name = 8,   //OBJECT_NAME VARCHAR(256),
-            num_field_date = 9,          //VIOLATION_DATE VARCHAR(256),
-            num_field_date_record = 10,  //RECORD_DATE VARCHAR(256),
-            num_field_URL = 11,          //URL VARCHAR(256),
-            num_field_user = 12,         //USER_CREATED VARCHAR(256)
-            fields_count = 13
+            num_filed_regnum = 1,        //REGNUM VARCHAR(64),
+            num_field_type = 2,          //VIOLATION_TYPE VARCHAR(256),
+            num_field_okrug = 3,         //OKRUG VARCHAR(256),
+            num_field_prefekt = 4,       //PREF VARCHAR(256),
+            num_field_district = 5,      //DISTRICT VARCHAR(256),
+            num_field_cam_name = 6,      //CAM_NAME VARCHAR(256),
+            num_field_object_type = 7,   //OBJECT_TYPE VARCHAR(256),
+            num_field_object_id = 8,     //OBJECT_ID VARCHAR(256),
+            num_field_object_name = 9,   //OBJECT_NAME VARCHAR(256),
+            num_field_date = 10,         //VIOLATION_DATE VARCHAR(32),
+            num_field_date_record = 11,  //RECORD_DATE VARCHAR(32),
+            num_field_URL = 12,          //URL VARCHAR(256),
+            num_field_user = 13,         //USER_CREATED VARCHAR(256),
+            num_field_note = 14,         //NOTE VARCHAR(256)
+            fields_count = 15
         };
     /// ========================================================================
     ///		CONSTRUCTORS/DESTRUCTOR
@@ -53,6 +55,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
         data_violation( ) :
             _n_id(0),
+            _x_regnum(""),
             _x_type(""),
             _x_okrug(""),
             _x_prefekt(""),
@@ -64,13 +67,15 @@ namespace vcamdb
             _x_date(""),
             _x_date_record(""),
             _x_URL(""),
-            _x_user("")
+            _x_user(""),
+            _x_note("")
         { }
 
     /// ------------------------------------------------------------------------
 		explicit
         data_violation( const data_violation &rhs ) :
             _n_id(rhs._n_id),
+            _x_regnum(rhs._x_regnum),
             _x_type(rhs._x_type),
             _x_okrug(rhs._x_okrug),
             _x_prefekt(rhs._x_prefekt),
@@ -82,7 +87,8 @@ namespace vcamdb
             _x_date(rhs._x_date),
             _x_date_record(rhs._x_date_record),
             _x_URL(rhs._x_URL),
-            _x_user(rhs._x_user)
+            _x_user(rhs._x_user),
+            _x_note(rhs._x_note)
         { }
 
     /// ------------------------------------------------------------------------
@@ -94,6 +100,7 @@ namespace vcamdb
                 this->clear_data( );
             }
             this->_n_id = row[num_field_id].toInt( );
+            this->_x_regnum = row[num_filed_regnum].toString( );
             this->_x_type = row[num_field_type].toString( );
             this->_x_okrug = row[num_field_okrug].toString( );
             this->_x_prefekt = row[num_field_prefekt].toString( );
@@ -106,6 +113,7 @@ namespace vcamdb
             this->_x_date_record = row[num_field_date_record].toString( );
             this->_x_URL = row[num_field_URL].toString( );
             this->_x_user = row[num_field_user].toString( );
+            this->_x_note = row[num_field_note].toString( );
         }
 
     /// ------------------------------------------------------------------------
@@ -117,6 +125,7 @@ namespace vcamdb
                 this->clear_data( );
             }
             this->_n_id = (*p_row)[num_field_id].toInt( );
+            this->_x_regnum = (*p_row)[num_filed_regnum].toString( );
             this->_x_type = (*p_row)[num_field_type].toString( );
             this->_x_okrug = (*p_row)[num_field_okrug].toString( );
             this->_x_prefekt = (*p_row)[num_field_prefekt].toString( );
@@ -129,6 +138,7 @@ namespace vcamdb
             this->_x_date_record = (*p_row)[num_field_date_record].toString( );
             this->_x_URL = (*p_row)[num_field_URL].toString( );
             this->_x_user = (*p_row)[num_field_user].toString( );
+            this->_x_note = (*p_row)[num_field_note].toString( );
         }
     /// ------------------------------------------------------------------------
         ~data_violation( )
@@ -144,6 +154,7 @@ namespace vcamdb
 		void clear_data( )
 		{
             this->_n_id = 0;
+            this->_x_regnum.clear( );
             this->_x_type.clear( );
             this->_x_okrug.clear( );
             this->_x_prefekt.clear( );
@@ -156,7 +167,7 @@ namespace vcamdb
             this->_x_date_record.clear( );
             this->_x_URL.clear( );
             this->_x_user.clear( );
-
+            this->_x_note.clear( );
         }
 
     /// ========================================================================
@@ -170,6 +181,14 @@ namespace vcamdb
 
         void id_violation( const int &n_id )
         { this->_n_id = n_id; }
+
+    /// ------------------------------------------------------------------------
+    ///	reg_number
+        const QString& reg_number( ) const
+        { return this->_x_regnum; }
+
+        void reg_number( const QString &x_regnum )
+        { this->_x_regnum = x_regnum; }
 
     /// ------------------------------------------------------------------------
     ///	violation_type
@@ -274,6 +293,14 @@ namespace vcamdb
         { this->_x_user = x_user; }
 
     /// ------------------------------------------------------------------------
+    ///	note
+        const QString& note( ) const
+        { return this->_x_note; }
+
+        void note( const QString &x_note )
+        { this->_x_note = x_note; }
+
+    /// ------------------------------------------------------------------------
     ///	to_string
         QString to_string( ) const
         {
@@ -291,6 +318,7 @@ namespace vcamdb
 				return *this;
 			}
             this->_n_id = rhs._n_id;
+            this->_x_regnum = rhs._x_regnum;
             this->_x_type = rhs._x_type;
             this->_x_okrug = rhs._x_okrug;
             this->_x_prefekt = rhs._x_prefekt;
@@ -303,6 +331,7 @@ namespace vcamdb
             this->_x_date_record = rhs._x_date_record;
             this->_x_URL = rhs._x_URL;
             this->_x_user = rhs._x_user;
+            this->_x_note = rhs._x_note;
 
 			return *this;
 		}
@@ -312,6 +341,7 @@ namespace vcamdb
     /// ========================================================================
 	private:
         int     _n_id;          //ID_VIOLATION INTEGER NOT NULL,
+        QString _x_regnum;      //REGNUM VARCHAR(64),
         QString _x_type;        //VIOLATION_TYPE VARCHAR(256),
         QString _x_okrug;       //OKRUG VARCHAR(256),
         QString _x_prefekt;     //PREF VARCHAR(256),
@@ -320,10 +350,11 @@ namespace vcamdb
         QString _x_object_type; //OBJECT_TYPE VARCHAR(256),
         QString _x_object_id;   //OBJECT_ID VARCHAR(256),
         QString _x_object_name; //OBJECT_NAME VARCHAR(256),
-        QString _x_date;        //VIOLATION_DATE VARCHAR(256),
-        QString _x_date_record; //RECORD_DATE VARCHAR(256),
+        QString _x_date;        //VIOLATION_DATE VARCHAR(32),
+        QString _x_date_record; //RECORD_DATE VARCHAR(32),
         QString _x_URL;         //URL VARCHAR(256),
-        QString _x_user;        //USER_CREATED VARCHAR(256)
+        QString _x_user;        //USER_CREATED VARCHAR(256),
+        QString _x_note;        //NOTE VARCHAR(256)
 
     };//class data_violation
 /// ############################################################################

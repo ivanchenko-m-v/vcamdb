@@ -84,6 +84,7 @@ namespace vcamdb
         layout->addWidget( this->init_1st_line( ) );
         layout->addWidget( this->init_2nd_line( ) );
         layout->addWidget( this->init_3rd_line( ) );
+        layout->addWidget( this->init_4th_line( ) );
         layout->addWidget( this->init_buttons( ) );
 
         this->setLayout( layout );
@@ -128,6 +129,17 @@ namespace vcamdb
         QHBoxLayout *layout = new QHBoxLayout;
 
         //
+        //_txt_regnum
+        //
+        this->_txt_regnum = new QLineEdit;
+        layout->addWidget(
+                    new ew::vertical_box( this->_txt_regnum,
+                                          QObject::tr( "reg number:" ),
+                                          this
+                                        ),
+                    25
+                         );
+        //
         //_cbx_cam_name
         //
         this->_cbx_cam_name = new combobox_camera_search;
@@ -135,7 +147,8 @@ namespace vcamdb
                     new ew::vertical_box( this->_cbx_cam_name,
                                           QObject::tr( "camera name:" ),
                                           this
-                                        )
+                                        ),
+                    25
                          );
         //
         //_lbl_cam_address
@@ -145,7 +158,8 @@ namespace vcamdb
                     new ew::vertical_box( this->_lbl_cam_address,
                                           QObject::tr( "camera address:" ),
                                           this
-                                        )
+                                        ),
+                    25
                          );
         //
         //_cbx_violation_type
@@ -155,7 +169,8 @@ namespace vcamdb
                     new ew::vertical_box( this->_cbx_violation_type,
                                           QObject::tr( "violation type:" ),
                                           this
-                                        )
+                                        ),
+                    25
                          );
 
 
@@ -239,6 +254,40 @@ namespace vcamdb
                                           this
                                         )
                          );
+
+        QWidget *w = new QWidget( this );
+        w->setLayout( layout );
+
+        return w;
+    }
+
+    /// ------------------------------------------------------------------------
+    /// init_4th_line( )
+    /// ------------------------------------------------------------------------
+    QWidget *widget_violation::init_4th_line( )
+    {
+        QHBoxLayout *layout = new QHBoxLayout;
+
+        //
+        //_txt_note
+        //
+        this->_txt_note = new QLineEdit;
+        layout->addWidget(
+                    new ew::vertical_box( this->_txt_note,
+                                          QObject::tr( "comment:" ),
+                                          this
+                                        )
+                         );
+
+        //
+        //_btn_attachment
+        //
+        this->_btn_attachment = new QPushButton;
+        this->_btn_attachment->setIcon(
+                        *( new QIcon( ":/image/images/32x32/mail-attachment.png" ) )
+                                 );
+        this->_btn_attachment->setToolTip( QObject::tr( "attach file to violation record in DB" ) );
+        layout->addWidget( this->_btn_attachment, 0, Qt::AlignBottom|Qt::AlignRight );
 
         QWidget *w = new QWidget( this );
         w->setLayout( layout );
@@ -345,11 +394,12 @@ namespace vcamdb
 
     void widget_violation::fill_controls( const data_violation &v )
     {
+        /*
         QMessageBox::information(
                                     0, "fill_controls( const data_violation &v )",
                                     v.to_string()
                                 );
-
+                                */
     }
 
     bool widget_violation::data_valid( )
@@ -436,7 +486,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     void widget_violation::buttons_mode_view()
     {
-        this->_btn_new->setEnabled( false );
+        this->_btn_new->setEnabled( true );
         this->_btn_edit->setEnabled( true );
         this->_btn_save->setEnabled( false );
         this->_btn_clear->setEnabled( false );
@@ -469,6 +519,8 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     void widget_violation::controls_disable( )
     {
+        //_txt_regnum
+        this->_txt_regnum->setEnabled( false );
         //_cbx_cam_name
         this->_cbx_cam_name->setEnabled( false );
         //_lbl_cam_address
@@ -485,6 +537,10 @@ namespace vcamdb
         this->_dte_violation->setEnabled( false );
         //_txt_url
         this->_txt_url->setEnabled( false );
+        //_txt_note
+        this->_txt_note->setEnabled( false );
+        //_btn_attachment
+        this->_btn_attachment->setEnabled( false );
     }
 
     /// ------------------------------------------------------------------------
@@ -492,6 +548,8 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     void widget_violation::controls_enable( )
     {
+        //_txt_regnum
+        this->_txt_regnum->setEnabled( true );
         //_cbx_cam_name
         this->_cbx_cam_name->setEnabled( true );
         //_lbl_cam_address
@@ -508,6 +566,10 @@ namespace vcamdb
         this->_dte_violation->setEnabled( true );
         //_txt_url
         this->_txt_url->setEnabled( true );
+        //_txt_note
+        this->_txt_note->setEnabled( true );
+        //_btn_attachment
+        this->_btn_attachment->setEnabled( true );
     }
 
     /// ------------------------------------------------------------------------
@@ -515,6 +577,8 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     void widget_violation::controls_clear( )
     {
+        //_txt_regnum
+        this->_txt_regnum->clear( );
         //_cbx_cam_name
         this->_cbx_cam_name->clear( );
          //_lbl_cam_address
@@ -531,6 +595,8 @@ namespace vcamdb
         this->_dte_violation->clear( );
         //_txt_url
         this->_txt_url->clear( );
+        //_txt_note
+        this->_txt_note->clear( );
     }
 
     /// ========================================================================

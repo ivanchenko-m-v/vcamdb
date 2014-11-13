@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 10-11-2014
-///		Date update	: 10-11-2014
+///		Date update	: 13-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <stdexcept>
@@ -21,6 +21,7 @@
 namespace vcamdb
 {
 //ID_VIOLATION INTEGER NOT NULL,
+//REGNUM VARCHAR(64),
 //VIOLATION_TYPE VARCHAR(256),
 //OKRUG VARCHAR(256),
 //PREF VARCHAR(256),
@@ -29,29 +30,32 @@ namespace vcamdb
 //OBJECT_TYPE VARCHAR(256),
 //OBJECT_ID VARCHAR(256),
 //OBJECT_NAME VARCHAR(256),
-//VIOLATION_DATE VARCHAR(256),
-//RECORD_DATE VARCHAR(256),
+//VIOLATION_DATE VARCHAR(32),
+//RECORD_DATE VARCHAR(32),
 //URL VARCHAR(256),
-//USER_CREATED VARCHAR(256)
+//USER_CREATED VARCHAR(256),
+//NOTE VARCHAR(256)
 
     const QString data_adapter_violation::_s_sql_insert(
                                 "INSERT INTO TABLE_VIOLATION "
-                                "(ID_VIOLATION, VIOLATION_TYPE, OKRUG, "
+                                "(ID_VIOLATION, REGNUM, VIOLATION_TYPE, OKRUG, "
                                 "PREF, DISTRICT, CAM_NAME, "
                                 "OBJECT_TYPE, OBJECT_ID, OBJECT_NAME,"
                                 "VIOLATION_DATE, RECORD_DATE, URL,"
-                                "USER_CREATED) "
-                                "   SELECT MAX(ID_VIOLATION)+1, :x_type, :x_okrug,"
+                                "USER_CREATED, NOTE) "
+                                "   SELECT MAX(ID_VIOLATION)+1, :x_regnum, :x_type, :x_okrug,"
                                           ":x_pref, :x_district, :x_cam_name, "
                                           ":x_obj_type, :x_obj_id, :x_obj_name,"
-                                          ":x_dt, :x_dt_rec, :x_url, :x_user "
+                                          ":x_dt, :x_dt_rec, :x_url, :x_user, :x_note "
                                     "FROM TABLE_VIOLATION;"
 									);
     const QString data_adapter_violation::_s_sql_update(
                                 "UPDATE TABLE_VIOLATION"
-                                "   SET VIOLATION_TYPE=:x_type, "
+                                "   SET REGNUM=:x_regnum,"
+                                       "VIOLATION_TYPE=:x_type, "
                                        "OKRUG=:x_okrug, "
                                        "PREF=:x_pref, "
+                                       "DISTRICT=:x_district, "
                                        "CAM_NAME=:x_cam_name, "
                                        "OBJECT_TYPE=:x_obj_type, "
                                        "OBJECT_ID=:x_obj_id, "
@@ -59,7 +63,8 @@ namespace vcamdb
                                        "VIOLATION_DATE=:x_dt, "
                                        "RECORD_DATE=:x_dt_rec, "
                                        "URL=:x_url, "
-                                       "USER_CREATED=:x_user "
+                                       "USER_CREATED=:x_user, "
+                                       "NOTE=:x_note "
                                 "WHERE ID_VIOLATION=:x_id_old;"
 									);
     const QString data_adapter_violation::_s_sql_delete(
@@ -67,11 +72,11 @@ namespace vcamdb
                                 "WHERE ID_VIOLATION=:x_id;"
 									);
     const QString data_adapter_violation::_s_sql_select(
-                                "SELECT ID_VIOLATION, VIOLATION_TYPE, OKRUG, "
+                                "SELECT ID_VIOLATION, REGNUM, VIOLATION_TYPE, OKRUG, "
                                     "PREF, DISTRICT, CAM_NAME, "
                                     "OBJECT_TYPE, OBJECT_ID, OBJECT_NAME,"
                                     "VIOLATION_DATE, RECORD_DATE, URL, "
-                                    "USER_CREATED "
+                                    "USER_CREATED, NOTE "
                                 "FROM TABLE_VIOLATION "
 									);
 /// ############################################################################
@@ -119,6 +124,7 @@ namespace vcamdb
     {
         using namespace espira::db;
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.violation_type( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.reg_number( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.okrug( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.prefekture( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.district( ) ) );
@@ -130,6 +136,7 @@ namespace vcamdb
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.date_record( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.URL( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.user( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.note( ) ) );
     }
     ///------------------------------------------------------------------------
     ///	make_params_update
@@ -140,6 +147,7 @@ namespace vcamdb
                                                    ) const
     {
         using namespace espira::db;
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.reg_number( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.violation_type( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.okrug( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.prefekture( ) ) );
@@ -152,6 +160,7 @@ namespace vcamdb
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.date_record( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.URL( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.user( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.note( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_int( r.id_violation( ) ) );
     }
 

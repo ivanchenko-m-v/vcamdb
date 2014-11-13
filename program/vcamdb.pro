@@ -4,7 +4,7 @@
 #           Project version     :
 #           Author              :   M. Ivanchenko
 #           Date create         :   05-10-2014
-#           Date update         :   10-11-2014
+#           Date update         :   13-11-2014
 #           Comment             :
 # ============================================================================
 QT       += core gui
@@ -136,3 +136,6 @@ INCLUDEPATH += W:/sqlite3/include
 LIBS += W:/sqlite3/sqlite3.dll
 RC_FILE = res/winres/app_icon.rc
 }
+
+OTHER_FILES += \
+    sql/TABLE_VIOLATION_ALTER.sql

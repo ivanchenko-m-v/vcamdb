@@ -63,6 +63,7 @@ class combobox_violation_object;
         QWidget* init_1st_line( );
         QWidget* init_2nd_line( );
         QWidget* init_3rd_line( );
+        QWidget* init_4th_line( );
         QWidget* init_buttons( );
 
         /// --------------------------------------------------------------------
@@ -124,6 +125,7 @@ class combobox_violation_object;
     ///			FIELDS
     /// ========================================================================
     private:
+        QLineEdit                   *_txt_regnum;
         combobox_camera_search      *_cbx_cam_name;
         QLabel                      *_lbl_cam_address;
         combobox_violation_type     *_cbx_violation_type;
@@ -132,6 +134,8 @@ class combobox_violation_object;
         QLabel                      *_lbl_id_object;
         QDateEdit                   *_dte_violation;
         QLineEdit                   *_txt_url;
+        QLineEdit                   *_txt_note;
+        QPushButton                 *_btn_attachment;
 
         QPushButton     *_btn_new; //clear all input fields and let it editing
         QPushButton     *_btn_edit;//lets input fields  editing
