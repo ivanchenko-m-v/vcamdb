@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 13-11-2014
+///		Date update	: 17-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QLabel>
@@ -371,6 +371,7 @@ namespace vcamdb
     {
         data_violation *pv = new data_violation( this->_violation );
 
+        pv->reg_number( this->_txt_regnum->text( ) );
         pv->violation_type( this->_cbx_violation_type->currentText( ) );
         pv->cam_name( this->_cbx_cam_name->currentText( ) );
         pv->object_type( this->_cbx_object_type->currentText( ) );
@@ -380,6 +381,7 @@ namespace vcamdb
         pv->date_record( QDate::currentDate( ) );
         pv->URL( this->_txt_url->text( ) );
         pv->user( application::program_instance( )->user( ) );
+        pv->note( this->_txt_note->text( ) );
 
         const data_violation_object *pvo  = this->_cbx_object_name->violation_object( );
         if( pvo )
@@ -394,12 +396,14 @@ namespace vcamdb
 
     void widget_violation::fill_controls( const data_violation &v )
     {
-        /*
-        QMessageBox::information(
-                                    0, "fill_controls( const data_violation &v )",
-                                    v.to_string()
-                                );
-                                */
+        this->_txt_regnum->setText( v.reg_number( ) );
+        this->_cbx_cam_name->camera( v.cam_name( ) );
+        this->_cbx_violation_type->violation_type( v.violation_type( ) );
+        this->_cbx_object_type->object_type( v.object_type( ) );
+        this->_cbx_object_name->refresh( v.object_type( ), v.object_name( ) );
+        this->_dte_violation->setDate( v.dt_violation( ) );
+        this->_txt_url->setText( v.URL( ) );
+        this->_txt_note->setText( v.note( ) );
     }
 
     bool widget_violation::data_valid( )

@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 03-11-2014
-///		Date update	: 03-11-2014
+///		Date update	: 17-11-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __DATA_ADAPTER_CAMERA_H__
@@ -75,7 +75,7 @@ namespace vcamdb
             _x_user_modified(rhs._x_user_modified)
         { }
 
-    /// ------------------------------------------------------------------------
+     /// ------------------------------------------------------------------------
 		explicit
         data_camera( const QVector<QVariant> &row )
         {
@@ -433,11 +433,15 @@ namespace vcamdb
 
     /// ------------------------------------------------------------------------
         QString make_select_filter( const QString &s_filter ) const;
+    /// ------------------------------------------------------------------------
+        QString make_select_one_filter( const QString &s_filter ) const;
 
     public:
     /// ------------------------------------------------------------------------
         data_camera_collection*
                             select( const QString &s_filter = QString( ) ) const;
+    /// ------------------------------------------------------------------------
+        data_camera *select_one( const QString &s_filter ) const;
     /// ------------------------------------------------------------------------
         void insert( const data_camera &record ) const;
     /// ------------------------------------------------------------------------

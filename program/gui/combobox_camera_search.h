@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 03-11-2014
-///		Date update	: 10-11-2014
+///		Date update	: 17-11-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __COMBOBOX_CAMERA_SEARCH_H__
@@ -43,6 +43,8 @@ class data_camera_collection;
         const data_camera* camera( ) const;
         /// --------------------------------------------------------------------
         void camera(  const data_camera *cam );
+        /// --------------------------------------------------------------------
+        void camera(const QString &s_cam_name);
         /// --------------------------------------------------------------------
         QString camera_address(int index) const;
 

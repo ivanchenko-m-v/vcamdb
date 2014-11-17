@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 03-11-2014
-///		Date update	: 10-11-2014
+///		Date update	: 17-11-2014
 ///		Comment		:
 /// ============================================================================
 #include "combobox_camera_search.h"
@@ -72,6 +72,13 @@ namespace vcamdb
     void combobox_camera_search::camera( const data_camera *cam )
     {
 
+    }
+    /// ------------------------------------------------------------------------
+    ///	camera( ) set
+    /// ------------------------------------------------------------------------
+    void combobox_camera_search::camera( const QString &s_cam_name )
+    {
+        this->refresh( s_cam_name );
     }
 
     /// ========================================================================

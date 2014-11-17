@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 02-11-2014
-///		Date update	: 02-11-2014
+///		Date update	: 17-11-2014
 ///		Comment		:
 /// ============================================================================
 #include "combobox_object_type.h"
@@ -54,6 +54,18 @@ namespace vcamdb
         return this->itemData( this->currentIndex( ) ).toString( );
     }
 
+    /// ------------------------------------------------------------------------
+    ///	object_type( )
+    /// ------------------------------------------------------------------------
+    void combobox_object_type::object_type( const QString &s_type )
+    {
+        int index = this->findData( s_type );
+        if( index >= 0 )
+        {
+            this->setCurrentIndex( index );
+        }
+    }
+
     /// ========================================================================
     ///		FUNCTIONS
     /// ========================================================================
@@ -80,18 +92,6 @@ namespace vcamdb
         {
             const data_object_type *rec = list.at( i );
             this->addItem( rec->object_type( ), rec->object_type( ) );
-        }
-    }
-
-    /// ------------------------------------------------------------------------
-    ///	set_object_type( )
-    /// ------------------------------------------------------------------------
-    void combobox_object_type::set_object_type( const QString &object_type )
-    {
-        int index = this->findData( object_type );
-        if( index >= 0 )
-        {
-            this->setCurrentIndex( index );
         }
     }
 

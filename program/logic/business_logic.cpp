@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 13-11-2014
+///		Date update	: 17-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QDebug>
@@ -340,6 +340,57 @@ namespace vcamdb
         }
 
         return p_coll;
+    }
+
+    /// ------------------------------------------------------------------------
+    ///	camera_select_one( )
+    /// ------------------------------------------------------------------------
+    data_camera* business_logic::camera_select_one(const QString &s_cam_name)
+    {
+        const int MIN_FILTER_LENGTH = 5;
+        data_camera *camera = 0;
+
+        if( s_cam_name.length( ) < MIN_FILTER_LENGTH )
+        {
+            return camera;
+        }
+
+        try
+        {
+            data_adapter_camera adap;
+            //select data
+            camera = adap.select_one( s_cam_name );
+        }
+        catch( std::exception &ex )
+        {
+            if( camera )
+            {
+                delete camera;
+                camera = 0;
+            }
+            QString s_msg(
+                            "business_logic::camera_select_one( )"
+                            ":\n\t" + QString::fromUtf8( ex.what( ) )
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+        catch( ... )
+        {
+            if( camera )
+            {
+                delete camera;
+                camera = 0;
+            }
+            QString s_msg(
+                        "business_logic::camera_select_one( )"
+                        ":\n\t unknown error while CAMERA select"
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+
+        return camera;
     }
 
 ///|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

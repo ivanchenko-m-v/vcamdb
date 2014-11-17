@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 10-11-2014
+///		Date update	: 17-11-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __BUSINESS_LOGIC_H__
@@ -20,6 +20,7 @@ class data_model_camera_object;
 class data_model_object_type;
 class data_model_violation_type;
 
+class data_camera;
 class data_camera_collection;
 class data_violation_object_collection;
 class data_violation;
@@ -110,6 +111,8 @@ class data_violation_collection;
         void violation_type_select( );
     /// ------------------------------------------------------------------------
         data_camera_collection* camera_select(const QString &s_filter);
+    /// ------------------------------------------------------------------------
+        data_camera *camera_select_one(const QString &s_filter);
     /// ------------------------------------------------------------------------
         data_violation_object_collection*
                                violation_object_select(

@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 04-11-2014
-///		Date update	: 10-11-2014
+///		Date update	: 17-11-2014
 ///		Comment		:
 /// ============================================================================
 #include "combobox_violation_type.h"
@@ -43,7 +43,7 @@ namespace vcamdb
     ///		PROPERTIES
     /// ========================================================================
     /// ------------------------------------------------------------------------
-    ///	object_type( )
+    ///	violation_type( )
     /// ------------------------------------------------------------------------
     QString combobox_violation_type::violation_type( )
     {
@@ -52,6 +52,19 @@ namespace vcamdb
             return QString( "" );
         }
         return this->itemData( this->currentIndex( ) ).toString( );
+    }
+
+    /// ------------------------------------------------------------------------
+    ///	violation_type( )
+    /// ------------------------------------------------------------------------
+    void combobox_violation_type::violation_type(const QString &s_type)
+    {
+        int index = this->findData( s_type );
+        if( index >= 0 )
+        {
+            this->setCurrentIndex( index );
+        }
+
     }
 
     /// ========================================================================
@@ -83,18 +96,6 @@ namespace vcamdb
         }
 
         this->setEditable( true );
-    }
-
-    /// ------------------------------------------------------------------------
-    ///	set_violation_type( )
-    /// ------------------------------------------------------------------------
-    void combobox_violation_type::set_violation_type( const QString &violation_type )
-    {
-        int index = this->findData( violation_type );
-        if( index >= 0 )
-        {
-            this->setCurrentIndex( index );
-        }
     }
 
 }//namespace vcamdb
