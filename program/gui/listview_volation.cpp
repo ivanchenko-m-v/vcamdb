@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 13-11-2014
+///		Date update	: 18-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QAbstractItemView>
@@ -132,6 +132,19 @@ namespace vcamdb
         {
             emit current_violation_changed( violation );
         }
+    }
+
+    void listview_violation::select_new_violation( )
+    {
+        if( this->model( ) && this->selectionModel( ) )
+        {
+            this->selectionModel( )->select( this->model( )->index( 0, 0 ), QItemSelectionModel::Select );
+        }
+    }
+
+    void listview_violation::select_updated_violation( const data_violation &v )
+    {
+
     }
 
 	/// ========================================================================

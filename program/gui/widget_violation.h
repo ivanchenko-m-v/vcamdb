@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 13-11-2014
+///		Date update	: 18-11-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __WIDGET_VIOLATION_H__
@@ -67,7 +67,7 @@ class combobox_violation_object;
         QWidget* init_buttons( );
 
         /// --------------------------------------------------------------------
-        data_violation* extract_violation( );
+        void extract_violation( );
         void fill_controls( const data_violation &v );
         bool data_valid( );
         bool camera_valid( );
@@ -120,6 +120,10 @@ class combobox_violation_object;
     public slots:
         void enable_controls( widget_violation_mode mode );
         void view_violation( const data_violation* );
+
+    signals:
+        void saved_new_item( const data_violation &item );
+        void saved_edited_item( const data_violation &item );
 
     /// ========================================================================
     ///			FIELDS

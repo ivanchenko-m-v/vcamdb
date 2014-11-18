@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 17-11-2014
+///		Date update	: 18-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QDebug>
@@ -595,7 +595,7 @@ namespace vcamdb
             //insert data
             adap.insert( record );
             //insert into model
-            this->_model_violation->append( record );
+            this->_model_violation->prepend( record );
         }
         catch( std::exception &ex )
         {
@@ -627,6 +627,8 @@ namespace vcamdb
             data_adapter_violation adap;
             //update data
             adap.update( record );
+            //update model
+            //this->_model_violation->re
         }
         catch( std::exception &ex )
         {

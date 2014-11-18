@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 02-11-2014
+///		Date update	: 18-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QDebug>
@@ -261,7 +261,7 @@ namespace vcamdb
     {
         try
         {
-            this->_params.save_cfg_file( );
+            this->_params.save_cfg_file( QDir::currentPath( )+"/app_vcamdb.cfg" );
         }
         catch( std::exception &ex )
 		{

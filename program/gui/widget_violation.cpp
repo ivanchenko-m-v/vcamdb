@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 17-11-2014
+///		Date update	: 18-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QLabel>
@@ -119,6 +119,10 @@ namespace vcamdb
                     this->_btn_clear, SIGNAL( clicked( ) ),
                     this, SLOT( clear_data_violation( ) )
                      );
+        this->connect(
+                    this->_btn_edit, SIGNAL( clicked( ) ),
+                    this, SLOT( edit_data_violation( ) )
+                     );
     }
 
     /// ------------------------------------------------------------------------
@@ -128,6 +132,7 @@ namespace vcamdb
     {
         QHBoxLayout *layout = new QHBoxLayout;
 
+        const int WIDTH_IN_PERCENTS = 25;
         //
         //_txt_regnum
         //
@@ -137,7 +142,7 @@ namespace vcamdb
                                           QObject::tr( "reg number:" ),
                                           this
                                         ),
-                    25
+                    WIDTH_IN_PERCENTS
                          );
         //
         //_cbx_cam_name
@@ -148,7 +153,7 @@ namespace vcamdb
                                           QObject::tr( "camera name:" ),
                                           this
                                         ),
-                    25
+                    WIDTH_IN_PERCENTS
                          );
         //
         //_lbl_cam_address
@@ -159,7 +164,7 @@ namespace vcamdb
                                           QObject::tr( "camera address:" ),
                                           this
                                         ),
-                    25
+                    WIDTH_IN_PERCENTS
                          );
         //
         //_cbx_violation_type
@@ -170,7 +175,7 @@ namespace vcamdb
                                           QObject::tr( "violation type:" ),
                                           this
                                         ),
-                    25
+                    WIDTH_IN_PERCENTS
                          );
 
 
@@ -367,31 +372,27 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// extract_violation( )
     /// ------------------------------------------------------------------------
-    data_violation* widget_violation::extract_violation( )
+    void widget_violation::extract_violation( )
     {
-        data_violation *pv = new data_violation( this->_violation );
-
-        pv->reg_number( this->_txt_regnum->text( ) );
-        pv->violation_type( this->_cbx_violation_type->currentText( ) );
-        pv->cam_name( this->_cbx_cam_name->currentText( ) );
-        pv->object_type( this->_cbx_object_type->currentText( ) );
-        pv->object_name( this->_cbx_object_name->currentText( ) );
-        pv->object_id( this->_lbl_id_object->text( ) );
-        pv->date_violation( this->_dte_violation->date( ) );
-        pv->date_record( QDate::currentDate( ) );
-        pv->URL( this->_txt_url->text( ) );
-        pv->user( application::program_instance( )->user( ) );
-        pv->note( this->_txt_note->text( ) );
+        this->_violation.reg_number( this->_txt_regnum->text( ) );
+        this->_violation.violation_type( this->_cbx_violation_type->currentText( ) );
+        this->_violation.cam_name( this->_cbx_cam_name->currentText( ) );
+        this->_violation.object_type( this->_cbx_object_type->currentText( ) );
+        this->_violation.object_name( this->_cbx_object_name->currentText( ) );
+        this->_violation.object_id( this->_lbl_id_object->text( ) );
+        this->_violation.date_violation( this->_dte_violation->date( ) );
+        this->_violation.date_record( QDate::currentDate( ) );
+        this->_violation.URL( this->_txt_url->text( ) );
+        this->_violation.user( application::program_instance( )->user( ) );
+        this->_violation.note( this->_txt_note->text( ) );
 
         const data_violation_object *pvo  = this->_cbx_object_name->violation_object( );
         if( pvo )
         {
-            pv->okrug( pvo->okrug( ) );
-            pv->prefekture( pvo->prefekture( ) );
-            pv->district( pvo->district( ) );
+            this->_violation.okrug( pvo->okrug( ) );
+            this->_violation.prefekture( pvo->prefekture( ) );
+            this->_violation.district( pvo->district( ) );
         }
-
-        return pv;
     }
 
     void widget_violation::fill_controls( const data_violation &v )
@@ -720,12 +721,21 @@ namespace vcamdb
         {
             return;
         }
-        data_violation *pv = this->extract_violation( );
 
-        if( pv )
+        //fill violation object with gui controls' values
+        this->extract_violation( );
+
+        if( this->_violation.id_violation( ) == 0 )
         {
-            application::the_business_logic( ).violation_insert( *pv );
-            delete pv;
+            //новая запись
+            application::the_business_logic( ).violation_insert( this->_violation );
+            emit saved_new_item( this->_violation );
+        }
+        else
+        {
+            //редактируемая запись
+            application::the_business_logic( ).violation_update( this->_violation );
+            emit saved_edited_item( this->_violation );
         }
     }
 
