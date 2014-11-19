@@ -17,71 +17,71 @@
     </message>
     <message>
         <source>OK</source>
-        <translation>ОК</translation>
+        <translation type="obsolete">ОК</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation type="obsolete">Отмена</translation>
     </message>
     <message>
         <source>find requests</source>
-        <translation>Искать карточки обращений</translation>
+        <translation type="obsolete">Искать карточки обращений</translation>
     </message>
     <message>
         <source>clear search criteria</source>
-        <translation>Очистить условия поиска</translation>
+        <translation type="obsolete">Очистить условия поиска</translation>
     </message>
     <message>
         <source>add declarant&apos;s request</source>
-        <translation>Добавить карточку обращения</translation>
+        <translation type="obsolete">Добавить карточку обращения</translation>
     </message>
     <message>
         <source>edit request</source>
-        <translation>Редактировать карточку обращения</translation>
+        <translation type="obsolete">Редактировать карточку обращения</translation>
     </message>
     <message>
         <source>delete request</source>
-        <translation>Удалить карточку обращения</translation>
+        <translation type="obsolete">Удалить карточку обращения</translation>
     </message>
     <message>
         <source>id</source>
-        <translation>Номер</translation>
+        <translation type="obsolete">Номер</translation>
     </message>
     <message>
         <source>administrative division</source>
-        <translation>Административный округ</translation>
+        <translation type="obsolete">Административный округ</translation>
     </message>
     <message>
         <source>ad abbreviation</source>
-        <translation>АО</translation>
+        <translation type="obsolete">АО</translation>
     </message>
     <message>
         <source>mediator</source>
-        <translation>Медиатор</translation>
+        <translation type="obsolete">Медиатор</translation>
     </message>
     <message>
         <source>mediator phone</source>
-        <translation>Телефон медиатора</translation>
+        <translation type="obsolete">Телефон медиатора</translation>
     </message>
     <message>
         <source>note</source>
-        <translation>Примечание</translation>
+        <translation type="obsolete">Примечание</translation>
     </message>
     <message>
         <source>class id</source>
-        <translation>Код классификатора</translation>
+        <translation type="obsolete">Код классификатора</translation>
     </message>
     <message>
         <source>ad id</source>
-        <translation>Код АО</translation>
+        <translation type="obsolete">Код АО</translation>
     </message>
     <message>
         <source>municipal district</source>
-        <translation>Муниципльный район</translation>
+        <translation type="obsolete">Муниципльный район</translation>
     </message>
     <message>
         <source>date</source>
-        <translation>Дата</translation>
+        <translation type="obsolete">Дата</translation>
     </message>
     <message>
         <source>time</source>
@@ -89,19 +89,19 @@
     </message>
     <message>
         <source>municipal region</source>
-        <translation>Муниципльный район</translation>
+        <translation type="obsolete">Муниципльный район</translation>
     </message>
     <message>
         <source>category</source>
-        <translation>Категория обращения</translation>
+        <translation type="obsolete">Категория обращения</translation>
     </message>
     <message>
         <source>declarant</source>
-        <translation>Заявитель</translation>
+        <translation type="obsolete">Заявитель</translation>
     </message>
     <message>
         <source>request category</source>
-        <translation>Категория обращения</translation>
+        <translation type="obsolete">Категория обращения</translation>
     </message>
     <message>
         <source>app exiting error</source>
@@ -113,87 +113,87 @@
     </message>
     <message>
         <source>Request card # </source>
-        <translation>Карточка заявителя № </translation>
+        <translation type="obsolete">Карточка заявителя № </translation>
     </message>
     <message>
         <source>Executor info</source>
-        <translation>Информация об исполнителе</translation>
+        <translation type="obsolete">Информация об исполнителе</translation>
     </message>
     <message>
         <source>Mediator</source>
-        <translation>Ф.И.О.</translation>
+        <translation type="obsolete">Ф.И.О.</translation>
     </message>
     <message>
         <source>Mediator phone</source>
-        <translation>Телефон</translation>
+        <translation type="obsolete">Телефон</translation>
     </message>
     <message>
         <source>Declarant info</source>
-        <translation>Информация о заявителе</translation>
+        <translation type="obsolete">Информация о заявителе</translation>
     </message>
     <message>
         <source>Declarant</source>
-        <translation>Ф.И.О.</translation>
+        <translation type="obsolete">Ф.И.О.</translation>
     </message>
     <message>
         <source>Administrative division</source>
-        <translation>Административный округ</translation>
+        <translation type="obsolete">Административный округ</translation>
     </message>
     <message>
         <source>Municipal district</source>
-        <translation>Муниципальный район</translation>
+        <translation type="obsolete">Муниципальный район</translation>
     </message>
     <message>
         <source>Address</source>
-        <translation>Адрес</translation>
+        <translation type="obsolete">Адрес</translation>
     </message>
     <message>
         <source>Declarant phone</source>
-        <translation>Телефон</translation>
+        <translation type="obsolete">Телефон</translation>
     </message>
     <message>
         <source>Service organization</source>
-        <translation>Жилищное объединение или управляющая компания</translation>
+        <translation type="obsolete">Жилищное объединение или управляющая компания</translation>
     </message>
     <message>
         <source>Request info</source>
-        <translation>Информация обращения</translation>
+        <translation type="obsolete">Информация обращения</translation>
     </message>
     <message>
         <source>Date</source>
-        <translation>Дата</translation>
+        <translation type="obsolete">Дата</translation>
     </message>
     <message>
         <source>Time</source>
-        <translation>Время</translation>
+        <translation type="obsolete">Время</translation>
     </message>
     <message>
         <source>Request category</source>
-        <translation>Категория обращения</translation>
+        <translation type="obsolete">Категория обращения</translation>
     </message>
     <message>
         <source>Request contents</source>
-        <translation>Вопрос/описание проблемы</translation>
+        <translation type="obsolete">Вопрос/описание проблемы</translation>
     </message>
     <message>
         <source>Other conflict party</source>
-        <translation>Вторая сторона конфликта (при наличии конфликта)</translation>
+        <translation type="obsolete">Вторая сторона конфликта (при наличии конфликта)</translation>
     </message>
     <message>
         <source>Responsible organization</source>
-        <translation>Организация, ответственная за решение вопроса</translation>
+        <translation type="obsolete">Организация, ответственная за решение вопроса</translation>
     </message>
     <message>
         <source>Consultation</source>
-        <translation>Содержание консультации</translation>
+        <translation type="obsolete">Содержание консультации</translation>
     </message>
     <message>
         <source>print request</source>
-        <translation>Печать карточки обращения </translation>
+        <translation type="obsolete">Печать карточки обращения </translation>
     </message>
     <message>
         <source>edit id of the request</source>
-        <translation>Редактировать номер обращения</translation>
+        <translation type="obsolete">Редактировать номер обращения</translation>
     </message>
     <message>
         <source>address</source>
@@ -201,369 +201,31 @@
     </message>
     <message>
         <source>error</source>
-        <translation>Ошибка</translation>
+        <translation type="obsolete">Ошибка</translation>
     </message>
     <message>
         <source>authorization isn&apos;t successful</source>
-        <translation>Введённые логин или пароль пользователя системы недействительны</translation>
+        <translation type="obsolete">Введённые логин или пароль пользователя системы недействительны</translation>
     </message>
     <message>
         <source>statistics</source>
-        <translation>Статистика</translation>
+        <translation type="obsolete">Статистика</translation>
     </message>
     <message>
         <source>Declarant type</source>
-        <translation>Тип заявителя</translation>
+        <translation type="obsolete">Тип заявителя</translation>
     </message>
     <message>
         <source>declarant type</source>
-        <translation>Тип заявителя</translation>
+        <translation type="obsolete">Тип заявителя</translation>
     </message>
-</context>
-<context>
-    <name>espira::widgets::dialog_authorization</name>
     <message>
-        <source>Authorization</source>
-        <translation>Авторизация</translation>
+        <source>object&apos;s address</source>
+        <translation>Адрес объекта</translation>
     </message>
     <message>
-        <source>login:</source>
-        <translation>Логин:</translation>
-    </message>
-    <message>
-        <source>pwd:</source>
-        <translation>Пароль:</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>ОК</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Отмена</translation>
-    </message>
-</context>
-<context>
-    <name>mac_mediator::application</name>
-    <message>
-        <source>select db file</source>
-        <translation>Выбрать файл базы данных</translation>
-    </message>
-    <message>
-        <source>warning</source>
-        <translation>Предупреждение</translation>
-    </message>
-    <message>
-        <source>Database file wasn&apos;t selected</source>
-        <translation>Файл базы данных не был выбран, часть функций программы не будет работоспособной</translation>
-    </message>
-</context>
-<context>
-    <name>mac_mediator::dialog_address_list</name>
-    <message>
-        <source>find declarant address</source>
-        <translation>Искать адрес заявителя</translation>
-    </message>
-</context>
-<context>
-    <name>mac_mediator::dialog_id_request</name>
-    <message>
-        <source>id request:</source>
-        <translation>Номер карточки:</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>ОК</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Отмена</translation>
-    </message>
-    <message>
-        <source>entered number is invalid</source>
-        <translation>Введённый номер карточки недействителен</translation>
-    </message>
-    <message>
-        <source>successful updateing request card #</source>
-        <translation>В базе данных успешно обновлено обращение №</translation>
-    </message>
-</context>
-<context>
-    <name>mac_mediator::dialog_period</name>
-    <message>
-        <source>stats for period</source>
-        <translation>Статистика за период</translation>
-    </message>
-    <message>
-        <source>period from:</source>
-        <translation>период с:</translation>
-    </message>
-    <message>
-        <source>to:</source>
-        <translation>по:</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>ОК</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Отмена</translation>
-    </message>
-</context>
-<context>
-    <name>mac_mediator::dialog_request_data</name>
-    <message>
-        <source>dialog_request_data</source>
-        <translation>Данные обращения</translation>
-    </message>
-    <message>
-        <source>administrative division:</source>
-        <translation>Административный округ:</translation>
-    </message>
-    <message>
-        <source>municipal region:</source>
-        <translation>Муниципальный район:</translation>
-    </message>
-    <message>
-        <source>mediator:</source>
-        <translation>Медиатор:</translation>
-    </message>
-    <message>
-        <source>request type:</source>
-        <translation>Категория обращения:</translation>
-    </message>
-    <message>
-        <source>date:</source>
-        <translation>Дата:</translation>
-    </message>
-    <message>
-        <source>time:</source>
-        <translation>Время:</translation>
-    </message>
-    <message>
-        <source>declarant:</source>
-        <translation>Заявитель:</translation>
-    </message>
-    <message>
-        <source>declarant phone:</source>
-        <translation>Телефон заявителя:</translation>
-    </message>
-    <message>
-        <source>declarant address:</source>
-        <translation>Адрес заявителя:</translation>
-    </message>
-    <message>
-        <source>service organization:</source>
-        <translation>Управляющая компания:</translation>
-    </message>
-    <message>
-        <source>other conflict party:</source>
-        <translation>Вторая сторона конфликта:</translation>
-    </message>
-    <message>
-        <source>responsible organization:</source>
-        <translation>Ответственная организация:</translation>
-    </message>
-    <message>
-        <source>request:</source>
-        <translation>Содержание обращения:</translation>
-    </message>
-    <message>
-        <source>consultation:</source>
-        <translation>Консультация:</translation>
-    </message>
-    <message>
-        <source>warning</source>
-        <translation>Предупреждение</translation>
-    </message>
-    <message>
-        <source>failed id request</source>
-        <translation>Сбой присвоения номера карточки обращения</translation>
-    </message>
-    <message>
-        <source>failed id mr</source>
-        <translation>Не задан муниципальный район</translation>
-    </message>
-    <message>
-        <source>failed id mediator</source>
-        <translation>Не задан медиатор</translation>
-    </message>
-    <message>
-        <source>failed request category</source>
-        <translation>Не задана категория обращения</translation>
-    </message>
-    <message>
-        <source>failed request date</source>
-        <translation>Не задана дата обращения</translation>
-    </message>
-    <message>
-        <source>failed request time</source>
-        <translation>Не задано время обращения</translation>
-    </message>
-    <message>
-        <source>failed request declarant</source>
-        <translation>Не задан заявитель</translation>
-    </message>
-    <message>
-        <source>failed request declarant address</source>
-        <translation>Не задан адрес заявителя</translation>
-    </message>
-    <message>
-        <source>failed request text</source>
-        <translation>Не задано содержание обращения</translation>
-    </message>
-    <message>
-        <source>failed request consultation text</source>
-        <translation>Не введён текст консультции</translation>
-    </message>
-    <message>
-        <source>successful inserting request card #</source>
-        <translation>В базу данных успешно внесено обращение №</translation>
-    </message>
-    <message>
-        <source>successful updateing request card #</source>
-        <translation>В базе данных успешно обновлено обращение №</translation>
-    </message>
-    <message>
-        <source>declarant type:</source>
-        <translation>Тип заявителя:</translation>
-    </message>
-    <message>
-        <source>failed id declarant type</source>
-        <translation>Не выбран тип заявителя.</translation>
-    </message>
-</context>
-<context>
-    <name>mac_mediator::main_window</name>
-    <message>
-        <source>mac mediator application</source>
-        <translation>Программа учёта обращений граждан</translation>
-    </message>
-</context>
-<context>
-    <name>mac_mediator::widget_card_view</name>
-    <message>
-        <source>Executor info</source>
-        <translation>Ипформация об исполнителе</translation>
-    </message>
-    <message>
-        <source>FIO:</source>
-        <translation>ФИО:</translation>
-    </message>
-    <message>
-        <source>Phone:</source>
-        <translation>Телефон:</translation>
-    </message>
-    <message>
-        <source>Declarant info</source>
-        <translation>Информация о заявителе</translation>
-    </message>
-    <message>
-        <source>Adm. Division:</source>
-        <translation>Административный округ:</translation>
-    </message>
-    <message>
-        <source>Mun. District:</source>
-        <translation>Муниципальный район:</translation>
-    </message>
-    <message>
-        <source>Address:</source>
-        <translation>Адрес:</translation>
-    </message>
-    <message>
-        <source>Service org:</source>
-        <translation>Управляющая компания:</translation>
-    </message>
-    <message>
-        <source>Request info</source>
-        <translation>Информация обращения</translation>
-    </message>
-    <message>
-        <source>Request category:</source>
-        <translation>Категория обращения:</translation>
-    </message>
-    <message>
-        <source>Request:</source>
-        <translation>Содержание обращения:</translation>
-    </message>
-    <message>
-        <source>Other conflict party:</source>
-        <translation>Вторая сторона конфликта:</translation>
-    </message>
-    <message>
-        <source>Responsible org:</source>
-        <translation>Ответственная организация:</translation>
-    </message>
-    <message>
-        <source>Consultation:</source>
-        <translation>Консультация:</translation>
-    </message>
-    <message>
-        <source>widget_card_view</source>
-        <translation>Карточка обращения заявителя</translation>
-    </message>
-    <message>
-        <source>Decl. Type:</source>
-        <translation>Тип заявителя:</translation>
-    </message>
-</context>
-<context>
-    <name>mac_mediator::widget_central</name>
-    <message>
-        <source>request list:</source>
-        <translation>Список карточек обращений:</translation>
-    </message>
-    <message>
-        <source>apply action</source>
-        <translation>Требуется подтверждение</translation>
-    </message>
-    <message>
-        <source>Press Yes if you&apos;re want delete request</source>
-        <translation>Нажмите кнопку &quot;Да&quot;, если вы действительно хотите удалить карточку обращения</translation>
-    </message>
-    <message>
-        <source>info</source>
-        <translation>Информация</translation>
-    </message>
-    <message>
-        <source> request successful deleted from db</source>
-        <translation>Карточка обращения успешно удалена из базы данных</translation>
-    </message>
-    <message>
-        <source>Request card info</source>
-        <translation>Данные карточки обращения</translation>
-    </message>
-    <message>
-        <source>Report</source>
-        <translation>Отчёт</translation>
-    </message>
-    <message>
-        <source>Diagaram</source>
-        <translation>Диаграмма</translation>
-    </message>
-</context>
-<context>
-    <name>mac_mediator::widget_search_card</name>
-    <message>
-        <source>administrative division:</source>
-        <translation>Административный округ:</translation>
-    </message>
-    <message>
-        <source>municipal region:</source>
-        <translation>Муниципальный район:</translation>
-    </message>
-    <message>
-        <source>mediator:</source>
-        <translation>Медиатор:</translation>
-    </message>
-    <message>
-        <source>request type:</source>
-        <translation>Категория обращения:</translation>
-    </message>
-    <message>
-        <source>declarant:</source>
-        <translation>Заявитель:</translation>
+        <source>camera&apos;s name</source>
+        <translation>Название камеры</translation>
     </message>
     <message>
         <source>from:</source>
@@ -574,16 +236,598 @@
         <translation>по:</translation>
     </message>
     <message>
+        <source>videocams violations</source>
+        <translation>зафиксированные нарушения</translation>
+    </message>
+    <message>
+        <source>user:</source>
+        <translation>пользователь:</translation>
+    </message>
+    <message>
+        <source>reg number:</source>
+        <translation>рег. номер:</translation>
+    </message>
+    <message>
+        <source>camera name:</source>
+        <translation>название камеры:</translation>
+    </message>
+    <message>
+        <source>camera address:</source>
+        <translation>адрес камеры:</translation>
+    </message>
+    <message>
+        <source>violation type:</source>
+        <translation>тип нарушения:</translation>
+    </message>
+    <message>
+        <source>object&apos;s type:</source>
+        <translation>тип объекта:</translation>
+    </message>
+    <message>
+        <source>object&apos;s name:</source>
+        <translation>название объекта:</translation>
+    </message>
+    <message>
+        <source>object&apos;s ID:</source>
+        <translation>ID объекта:</translation>
+    </message>
+    <message>
+        <source>violation&apos;s date:</source>
+        <translation>дата нарушения:</translation>
+    </message>
+    <message>
+        <source>URL to violation&apos;s facts:</source>
+        <translation>URL с фактами нарушения:</translation>
+    </message>
+    <message>
+        <source>comment:</source>
+        <translation>комметарий:</translation>
+    </message>
+    <message>
+        <source>attach file to violation record in DB</source>
+        <translation>присоединить файл к записи нарушения в БД</translation>
+    </message>
+    <message>
+        <source>insert new violation&apos;s data into DB</source>
+        <translation>добавить новую запись данных нарушения в БД</translation>
+    </message>
+    <message>
+        <source>edit selected violation in the list</source>
+        <translation>редактировать выделенное нарушение</translation>
+    </message>
+    <message>
+        <source>delete  selected violation in the list from DB</source>
+        <translation>удалить выделенное нарушение из БД</translation>
+    </message>
+    <message>
+        <source>cancel editing and exit from edit mode</source>
+        <translation>отменить редактирование данных</translation>
+    </message>
+    <message>
+        <source>save new or edited violation in the DB</source>
+        <translation>сохранить данные в БД</translation>
+    </message>
+    <message>
+        <source>cam_name</source>
+        <translation>камера</translation>
+    </message>
+    <message>
+        <source>CAM_ID</source>
+        <translation>ID камеры</translation>
+    </message>
+    <message>
+        <source>CAM_NAME</source>
+        <translation>название камеры</translation>
+    </message>
+    <message>
+        <source>CAM_ADDRESS</source>
+        <translation>адрес камеры</translation>
+    </message>
+    <message>
+        <source>CAM_TYPE</source>
+        <translation>тип камеры</translation>
+    </message>
+    <message>
+        <source>INSPECTION_FLAG</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>OVERVIEW_TYPE</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>SELECTION</source>
+        <translation>выборка</translation>
+    </message>
+    <message>
+        <source>OBJECT_TYPE</source>
+        <translation>тип объекта</translation>
+    </message>
+    <message>
+        <source>OBJECT_ID</source>
+        <translation>ID объекта</translation>
+    </message>
+    <message>
+        <source>OBJECT_NAME</source>
+        <translation>название объекта</translation>
+    </message>
+    <message>
+        <source>OBJECT_VIEW_GRADE</source>
+        <translation>OBJECT_VIEW_GRADE</translation>
+    </message>
+    <message>
+        <source>DATE_OF_RECORD</source>
+        <translation>дата фиксации</translation>
+    </message>
+    <message>
+        <source>USER_CREATED</source>
+        <translation>пользователь</translation>
+    </message>
+    <message>
+        <source>object_type</source>
+        <translation>тип объекта</translation>
+    </message>
+    <message>
+        <source>description</source>
+        <translation>описание</translation>
+    </message>
+    <message>
+        <source>date_record</source>
+        <translation>дата фиксации</translation>
+    </message>
+    <message>
+        <source>date_violation</source>
+        <translation>дата нарушения</translation>
+    </message>
+    <message>
+        <source>type_violation</source>
+        <translation>тип нарушения</translation>
+    </message>
+    <message>
+        <source>okrug</source>
+        <translation>округ</translation>
+    </message>
+    <message>
+        <source>district</source>
+        <translation>район</translation>
+    </message>
+    <message>
+        <source>object_ID</source>
+        <translation>ID объекта</translation>
+    </message>
+    <message>
+        <source>object_name</source>
+        <translation>название объекта</translation>
+    </message>
+    <message>
+        <source>URL</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <source>user</source>
+        <translation>пользователь</translation>
+    </message>
+    <message>
+        <source>violation_type</source>
+        <translation>тип нарушения</translation>
+    </message>
+</context>
+<context>
+    <name>espira::widgets::dialog_authorization</name>
+    <message>
+        <source>Authorization</source>
+        <translation type="obsolete">Авторизация</translation>
+    </message>
+    <message>
+        <source>login:</source>
+        <translation type="obsolete">Логин:</translation>
+    </message>
+    <message>
+        <source>pwd:</source>
+        <translation type="obsolete">Пароль:</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="obsolete">ОК</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Отмена</translation>
+    </message>
+</context>
+<context>
+    <name>mac_mediator::application</name>
+    <message>
+        <source>select db file</source>
+        <translation type="obsolete">Выбрать файл базы данных</translation>
+    </message>
+    <message>
+        <source>warning</source>
+        <translation type="obsolete">Предупреждение</translation>
+    </message>
+    <message>
+        <source>Database file wasn&apos;t selected</source>
+        <translation type="obsolete">Файл базы данных не был выбран, часть функций программы не будет работоспособной</translation>
+    </message>
+</context>
+<context>
+    <name>mac_mediator::dialog_address_list</name>
+    <message>
+        <source>find declarant address</source>
+        <translation type="obsolete">Искать адрес заявителя</translation>
+    </message>
+</context>
+<context>
+    <name>mac_mediator::dialog_id_request</name>
+    <message>
+        <source>id request:</source>
+        <translation type="obsolete">Номер карточки:</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="obsolete">ОК</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Отмена</translation>
+    </message>
+    <message>
+        <source>entered number is invalid</source>
+        <translation type="obsolete">Введённый номер карточки недействителен</translation>
+    </message>
+    <message>
+        <source>successful updateing request card #</source>
+        <translation type="obsolete">В базе данных успешно обновлено обращение №</translation>
+    </message>
+</context>
+<context>
+    <name>mac_mediator::dialog_period</name>
+    <message>
+        <source>stats for period</source>
+        <translation type="obsolete">Статистика за период</translation>
+    </message>
+    <message>
+        <source>period from:</source>
+        <translation type="obsolete">период с:</translation>
+    </message>
+    <message>
+        <source>to:</source>
+        <translation type="obsolete">по:</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="obsolete">ОК</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Отмена</translation>
+    </message>
+</context>
+<context>
+    <name>mac_mediator::dialog_request_data</name>
+    <message>
+        <source>dialog_request_data</source>
+        <translation type="obsolete">Данные обращения</translation>
+    </message>
+    <message>
+        <source>administrative division:</source>
+        <translation type="obsolete">Административный округ:</translation>
+    </message>
+    <message>
+        <source>municipal region:</source>
+        <translation type="obsolete">Муниципальный район:</translation>
+    </message>
+    <message>
+        <source>mediator:</source>
+        <translation type="obsolete">Медиатор:</translation>
+    </message>
+    <message>
+        <source>request type:</source>
+        <translation type="obsolete">Категория обращения:</translation>
+    </message>
+    <message>
+        <source>date:</source>
+        <translation type="obsolete">Дата:</translation>
+    </message>
+    <message>
+        <source>time:</source>
+        <translation type="obsolete">Время:</translation>
+    </message>
+    <message>
+        <source>declarant:</source>
+        <translation type="obsolete">Заявитель:</translation>
+    </message>
+    <message>
+        <source>declarant phone:</source>
+        <translation type="obsolete">Телефон заявителя:</translation>
+    </message>
+    <message>
+        <source>declarant address:</source>
+        <translation type="obsolete">Адрес заявителя:</translation>
+    </message>
+    <message>
+        <source>service organization:</source>
+        <translation type="obsolete">Управляющая компания:</translation>
+    </message>
+    <message>
+        <source>other conflict party:</source>
+        <translation type="obsolete">Вторая сторона конфликта:</translation>
+    </message>
+    <message>
+        <source>responsible organization:</source>
+        <translation type="obsolete">Ответственная организация:</translation>
+    </message>
+    <message>
+        <source>request:</source>
+        <translation type="obsolete">Содержание обращения:</translation>
+    </message>
+    <message>
+        <source>consultation:</source>
+        <translation type="obsolete">Консультация:</translation>
+    </message>
+    <message>
+        <source>warning</source>
+        <translation type="obsolete">Предупреждение</translation>
+    </message>
+    <message>
+        <source>failed id request</source>
+        <translation type="obsolete">Сбой присвоения номера карточки обращения</translation>
+    </message>
+    <message>
+        <source>failed id mr</source>
+        <translation type="obsolete">Не задан муниципальный район</translation>
+    </message>
+    <message>
+        <source>failed id mediator</source>
+        <translation type="obsolete">Не задан медиатор</translation>
+    </message>
+    <message>
+        <source>failed request category</source>
+        <translation type="obsolete">Не задана категория обращения</translation>
+    </message>
+    <message>
+        <source>failed request date</source>
+        <translation type="obsolete">Не задана дата обращения</translation>
+    </message>
+    <message>
+        <source>failed request time</source>
+        <translation type="obsolete">Не задано время обращения</translation>
+    </message>
+    <message>
+        <source>failed request declarant</source>
+        <translation type="obsolete">Не задан заявитель</translation>
+    </message>
+    <message>
+        <source>failed request declarant address</source>
+        <translation type="obsolete">Не задан адрес заявителя</translation>
+    </message>
+    <message>
+        <source>failed request text</source>
+        <translation type="obsolete">Не задано содержание обращения</translation>
+    </message>
+    <message>
+        <source>failed request consultation text</source>
+        <translation type="obsolete">Не введён текст консультции</translation>
+    </message>
+    <message>
+        <source>successful inserting request card #</source>
+        <translation type="obsolete">В базу данных успешно внесено обращение №</translation>
+    </message>
+    <message>
+        <source>successful updateing request card #</source>
+        <translation type="obsolete">В базе данных успешно обновлено обращение №</translation>
+    </message>
+    <message>
+        <source>declarant type:</source>
+        <translation type="obsolete">Тип заявителя:</translation>
+    </message>
+    <message>
+        <source>failed id declarant type</source>
+        <translation type="obsolete">Не выбран тип заявителя.</translation>
+    </message>
+</context>
+<context>
+    <name>mac_mediator::main_window</name>
+    <message>
+        <source>mac mediator application</source>
+        <translation type="obsolete">Программа учёта обращений граждан</translation>
+    </message>
+</context>
+<context>
+    <name>mac_mediator::widget_card_view</name>
+    <message>
+        <source>Executor info</source>
+        <translation type="obsolete">Ипформация об исполнителе</translation>
+    </message>
+    <message>
+        <source>FIO:</source>
+        <translation type="obsolete">ФИО:</translation>
+    </message>
+    <message>
+        <source>Phone:</source>
+        <translation type="obsolete">Телефон:</translation>
+    </message>
+    <message>
+        <source>Declarant info</source>
+        <translation type="obsolete">Информация о заявителе</translation>
+    </message>
+    <message>
+        <source>Adm. Division:</source>
+        <translation type="obsolete">Административный округ:</translation>
+    </message>
+    <message>
+        <source>Mun. District:</source>
+        <translation type="obsolete">Муниципальный район:</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <translation type="obsolete">Адрес:</translation>
+    </message>
+    <message>
+        <source>Service org:</source>
+        <translation type="obsolete">Управляющая компания:</translation>
+    </message>
+    <message>
+        <source>Request info</source>
+        <translation type="obsolete">Информация обращения</translation>
+    </message>
+    <message>
+        <source>Request category:</source>
+        <translation type="obsolete">Категория обращения:</translation>
+    </message>
+    <message>
+        <source>Request:</source>
+        <translation type="obsolete">Содержание обращения:</translation>
+    </message>
+    <message>
+        <source>Other conflict party:</source>
+        <translation type="obsolete">Вторая сторона конфликта:</translation>
+    </message>
+    <message>
+        <source>Responsible org:</source>
+        <translation type="obsolete">Ответственная организация:</translation>
+    </message>
+    <message>
+        <source>Consultation:</source>
+        <translation type="obsolete">Консультация:</translation>
+    </message>
+    <message>
+        <source>widget_card_view</source>
+        <translation type="obsolete">Карточка обращения заявителя</translation>
+    </message>
+    <message>
+        <source>Decl. Type:</source>
+        <translation type="obsolete">Тип заявителя:</translation>
+    </message>
+</context>
+<context>
+    <name>mac_mediator::widget_central</name>
+    <message>
+        <source>request list:</source>
+        <translation type="obsolete">Список карточек обращений:</translation>
+    </message>
+    <message>
+        <source>apply action</source>
+        <translation type="obsolete">Требуется подтверждение</translation>
+    </message>
+    <message>
+        <source>Press Yes if you&apos;re want delete request</source>
+        <translation type="obsolete">Нажмите кнопку &quot;Да&quot;, если вы действительно хотите удалить карточку обращения</translation>
+    </message>
+    <message>
+        <source>info</source>
+        <translation type="obsolete">Информация</translation>
+    </message>
+    <message>
+        <source> request successful deleted from db</source>
+        <translation type="obsolete">Карточка обращения успешно удалена из базы данных</translation>
+    </message>
+    <message>
+        <source>Request card info</source>
+        <translation type="obsolete">Данные карточки обращения</translation>
+    </message>
+    <message>
+        <source>Report</source>
+        <translation type="obsolete">Отчёт</translation>
+    </message>
+    <message>
+        <source>Diagaram</source>
+        <translation type="obsolete">Диаграмма</translation>
+    </message>
+</context>
+<context>
+    <name>mac_mediator::widget_search_card</name>
+    <message>
+        <source>administrative division:</source>
+        <translation type="obsolete">Административный округ:</translation>
+    </message>
+    <message>
+        <source>municipal region:</source>
+        <translation type="obsolete">Муниципальный район:</translation>
+    </message>
+    <message>
+        <source>mediator:</source>
+        <translation type="obsolete">Медиатор:</translation>
+    </message>
+    <message>
+        <source>request type:</source>
+        <translation type="obsolete">Категория обращения:</translation>
+    </message>
+    <message>
+        <source>declarant:</source>
+        <translation type="obsolete">Заявитель:</translation>
+    </message>
+    <message>
+        <source>from:</source>
+        <translation type="obsolete">период с:</translation>
+    </message>
+    <message>
+        <source>to:</source>
+        <translation type="obsolete">по:</translation>
+    </message>
+    <message>
+        <source>warning</source>
+        <translation type="obsolete">Предупреждение</translation>
+    </message>
+    <message>
+        <source>the search criteria not set</source>
+        <translation type="obsolete">Не установлены критерии поиска</translation>
+    </message>
+    <message>
+        <source>declarant type:</source>
+        <translation type="obsolete">Тип заявителя:</translation>
+    </message>
+</context>
+<context>
+    <name>vcamdb::application</name>
+    <message>
+        <source>select db file</source>
+        <translation>Выбрать файл базы данных</translation>
+    </message>
+    <message>
         <source>warning</source>
         <translation>Предупреждение</translation>
     </message>
     <message>
-        <source>the search criteria not set</source>
-        <translation>Не установлены критерии поиска</translation>
+        <source>Database file havn&apos;t been selected</source>
+        <translation>Файл базы данных не был выбран</translation>
+    </message>
+</context>
+<context>
+    <name>vcamdb::main_window</name>
+    <message>
+        <source>ogh videocams application</source>
+        <translation>Учёт фиксации нарушений на объектах городского хозяйства</translation>
+    </message>
+</context>
+<context>
+    <name>vcamdb::widget_object_to_cam</name>
+    <message>
+        <source>form to link camera&apos;s objects</source>
+        <translation>Форма для связи ОГХ и видеокамер</translation>
+    </message>
+</context>
+<context>
+    <name>vcamdb::widget_violation</name>
+    <message>
+        <source>warning</source>
+        <translation>Предупреждение</translation>
     </message>
     <message>
-        <source>declarant type:</source>
-        <translation>Тип заявителя:</translation>
+        <source>camera&apos;s name or object&apos;s name field must be filled</source>
+        <translation>Поле названия камеры должно быть заполнено</translation>
+    </message>
+    <message>
+        <source>URL field must be filled</source>
+        <translation>Поле URL должно быть заполнено</translation>
+    </message>
+    <message>
+        <source>user name must be filled in config file</source>
+        <translation>Имя пользователя должно быть задано в конфигурационном файле</translation>
+    </message>
+    <message>
+        <source>Violation type must be selected!</source>
+        <translation>Тип нарушения должен быть выбран</translation>
     </message>
 </context>
 </TS>

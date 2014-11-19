@@ -60,6 +60,7 @@ class combobox_violation_object;
         void init_layout( );
         void init_connections( );
 
+        QWidget* init_0_line( );
         QWidget* init_1st_line( );
         QWidget* init_2nd_line( );
         QWidget* init_3rd_line( );
@@ -74,6 +75,7 @@ class combobox_violation_object;
         bool object_type_valid( );
         bool object_name_valid( );
         bool URL_valid( );
+        bool user_valid( );
 
         /// --------------------------------------------------------------------
         void buttons_mode_default( );
@@ -129,6 +131,7 @@ class combobox_violation_object;
     ///			FIELDS
     /// ========================================================================
     private:
+        QLabel                      *_lbl_user;
         QLineEdit                   *_txt_regnum;
         combobox_camera_search      *_cbx_cam_name;
         QLabel                      *_lbl_cam_address;

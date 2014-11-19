@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 10-11-2014
-///		Date update	: 13-11-2014
+///		Date update	: 19-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <stdexcept>
@@ -123,8 +123,8 @@ namespace vcamdb
                                                    ) const
     {
         using namespace espira::db;
-        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.violation_type( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.reg_number( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.violation_type( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.okrug( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.prefekture( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.district( ) ) );
@@ -170,7 +170,7 @@ namespace vcamdb
     void data_adapter_violation::make_params_delete(
                                             espira::db::qt_sqlite_command *pcmd,
                                             const data_violation &r
-                        ) const
+                                                   ) const
     {
         using namespace espira::db;
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_int( r.id_violation( ) ) );
@@ -183,10 +183,10 @@ namespace vcamdb
     {
         if( !s_filter.length( ) )
         {
-            return QString(";");
+            return QString("WHERE (ID_VIOLATION>0) ORDER BY ID_VIOLATION DESC;");
         }
-        QString s_where(" WHERE ");
-        s_where += "(USER_CREATED='"+s_filter+"');";
+        QString s_where("WHERE ");
+        s_where += "(ID_VIOLATION>0)AND(USER_CREATED='"+s_filter+"') ORDER BY ID_VIOLATION DESC;";
 
         return s_where;
     }
@@ -199,10 +199,7 @@ namespace vcamdb
 	{
 		//make select query
         QString s_qry( data_adapter_violation::_s_sql_select );
-        if( s_filter.length( ) )
-        {
-            s_qry += this->make_select_filter( s_filter );
-        }
+        s_qry += this->make_select_filter( s_filter );
 
         qDebug()<<"preparing: " <<s_qry;
 

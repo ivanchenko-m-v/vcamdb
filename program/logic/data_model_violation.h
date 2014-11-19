@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 13-11-2014
+///		Date update	: 19-11-2014
 ///		Comment		:
 /// ============================================================================
 
@@ -18,6 +18,7 @@ namespace vcamdb
 
     class data_violation;
     class data_violation_collection;
+    typedef QList<data_violation*> data_violation_list;
 /// ############################################################################
 ///			class data_model_violation
 /// ############################################################################
@@ -57,6 +58,7 @@ namespace vcamdb
 	/// ------------------------------------------------------------------------
 		virtual void init_columns_header( void )
 		{
+            this -> _header.append( QObject::tr( "date_record" ) );
             this -> _header.append( QObject::tr( "date_violation" ) );
             this -> _header.append( QObject::tr( "type_violation" ) );
             this -> _header.append( QObject::tr( "okrug" ) );
@@ -77,9 +79,16 @@ namespace vcamdb
 	/// ------------------------------------------------------------------------
         void refresh( data_violation_collection *data );
 	/// ------------------------------------------------------------------------
-        void append( const data_violation &request );
+        void append( const data_violation &violation );
 	/// ------------------------------------------------------------------------
-        void prepend(const data_violation &request);
+        void prepend(const data_violation &violation);
+	/// ------------------------------------------------------------------------
+        void update(const data_violation &violation);
+	/// ------------------------------------------------------------------------
+        data_violation* find( int id_violation );
+	/// ------------------------------------------------------------------------
+        int row_index( int id_violation );
+
 	/// ------------------------------------------------------------------------
 	/// override
 		virtual int rowCount(
@@ -159,8 +168,8 @@ namespace vcamdb
 	///			FIELDS
 	/// ========================================================================
 	private:
-        QList<data_violation*>	_list;
-		QVector<QString>		_header;
+        data_violation_list	_list;
+		QVector<QString>	_header;
 
     };//class data_model_violation
 /// ############################################################################

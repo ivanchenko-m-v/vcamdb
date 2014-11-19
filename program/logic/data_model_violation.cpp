@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 10-11-2014
+///		Date update	: 19-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QDebug>
@@ -43,7 +43,7 @@ namespace vcamdb
 	///		PROPERTIES
 	/// ========================================================================
 	/// ------------------------------------------------------------------------
-	///	request( int i_row )
+	///	violation( int i_row )
 	/// ------------------------------------------------------------------------
     const data_violation* data_model_violation::violation( int i_row ) const
 	{
@@ -94,8 +94,8 @@ namespace vcamdb
 		QVector<QVector<QVariant> >::const_iterator iter;
 		for( iter = data.constBegin( ); iter != data.end( ); ++iter )
 		{
-            data_violation *request = new data_violation( *iter );
-			this->_list.append( request );
+            data_violation *violation = new data_violation( *iter );
+			this->_list.append( violation );
 		}
 		this->endInsertRows( );
 	}
@@ -121,14 +121,14 @@ namespace vcamdb
     }
 
 	/// ------------------------------------------------------------------------
-    ///	append(const data_violation &request)
+    ///	append(const data_violation &violation)
 	/// ------------------------------------------------------------------------
-    void data_model_violation::append( const data_violation &request )
+    void data_model_violation::append( const data_violation &violation )
     {
         //вставка в конец списка
 		this->beginInsertRows( QModelIndex( ), this->_list.size( ), this->_list.size( ) );
 
-        data_violation *pr = new data_violation( request );
+        data_violation *pr = new data_violation( violation );
         //вставка в конец списка
 		this->_list.append( pr );
 
@@ -136,18 +136,75 @@ namespace vcamdb
     }
 
 	/// ------------------------------------------------------------------------
-    ///	prepend(const data_violation &request)
+    ///	prepend(const data_violation &violation)
 	/// ------------------------------------------------------------------------
-    void data_model_violation::prepend( const data_violation &request )
+    void data_model_violation::prepend( const data_violation &violation )
     {
         //вставка в начало списка
 		this->beginInsertRows( QModelIndex( ), 0, 0 );
 
-        data_violation *pr = new data_violation( request );
+        data_violation *pr = new data_violation( violation );
         //вставка в начало списка
 		this->_list.prepend( pr );
 
         this->endInsertRows( );
+    }
+
+	/// ------------------------------------------------------------------------
+    ///	update(const data_violation &violation)
+	/// ------------------------------------------------------------------------
+    void data_model_violation::update( const data_violation &violation )
+    {
+        if( violation.id_violation() == 0 )
+        {
+            return;
+        }
+        data_violation *pv = this->find( violation.id_violation( ) );
+        if( pv )
+        {
+            *pv = violation;
+        }
+    }
+
+	/// ------------------------------------------------------------------------
+    ///	find( int id_violation )
+	/// ------------------------------------------------------------------------
+    data_violation* data_model_violation::find( int id_violation )
+    {
+        data_violation *result = 0;
+
+        data_violation_list::iterator it = this->_list.begin( );
+        for( ;it < this->_list.end( ); ++it )
+        {
+            data_violation *v = *it;
+            if( v && v->id_violation( ) == id_violation )
+            {
+                result = v;
+                break;
+            }
+        }
+        return result;
+    }
+
+	/// ------------------------------------------------------------------------
+    ///	row_index( int id_violation )
+	/// ------------------------------------------------------------------------
+    int data_model_violation::row_index( int id_violation )
+    {
+        int n_row = -1;//out of list
+
+        data_violation_list::iterator it = this->_list.begin( );
+        for( ;it < this->_list.end( ); ++it )
+        {
+            ++n_row;
+
+            data_violation *v = *it;
+            if( v && v->id_violation( ) == id_violation )
+            {
+                break;
+            }
+        }
+        return n_row;
     }
 
 	/// ------------------------------------------------------------------------
@@ -171,24 +228,26 @@ namespace vcamdb
 		switch( index.column( ) )
 		{
             case 0:
+                return pv->date_record( );
+            case 1:
                 return pv->date_violation( );
-			case 1:
+			case 2:
                 return pv->violation_type( );
-            case 2:
-                return pv->okrug( );
             case 3:
-                return pv->district( );
+                return pv->okrug( );
             case 4:
-                return pv->cam_name( );
+                return pv->district( );
             case 5:
-                return pv->object_type( );
+                return pv->cam_name( );
             case 6:
-                return pv->object_id( );
+                return pv->object_type( );
             case 7:
-                return pv->object_name( );
+                return pv->object_id( );
             case 8:
-                return pv->URL( );
+                return pv->object_name( );
             case 9:
+                return pv->URL( );
+            case 10:
                 return pv->user( );
             default:
 				return QVariant( );
@@ -235,8 +294,8 @@ namespace vcamdb
 
 		for( int i = 0; i < count; i++ )
 		{
-            data_violation* request = new data_violation;
-			this->_list.insert( row + i, request );
+            data_violation* violation = new data_violation;
+			this->_list.insert( row + i, violation );
 		}
 
 		this->endInsertRows( );

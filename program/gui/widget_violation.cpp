@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 18-11-2014
+///		Date update	: 19-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QLabel>
@@ -81,6 +81,7 @@ namespace vcamdb
         layout->setMargin( 0 );
 
         layout->addStretch( 1000 );
+        layout->addWidget( this->init_0_line( ) );
         layout->addWidget( this->init_1st_line( ) );
         layout->addWidget( this->init_2nd_line( ) );
         layout->addWidget( this->init_3rd_line( ) );
@@ -123,6 +124,33 @@ namespace vcamdb
                     this->_btn_edit, SIGNAL( clicked( ) ),
                     this, SLOT( edit_data_violation( ) )
                      );
+        this->connect(
+                    this->_btn_del, SIGNAL( clicked( ) ),
+                    this, SLOT( delete_data_violation( ) )
+                     );
+    }
+
+    /// ------------------------------------------------------------------------
+    /// init_0_line( )
+    /// ------------------------------------------------------------------------
+    QWidget* widget_violation::init_0_line( )
+    {
+        QHBoxLayout *layout = new QHBoxLayout;
+        //
+        //_lbl_user
+        //
+        this->_lbl_user = new QLabel;
+        layout->addWidget(
+                    new ew::vertical_box( this->_lbl_user,
+                                          QObject::tr( "user:" ),
+                                          this
+                                        )
+                         );
+
+        QWidget *w = new QWidget( this );
+        w->setLayout( layout );
+
+        return w;
     }
 
     /// ------------------------------------------------------------------------
@@ -381,7 +409,11 @@ namespace vcamdb
         this->_violation.object_name( this->_cbx_object_name->currentText( ) );
         this->_violation.object_id( this->_lbl_id_object->text( ) );
         this->_violation.date_violation( this->_dte_violation->date( ) );
-        this->_violation.date_record( QDate::currentDate( ) );
+        if( this->_violation.id_violation() == 0 )
+        {
+            //дата фиксации нарушения ставится только у нового нарушения
+            this->_violation.date_record( QDate::currentDate( ) );
+        }
         this->_violation.URL( this->_txt_url->text( ) );
         this->_violation.user( application::program_instance( )->user( ) );
         this->_violation.note( this->_txt_note->text( ) );
@@ -395,8 +427,12 @@ namespace vcamdb
         }
     }
 
+    /// ------------------------------------------------------------------------
+    /// fill_controls( const data_violation &v )
+    /// ------------------------------------------------------------------------
     void widget_violation::fill_controls( const data_violation &v )
     {
+        this->_lbl_user->setText( v.user( ) );
         this->_txt_regnum->setText( v.reg_number( ) );
         this->_cbx_cam_name->camera( v.cam_name( ) );
         this->_cbx_violation_type->violation_type( v.violation_type( ) );
@@ -407,59 +443,83 @@ namespace vcamdb
         this->_txt_note->setText( v.note( ) );
     }
 
+    /// ------------------------------------------------------------------------
+    /// fill_controls( const data_violation &v )
+    /// ------------------------------------------------------------------------
     bool widget_violation::data_valid( )
     {
-        if( !this->camera_valid( ) ) return false;
+        if( !this->user_valid( ) ) return false;
 
-        if( !this->object_type_valid( ) ) return false;
-
-        if( !this->object_name_valid( ) ) return false;
-
-        if( !this->URL_valid( ) ) return false;
+        if( !this->camera_valid( ) && !this->object_name_valid( ) )
+        {
+            QMessageBox::warning(
+                                this, tr( "warning" ),
+                                tr( "camera\'s name or object's name field must be filled" )
+                                );
+            return false;
+        }
 
         return true;
     }
 
-    bool widget_violation::camera_valid()
+    /// ------------------------------------------------------------------------
+    /// camera_valid( )
+    /// ------------------------------------------------------------------------
+    bool widget_violation::camera_valid( )
     {
         if( this->_cbx_cam_name->currentIndex( ) < 0 )
         {
+        /*
             QMessageBox::warning(
                                 this, tr( "warning" ),
                                 tr( "camera\'s name field must be filled" )
                                 );
+                                */
             return false;
         }
         return true;
     }
 
-    bool widget_violation::object_type_valid()
+    /// ------------------------------------------------------------------------
+    /// object_type_valid( )
+    /// ------------------------------------------------------------------------
+    bool widget_violation::object_type_valid( )
     {
         QString text_obj_type( this->_cbx_object_type->currentText( ).simplified( ).remove( ' ' ) );
         if( !text_obj_type.length( ) )
         {
+        /*
             QMessageBox::warning(
                                 this, tr( "warning" ),
                                 tr( "object\'s type field must be filled" )
                                 );
+                                */
             return false;
         }
         return true;
     }
 
-    bool widget_violation::object_name_valid()
+    /// ------------------------------------------------------------------------
+    /// object_name_valid( )
+    /// ------------------------------------------------------------------------
+    bool widget_violation::object_name_valid( )
     {
         if( this->_cbx_object_name->currentIndex( ) < 0 )
         {
+        /*
             QMessageBox::warning(
                                 this, tr( "warning" ),
                                 tr( "object\'s name field must be filled" )
                                 );
+                                */
             return false;
         }
         return true;
     }
 
+    /// ------------------------------------------------------------------------
+    /// URL_valid( )
+    /// ------------------------------------------------------------------------
     bool widget_violation::URL_valid( )
     {
         const int MIN_URL_LENGTH = 4;
@@ -468,6 +528,22 @@ namespace vcamdb
             QMessageBox::warning(
                                 this, tr( "warning" ),
                                 tr( "URL field must be filled" )
+                                );
+            return false;
+        }
+        return true;
+    }
+
+    /// ------------------------------------------------------------------------
+    /// user_valid( )
+    /// ------------------------------------------------------------------------
+    bool widget_violation::user_valid( )
+    {
+        if( application::program_instance( )->user( ).isEmpty( ) )
+        {
+            QMessageBox::warning(
+                                this, tr( "warning" ),
+                                tr( "user name must be filled in config file" )
                                 );
             return false;
         }
@@ -496,8 +572,8 @@ namespace vcamdb
         this->_btn_save->setEnabled( false );
         this->_btn_clear->setEnabled( false );
 
-        const QString &s_user = application::program_instance( )->user( );
-        if( s_user.compare( "su" ) == 0 )
+        const QString &s_group = application::program_instance( )->group( );
+        if( s_group.compare( "su" ) == 0 )
         {
             this->_btn_del->setEnabled( true );
         }
@@ -681,6 +757,8 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     void widget_violation::new_data_violation( )
     {
+        this->_violation.clear_data( );
+
         this->controls_clear( );
         this->controls_enable( );
         this->buttons_mode_edit( );
@@ -709,7 +787,11 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     void widget_violation::delete_data_violation( )
     {
+            //удалить запись
+            application::the_business_logic( ).violation_delete( this->_violation );
 
+            this->controls_clear( );
+            this->enable_controls( no_selection );
     }
 
     /// ------------------------------------------------------------------------
@@ -729,18 +811,20 @@ namespace vcamdb
         {
             //новая запись
             application::the_business_logic( ).violation_insert( this->_violation );
-            emit saved_new_item( this->_violation );
+
+            this->controls_clear( );
+            this->enable_controls( no_selection );
         }
         else
         {
             //редактируемая запись
             application::the_business_logic( ).violation_update( this->_violation );
-            emit saved_edited_item( this->_violation );
+            this->enable_controls( view_item );
         }
     }
 
     /// ------------------------------------------------------------------------
-    /// set_buttons_mode( )
+    /// enable_controls( )
     /// ------------------------------------------------------------------------
     void widget_violation::enable_controls(widget_violation::widget_violation_mode mode)
     {
@@ -765,7 +849,7 @@ namespace vcamdb
     }
 
     /// ------------------------------------------------------------------------
-    /// set_buttons_mode( )
+    /// view_violation( )
     /// ------------------------------------------------------------------------
     void widget_violation::view_violation( const data_violation *v )
     {

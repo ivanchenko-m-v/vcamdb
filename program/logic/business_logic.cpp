@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 18-11-2014
+///		Date update	: 19-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QDebug>
@@ -594,8 +594,8 @@ namespace vcamdb
             data_adapter_violation adap;
             //insert data
             adap.insert( record );
-            //insert into model
-            this->_model_violation->prepend( record );
+            //refresh model
+            this->violation_select( );
         }
         catch( std::exception &ex )
         {
@@ -628,7 +628,7 @@ namespace vcamdb
             //update data
             adap.update( record );
             //update model
-            //this->_model_violation->re
+            this->_model_violation->update( record );
         }
         catch( std::exception &ex )
         {
@@ -660,6 +660,8 @@ namespace vcamdb
             data_adapter_violation adap;
             //delete data
             adap.del( record );
+            //refresh model
+            this->violation_select( );
         }
         catch( std::exception &ex )
         {
@@ -684,7 +686,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     ///	violation_select( )
     /// ------------------------------------------------------------------------
-    data_violation_collection* business_logic::violation_select( )
+    void business_logic::violation_select( )
     {
         data_violation_collection *p_coll = 0;
 
@@ -692,20 +694,21 @@ namespace vcamdb
         {
             data_adapter_violation adap;
 
-            QString s_filter( application::program_instance( )->user( ) );
-            if( !s_filter.compare( "su" ) )
+            QString s_user( application::program_instance( )->user( ) );
+            QString s_group( application::program_instance( )->group( ) );
+            if( !s_group.compare( "su" ) )
             {
                 //for superuser records filtration
                 //do not applied
-                s_filter.clear( );
+                s_user.clear( );
             }
-            else if( !s_filter.length( ) )
+            else if( s_user.isEmpty( ) )
             {
                 //ненастроенный пользователь не должен видеть записи БД
-                s_filter = "abrakadabra1";
+                s_user = "abrakadabra1";
             }
             //select data
-            p_coll = adap.select( s_filter );
+            p_coll = adap.select( s_user );
             //refresh data model
             this->_model_violation->refresh( p_coll );
         }
@@ -737,8 +740,6 @@ namespace vcamdb
             qDebug( ) << s_msg;
             QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
         }
-
-        return p_coll;
     }
 
 /// ############################################################################

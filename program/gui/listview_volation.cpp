@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 18-11-2014
+///		Date update	: 19-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QAbstractItemView>
@@ -17,6 +17,8 @@
 
 #include "listview_volation.h"
 #include "delegate_line_edit.h"
+
+#include "data_adapter_violation.h"
 
 namespace vcamdb
 {
@@ -144,7 +146,12 @@ namespace vcamdb
 
     void listview_violation::select_updated_violation( const data_violation &v )
     {
+        if( !this->model( ) ) return;
+        if( !this->selectionModel( ) ) return;
 
+        const business_logic &logic = application::the_business_logic( );
+        int row_index = logic.model_violation( )->row_index( v.id_violation( ) );
+        this->selectionModel( )->select( this->model( )->index( row_index, 0 ), QItemSelectionModel::Select );
     }
 
 	/// ========================================================================

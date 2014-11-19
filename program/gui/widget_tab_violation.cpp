@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 13-11-2014
+///		Date update	: 19-11-2014
 ///		Comment		:
 /// ============================================================================
 #include <QSplitter>
@@ -22,6 +22,9 @@
 #include "listview_cam_selection.h"
 #include "listview_volation.h"
 #include "widget_violation.h"
+
+#include "data_model_violation.h"
+#include "data_adapter_violation.h"
 
 namespace vcamdb
 {
@@ -92,6 +95,26 @@ namespace vcamdb
                     this->_w_violation,
                     SLOT( view_violation( const data_violation* ) )
                      );
+        this->connect(
+                    this->_lv_violations,
+                    SIGNAL( clicked(QModelIndex) ),
+                    this,
+                    SLOT( view_violation(QModelIndex) )
+                     );
+                     /*
+        this->connect(
+                    this->_w_violation,
+                    SIGNAL( saved_edited_item( data_violation ) ),
+                    this->_lv_violations,
+                    SLOT( select_updated_violation( data_violation ) )
+                    );
+        this->connect(
+                    this->_w_violation,
+                    SIGNAL( saved_new_item( data_violation ) ),
+                    this->_lv_violations,
+                    SLOT( clearSelection( ) )
+                    );
+                    */
     }
 
     /// ------------------------------------------------------------------------
@@ -141,25 +164,6 @@ namespace vcamdb
         widget->setLayout( layout );
 
         return widget;
-        /*
-        QGridLayout *layout = new QGridLayout;
-
-        //
-        //_lv_violations
-        //
-        this->_lv_violations = new listview_violation( this );
-        layout->addWidget( this->_lv_violations, 0, 0 );
-         //
-        //_w_violation
-        //
-        this->_w_violation = new widget_violation( this );
-        layout->addWidget( this->_w_violation, 2, 0 );
-
-        QWidget  *widget = new QWidget( this );
-        widget->setLayout( layout );
-
-        return widget;
-        */
     }
 
     /// ========================================================================
@@ -185,151 +189,18 @@ namespace vcamdb
     /// ========================================================================
     ///		SLOTS
     /// ========================================================================
-/*
-    /// ------------------------------------------------------------------------
-    /// slot_add_request( )
-    /// ------------------------------------------------------------------------
-    void widget_tab_violation::slot_add_request( )
+    void widget_tab_violation::view_violation( QModelIndex idx )
     {
-        dialog_request_data w_data_add;
-        w_data_add.exec( );
-    }
-
-    /// ------------------------------------------------------------------------
-    /// slot_edit_request( )
-    /// ------------------------------------------------------------------------
-    void widget_tab_violation::slot_edit_request( )
-    {
-        data_request *request =
-            const_cast<data_request*>( this->_lv_request->current_request( ) );
-        if( !request )
+        if( !idx.isValid( ) )
         {
             return;
         }
-        dialog_request_data w_data_edit( 0, dialog_request_data::mode_edit_request );
-        w_data_edit.request( *request );
-        int res = w_data_edit.exec( );
-        //update data model item
-        if( res == QDialog::Accepted )
+        business_logic &logic = application::the_business_logic( );
+        const data_violation *v = logic.model_violation( )->violation( idx.row( ) );
+        if( v )
         {
-            *request = w_data_edit.request( );
+            this->_w_violation->view_violation( v );
         }
     }
-
-    /// ------------------------------------------------------------------------
-    /// slot_del_request( )
-    /// ------------------------------------------------------------------------
-    void widget_tab_violation::slot_del_request( )
-    {
-        const data_request *r = this->_lv_request->current_request( );
-        if( !r )
-        {
-            return;
-        }
-        int i_reply = QMessageBox::question(
-                                    0, tr("apply action"),
-                                    tr( "Press Yes if you're want delete request" ),
-                                    QMessageBox::No|QMessageBox::Yes
-                                           );
-        if( i_reply == QMessageBox::Yes)
-        {
-            business_logic &logic = application::the_business_logic( );
-            if( logic.request_delete( r->id_request( ) ) )
-            {
-                QMessageBox::information(
-                                         0, tr("info"),
-                                         r->id_request_string( ) +
-                                         tr(" request successful deleted from db")
-                                        );
-            }
-        }
-    }
-
-    /// ------------------------------------------------------------------------
-    /// slot_id_request_edit( )
-    /// ------------------------------------------------------------------------
-    void widget_tab_violation::slot_id_request_edit( )
-    {
-        const data_request *request = this->_lv_request->current_request( );
-        if( !request )
-        {
-            return;
-        }
-        dialog_id_request dlg;
-        dlg.request( const_cast<data_request *>( request ) );
-        dlg.exec( );
-    }
-
-    /// ------------------------------------------------------------------------
-    /// slot_print_request( )
-    /// ------------------------------------------------------------------------
-    void widget_tab_violation::slot_print_request( )
-    {
-		const data_request *r = this->_lv_request->current_request( );
-		if( !r )
-		{
-            return;
-		}
-		QPrinter printer;
-		printer.setPageMargins( 15, 15, 15, 15, QPrinter::Millimeter );
-		printer.setOrientation( QPrinter::Portrait );
-		printer.setPaperSize( QPrinter::A4 );
-		printer.setPaperSource( QPrinter::Auto );
-
-		QPrintPreviewDialog ppvw_dlg( &printer );
-		ppvw_dlg.setWindowTitle( tr( "Request card info" ) );
-		ppvw_dlg.setWindowFlags( Qt::WindowMaximizeButtonHint|Qt::WindowCloseButtonHint );
-		this->connect(
-				&ppvw_dlg, SIGNAL( paintRequested( QPrinter* ) ),
-				this, SLOT( slot_print_preview_paint_requested( QPrinter* ) )
-					 );
-		ppvw_dlg.exec( );
-    }
-
-    /// ------------------------------------------------------------------------
-	///	slot_print_preview_paint_requested( QPrinter *p ) const
-    /// ------------------------------------------------------------------------
-    void widget_tab_violation::slot_print_preview_paint_requested( QPrinter *p ) const
-	{
-		//get request
-		const data_request *r = this->_lv_request->current_request( );
-		if( !r )
-		{
-            return;
-		}
-		renderer_request rdr( p );
-		rdr.request( r );
-		//
-		rdr.begin( p );
-        rdr.draw_request( );
-        rdr.end( );
-    }
-
-    /// ------------------------------------------------------------------------
-    /// slot_stat_report( )
-    /// ------------------------------------------------------------------------
-    void widget_tab_violation::slot_stat_report( )
-    {
-        dialog_period dlg;
-        if( dlg.exec( ) != QDialog::Accepted )
-        {
-            return;
-        }
-        QMessageBox::information(0, "slot_stat_report", "report" );
-    }
-
-    /// ------------------------------------------------------------------------
-    /// slot_stat_diagram( )
-    /// ------------------------------------------------------------------------
-    void widget_tab_violation::slot_stat_diagram( )
-    {
-        dialog_period dlg;
-        if( dlg.exec( ) != QDialog::Accepted )
-        {
-            return;
-        }
-        QMessageBox::information(0, "slot_stat_diagram", "diagram" );
-    }
-    */
 
 }//namespace vcamdb
