@@ -281,7 +281,7 @@
     </message>
     <message>
         <source>comment:</source>
-        <translation>комметарий:</translation>
+        <translation>комментарий:</translation>
     </message>
     <message>
         <source>attach file to violation record in DB</source>
