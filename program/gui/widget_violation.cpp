@@ -745,7 +745,6 @@ namespace vcamdb
             return;
         }
         this->_lbl_id_object->setText(
-
                     QString::number(
                         this->_cbx_object_name->object_id( current_object_index )
                                    )
