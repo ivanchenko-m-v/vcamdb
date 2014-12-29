@@ -411,6 +411,38 @@
         <source>violation_type</source>
         <translation>тип нарушения</translation>
     </message>
+    <message>
+        <source>program setup</source>
+        <translation>Настройки программы</translation>
+    </message>
+    <message>
+        <source>info</source>
+        <translation>Информация</translation>
+    </message>
+    <message>
+        <source>Violation record successfully inserted</source>
+        <translation>Запись о нарушении успешно добавлена</translation>
+    </message>
+    <message>
+        <source>Violation record successfully updated</source>
+        <translation>Запись о нарушении успешно обновлена</translation>
+    </message>
+    <message>
+        <source>Violation record deleted</source>
+        <translation>Запись о нарушении успешно удалена из БД</translation>
+    </message>
+    <message>
+        <source>ODH import complete</source>
+        <translation>Импорт ОДХ завершён</translation>
+    </message>
+    <message>
+        <source>DT import complete</source>
+        <translation>Импорт ДТ завершён</translation>
+    </message>
+    <message>
+        <source>CA import complete</source>
+        <translation>Импорт КП завершён</translation>
+    </message>
 </context>
 <context>
     <name>espira::widgets::dialog_authorization</name>
@@ -805,6 +837,21 @@
     <message>
         <source>form to link camera&apos;s objects</source>
         <translation>Форма для связи ОГХ и видеокамер</translation>
+    </message>
+</context>
+<context>
+    <name>vcamdb::widget_tab_setup</name>
+    <message>
+        <source>Import...</source>
+        <translation>Импортировать...</translation>
+    </message>
+    <message>
+        <source>warning</source>
+        <translation>Предупреждение</translation>
+    </message>
+    <message>
+        <source>Data file didn&apos;t selected</source>
+        <translation>Файл данных не был выбран</translation>
     </message>
 </context>
 <context>

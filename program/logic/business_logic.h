@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 19-11-2014
+///		Date update	: 29-12-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __BUSINESS_LOGIC_H__
@@ -57,8 +57,15 @@ class data_violation_collection;
         const QString& db_path( ) const
         { return this->_db_path; }
 
-        void db_path( const QString& db_path)
+        void db_path( const QString& db_path )
         { this->_db_path = db_path; }
+
+    /// ------------------------------------------------------------------------
+        const QString& db_ex_path( ) const
+        { return this->_db_ex_path; }
+
+        void db_ex_path( const QString& db_ex_path )
+        { this->_db_ex_path = db_ex_path; }
     /// ------------------------------------------------------------------------
         data_model_cam_selection* model_cam_selection( ) const
         { return this->_model_cam_selection; }
@@ -133,6 +140,12 @@ class data_violation_collection;
         void violation_delete( const data_violation &record );
     /// ------------------------------------------------------------------------
         void violation_select( );
+    /// ------------------------------------------------------------------------
+        void ODH_import( const QString &f_file_from );
+    /// ------------------------------------------------------------------------
+        void DT_import( const QString &f_file_from );
+    /// ------------------------------------------------------------------------
+        void CA_import( const QString &f_file_from );
 
 	/// ========================================================================
 	///		OPERATORS
@@ -147,6 +160,7 @@ class data_violation_collection;
     /// ========================================================================
     private:
         QString _db_path;
+        QString _db_ex_path;
 
         data_model_cam_selection    *_model_cam_selection;
         data_model_violation        *_model_violation;

@@ -58,7 +58,12 @@ SOURCES += \
     dbmodule/data_adapter_CA.cpp \
     dbmodule/data_adapter_ODH.cpp \
     gui/combobox_violation_object.cpp \
-    dbmodule/data_adapter_violation.cpp
+    dbmodule/data_adapter_violation.cpp \
+    dbmodule/data_adapter_violation_attachment.cpp \
+    gui/widget_tab_setup.cpp \
+    dbmodule/data_adapter_import_CA.cpp \
+    dbmodule/data_adapter_import_ODH.cpp \
+    dbmodule/data_adapter_import_DT.cpp
 
 HEADERS  += \
     app/application.h \
@@ -101,7 +106,12 @@ HEADERS  += \
     dbmodule/data_adapter_ODH.h \
     dbmodule/data_violation_object.h \
     gui/combobox_violation_object.h \
-    dbmodule/data_adapter_violation.h
+    dbmodule/data_adapter_violation.h \
+    dbmodule/data_adapter_violation_attachment.h \
+    gui/widget_tab_setup.h \
+    dbmodule/data_adapter_import_CA.h \
+    dbmodule/data_adapter_import_ODH.h \
+    dbmodule/data_adapter_import_DT.h
 
 INCLUDEPATH += ./app \
 				./dbmodule \
@@ -138,4 +148,5 @@ RC_FILE = res/winres/app_icon.rc
 }
 
 OTHER_FILES += \
-    sql/TABLE_VIOLATION_ALTER.sql
+    sql/TABLE_VIOLATION_ALTER.sql \
+    sql/t_violation_attachment.sql

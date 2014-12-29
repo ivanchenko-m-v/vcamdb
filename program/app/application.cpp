@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 18-11-2014
+///		Date update	: 29-12-2014
 ///		Comment		:
 /// ============================================================================
 #include <QDebug>
@@ -249,6 +249,7 @@ namespace vcamdb
     {
         this->find_db_file( );
         application::the_business_logic( ).db_path( this->_params.parameter("db_path") );
+        application::the_business_logic( ).db_ex_path( this->_params.parameter( "db_attachment" ) );
     }
 
     /// ========================================================================

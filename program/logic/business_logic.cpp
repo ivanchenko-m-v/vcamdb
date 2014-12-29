@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 19-11-2014
+///		Date update	: 29-12-2014
 ///		Comment		:
 /// ============================================================================
 #include <QDebug>
@@ -26,6 +26,10 @@
 #include "data_adapter_DT.h"
 #include "data_adapter_ODH.h"
 #include "data_adapter_violation.h"
+
+#include "data_adapter_import_CA.h"
+#include "data_adapter_import_ODH.h"
+#include "data_adapter_import_DT.h"
 
 namespace vcamdb
 {
@@ -596,6 +600,7 @@ namespace vcamdb
             adap.insert( record );
             //refresh model
             this->violation_select( );
+            QMessageBox::information( 0, QObject::tr( "info" ), QObject::tr( "Violation record successfully inserted" ));
         }
         catch( std::exception &ex )
         {
@@ -629,6 +634,7 @@ namespace vcamdb
             adap.update( record );
             //update model
             this->_model_violation->update( record );
+            QMessageBox::information( 0, QObject::tr( "info" ), QObject::tr( "Violation record successfully updated" ) );
         }
         catch( std::exception &ex )
         {
@@ -662,6 +668,7 @@ namespace vcamdb
             adap.del( record );
             //refresh model
             this->violation_select( );
+            QMessageBox::information( 0, QObject::tr( "info" ), QObject::tr( "Violation record deleted" ) );
         }
         catch( std::exception &ex )
         {
@@ -740,6 +747,116 @@ namespace vcamdb
             qDebug( ) << s_msg;
             QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
         }
+    }
+
+///|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+///
+/// BLOCK import
+///
+///|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    /// ------------------------------------------------------------------------
+    ///	ODH_import( const QString &f_file_from )
+    /// ------------------------------------------------------------------------
+    void business_logic::ODH_import( const QString &f_file_from )
+    {
+        QApplication::setOverrideCursor( QCursor( Qt::WaitCursor ) );
+
+        try
+        {
+            data_adapter_import_ODH adap;
+            adap.import_file( f_file_from );
+            QMessageBox::information( 0, QObject::tr( "info" ), QObject::tr( "ODH import complete" ) );
+        }
+        catch( std::exception &ex )
+        {
+            QString s_msg(
+                            "business_logic::ODH_import( )"
+                            ":\n\t" + QString::fromUtf8( ex.what( ) )
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+        catch( ... )
+        {
+            QString s_msg(
+                        "business_logic::ODH_import( )"
+                        ":\n\t unknown error while importing ODH"
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+
+        QApplication::restoreOverrideCursor( );
+    }
+
+    /// ------------------------------------------------------------------------
+    ///	DT_import( const QString &f_file_from )
+    /// ------------------------------------------------------------------------
+    void business_logic::DT_import( const QString &f_file_from )
+    {
+        QApplication::setOverrideCursor( QCursor( Qt::WaitCursor ) );
+
+        try
+        {
+            data_adapter_import_DT adap;
+            adap.import_file( f_file_from );
+            QMessageBox::information( 0, QObject::tr( "info" ), QObject::tr( "DT import complete" ) );
+        }
+        catch( std::exception &ex )
+        {
+            QString s_msg(
+                            "business_logic::DT_import( )"
+                            ":\n\t" + QString::fromUtf8( ex.what( ) )
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+        catch( ... )
+        {
+            QString s_msg(
+                        "business_logic::DT_import( )"
+                        ":\n\t unknown error while importing CA"
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+
+        QApplication::restoreOverrideCursor( );
+    }
+
+    /// ------------------------------------------------------------------------
+    ///	CA_import( const QString &f_file_from )
+    /// ------------------------------------------------------------------------
+    void business_logic::CA_import( const QString &f_file_from )
+    {
+        QApplication::setOverrideCursor( QCursor( Qt::WaitCursor ) );
+
+        try
+        {
+            data_adapter_import_CA adap;
+            adap.import_file( f_file_from );
+            QMessageBox::information( 0, QObject::tr( "info" ), QObject::tr( "CA import complete" ) );
+        }
+        catch( std::exception &ex )
+        {
+            QString s_msg(
+                            "business_logic::CA_import( )"
+                            ":\n\t" + QString::fromUtf8( ex.what( ) )
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+        catch( ... )
+        {
+            QString s_msg(
+                        "business_logic::CA_import( )"
+                        ":\n\t unknown error while importing CA"
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+
+        QApplication::restoreOverrideCursor( );
     }
 
 /// ############################################################################

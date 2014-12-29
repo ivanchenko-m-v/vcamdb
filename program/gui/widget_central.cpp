@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 10-11-2014
+///		Date update	: 29-12-2014
 ///		Comment		:
 /// ============================================================================
 #include <QLabel>
@@ -20,6 +20,7 @@
 #include "widget_central.h"
 #include "widget_tab_object.h"
 #include "widget_tab_violation.h"
+#include "widget_tab_setup.h"
 
 namespace vcamdb
 {
@@ -55,15 +56,9 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     void widget_central::initialize( )
     {
-        //this->addTab( new widget_tab_object, QObject::tr( "videocams" ) );
-        this->addTab( new widget_tab_violation, QObject::tr( "videocams violations" ) );
-        this->setTabPosition( QTabWidget::West );
-
         this->init_layout( );
 
         this->init_connections( );
-
-        //this->_w_search->setFocus( );
     }
 
     /// ------------------------------------------------------------------------
@@ -71,25 +66,14 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     void widget_central::init_layout( )
     {
-        /*
-        QGridLayout *gl = new QGridLayout;
+        //this->addTab( new widget_tab_object, QObject::tr( "videocams" ) );
+        this->addTab( new widget_tab_violation, QObject::tr( "videocams violations" ) );
+        if( application::program_instance( )->group( ).compare( "su" ) == 0 )
+        {
+            this->addTab( new widget_tab_setup, QObject::tr( "program setup" ) );
+        }
+        this->setTabPosition( QTabWidget::West );
 
-        //column 0
-        gl->addWidget( this->init_search_card( ), 0, 0 );
-        gl->addWidget( this->init_buttons_search( ), 1, 0 );
-        //column 1
-        gl->addWidget( this->init_listview_request( ), 0, 1 );
-        gl->addWidget( this->init_buttons_listview( ), 1, 1 );
-        gl->addWidget( this->init_view_card( ), 2, 0, 2, 2 );
-
-        gl->setColumnStretch( 0, 20 );
-        gl->setColumnStretch( 1, 800 );
-
-        gl->setRowStretch( 0, 500 );
-        gl->setRowStretch( 2, 500 );
-
-        this->setLayout( gl );
-        */
     }
 
     /// ------------------------------------------------------------------------
@@ -97,58 +81,6 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     void widget_central::init_connections( )
     {
-        /*
-        //_btn_find_request
-        this->connect(
-                    this->_btn_find_request, SIGNAL( clicked( ) ),
-                    this->_w_search, SLOT( find_requests( ) )
-                    );
-        //_btn_clear_search_criteria
-        this->connect(
-                    this->_btn_clear_search_criteria, SIGNAL( clicked( ) ),
-                    this->_w_search, SLOT( clear_search_criteria( ) )
-                    );
-        //_btn_add_request
-        this->connect(
-                    this->_btn_add_request, SIGNAL( clicked( ) ),
-                    this, SLOT( slot_add_request( ) )
-                    );
-        //_btn_print_request
-        this->connect(
-                    this->_btn_print_request, SIGNAL( clicked( ) ),
-                    this, SLOT( slot_print_request( ) )
-                    );
-        //_btn_edit_request
-        this->connect(
-                    this->_btn_edit_request, SIGNAL( clicked( ) ),
-                    this, SLOT( slot_edit_request( ) )
-                    );
-        //_btn_edit_id_request
-        this->connect(
-                    this->_btn_edit_id_request, SIGNAL( clicked( ) ),
-                    this, SLOT( slot_id_request_edit( ) )
-                    );
-        //_btn_del_request
-        this->connect(
-                    this->_btn_del_request, SIGNAL( clicked( ) ),
-                    this, SLOT( slot_del_request( ) )
-                    );
-        //_lv_request
-        this->connect(
-                     this->_lv_request, SIGNAL(current_request_changed(const data_request*)),
-                     this->_w_view, SLOT(change_view(const data_request*))
-                     );
-        //_act_report
-        this->connect(
-                     this->_act_report, SIGNAL( triggered( ) ),
-                     this, SLOT( slot_stat_report( ) )
-                     );
-        //_act_diagram
-        this->connect(
-                     this->_act_diagram, SIGNAL( triggered( ) ),
-                     this, SLOT( slot_stat_diagram( ) )
-                     );
-                     */
     }
 
 /*
