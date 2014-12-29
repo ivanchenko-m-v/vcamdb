@@ -141,9 +141,16 @@ LIBS += /usr/lib64/libsqlite3.so
 #}
 
 #home notebook setiings
+#win32: {
+#INCLUDEPATH += W:/sqlite3/include
+#LIBS += W:/sqlite3/sqlite3.dll
+#RC_FILE = res/winres/app_icon.rc
+#}
+
+#rele Chromium OS VM setiings
 win32: {
-INCLUDEPATH += W:/sqlite3/include
-LIBS += W:/sqlite3/sqlite3.dll
+INCLUDEPATH += D:/DEVELOP/sqlite3/include
+LIBS += D:/DEVELOP/sqlite3/sqlite3.dll
 RC_FILE = res/winres/app_icon.rc
 }
 

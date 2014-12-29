@@ -237,7 +237,7 @@
     </message>
     <message>
         <source>videocams violations</source>
-        <translation>зафиксированные нарушения</translation>
+        <translation>Зафиксированные нарушения</translation>
     </message>
     <message>
         <source>user:</source>

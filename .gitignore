@@ -5,5 +5,6 @@ data/*
 *.sqlite
 *.sqlite*
 *.pro.user
+*.pro.user*
 .directory
 */.directory
