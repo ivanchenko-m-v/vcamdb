@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 29-12-2014
-///		Date update	: 29-12-2014
+///		Date update	: 06-01-2015
 ///		Comment		:
 /// ============================================================================
 #ifndef __WIDGET_TAB_SETUP_H__
@@ -13,6 +13,8 @@
 
 namespace vcamdb
 {
+
+class listview_violation_type;
 
 /// ############################################################################
 ///			class widget_tab_setup
@@ -43,6 +45,7 @@ namespace vcamdb
         void init_connections( );
 
         QWidget* init_buttons( );
+        QWidget* init_listview_violation_type( );
 
         /// --------------------------------------------------------------------
         QString file_select( const QString &caption );
@@ -85,6 +88,8 @@ namespace vcamdb
         QPushButton *_btn_import_DT;
         QPushButton *_btn_import_CA;
         QPushButton *_btn_import_ODH;
+
+        listview_violation_type *_lv_violation_type;
 
     };//class widget_tab_setup
 /// ############################################################################

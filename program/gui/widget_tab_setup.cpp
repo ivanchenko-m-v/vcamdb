@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 29-12-2014
-///		Date update	: 29-12-2014
+///		Date update	: 06-01-2015
 ///		Comment		:
 /// ============================================================================
 #include <QVBoxLayout>
@@ -16,6 +16,8 @@
 #include "business_logic.h"
 
 #include "widget_tab_setup.h"
+
+#include "listview_violation_type.h"
 
 namespace vcamdb
 {
@@ -63,8 +65,8 @@ namespace vcamdb
     {
         QVBoxLayout *layout = new QVBoxLayout;
 
-        layout->addWidget( this->init_buttons( ) );
-        layout->addStretch( 1000 );
+        layout->addWidget( this->init_buttons( ), 1 );
+        layout->addWidget( this->init_listview_violation_type( ), 1000 );
 
         this->setLayout( layout );
      }
@@ -126,6 +128,27 @@ namespace vcamdb
         layout->addWidget( new QWidget, 2, 2 );
 
         layout->setColumnStretch( 2, 1000 );
+
+        QWidget  *widget = new QWidget( this );
+        widget->setLayout( layout );
+
+        return widget;
+    }
+
+    /// ------------------------------------------------------------------------
+    /// init_listview_violation_type( )
+    /// ------------------------------------------------------------------------
+    QWidget* widget_tab_setup::init_listview_violation_type( )
+    {
+        QGridLayout *layout = new QGridLayout;
+
+        //
+        //_lv_violation_type
+        //
+        layout->addWidget( new QLabel( tr( "violation types:" ) ), 0, 0, 1, 2 );
+
+        this->_lv_violation_type = new listview_violation_type;
+        layout->addWidget( this->_lv_violation_type, 1, 0, 1, 2 );
 
         QWidget  *widget = new QWidget( this );
         widget->setLayout( layout );

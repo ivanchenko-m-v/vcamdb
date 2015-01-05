@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 04-11-2014
-///		Date update	: 04-11-2014
+///		Date update	: 06-01-2015
 ///		Comment		:
 /// ============================================================================
 
@@ -63,7 +63,7 @@ namespace vcamdb
 		virtual void init_columns_header( void )
 		{
             this -> _header.append( QObject::tr( "violation_type" ) );
-            this -> _header.append( QObject::tr( "description" ) );
+            this -> _header.append( QObject::tr( "violation_type_description" ) );
         }
 
 	public:

@@ -63,7 +63,8 @@ SOURCES += \
     gui/widget_tab_setup.cpp \
     dbmodule/data_adapter_import_CA.cpp \
     dbmodule/data_adapter_import_ODH.cpp \
-    dbmodule/data_adapter_import_DT.cpp
+    dbmodule/data_adapter_import_DT.cpp \
+    gui/listview_violation_type.cpp
 
 HEADERS  += \
     app/application.h \
@@ -111,7 +112,8 @@ HEADERS  += \
     gui/widget_tab_setup.h \
     dbmodule/data_adapter_import_CA.h \
     dbmodule/data_adapter_import_ODH.h \
-    dbmodule/data_adapter_import_DT.h
+    dbmodule/data_adapter_import_DT.h \
+    gui/listview_violation_type.h
 
 INCLUDEPATH += ./app \
 				./dbmodule \
