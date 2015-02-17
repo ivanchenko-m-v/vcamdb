@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 19-11-2014
+///		Date update	: 17-02-2015
 ///		Comment		:
 /// ============================================================================
 #include <QLabel>
@@ -86,6 +86,7 @@ namespace vcamdb
         layout->addWidget( this->init_2nd_line( ) );
         layout->addWidget( this->init_3rd_line( ) );
         layout->addWidget( this->init_4th_line( ) );
+        layout->addWidget( this->init_5th_line( ) );
         layout->addWidget( this->init_buttons( ) );
 
         this->setLayout( layout );
@@ -154,13 +155,24 @@ namespace vcamdb
     }
 
     /// ------------------------------------------------------------------------
-    /// init_1st_line( )
+    /// init_2nd_line( )
     /// ------------------------------------------------------------------------
-    QWidget* widget_violation::init_1st_line( )
+    QWidget* widget_violation::init_2nd_line( )
     {
         QHBoxLayout *layout = new QHBoxLayout;
 
         const int WIDTH_IN_PERCENTS = 25;
+        //
+        //_cbx_violation_type
+        //
+        this->_cbx_violation_type = new combobox_violation_type;
+        layout->addWidget(
+                    new ew::vertical_box( this->_cbx_violation_type,
+                                          QObject::tr( "violation type:" ),
+                                          this
+                                        ),
+                    WIDTH_IN_PERCENTS
+                         );
         //
         //_txt_regnum
         //
@@ -194,18 +206,6 @@ namespace vcamdb
                                         ),
                     WIDTH_IN_PERCENTS
                          );
-        //
-        //_cbx_violation_type
-        //
-        this->_cbx_violation_type = new combobox_violation_type;
-        layout->addWidget(
-                    new ew::vertical_box( this->_cbx_violation_type,
-                                          QObject::tr( "violation type:" ),
-                                          this
-                                        ),
-                    WIDTH_IN_PERCENTS
-                         );
-
 
         QWidget *w = new QWidget( this );
         w->setLayout( layout );
@@ -214,9 +214,9 @@ namespace vcamdb
     }
 
     /// ------------------------------------------------------------------------
-    /// init_2nd_line( )
+    /// init_1st_line( )
     /// ------------------------------------------------------------------------
-    QWidget* widget_violation::init_2nd_line( )
+    QWidget* widget_violation::init_1st_line( )
     {
         QHBoxLayout *layout = new QHBoxLayout;
 
@@ -260,7 +260,42 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     /// init_3rd_line( )
     /// ------------------------------------------------------------------------
-    QWidget* widget_violation::init_3rd_line( )
+    QWidget *widget_violation::init_3rd_line( )
+    {
+        QHBoxLayout *layout = new QHBoxLayout;
+
+        //
+        //_cbx_response
+        //
+        this->_cbx_response = new QComboBox;
+        layout->addWidget(
+                    new ew::vertical_box( this->_cbx_response,
+                                          QObject::tr( "response:" ),
+                                          this
+                                        )
+                         );
+        //
+        //_cbx_contractor
+        //
+        this->_cbx_contractor = new QComboBox;
+        layout->addWidget(
+                    new ew::vertical_box( this->_cbx_contractor,
+                                          QObject::tr( "contractor:" ),
+                                          this
+                                        )
+                         );
+
+        QWidget *w = new QWidget( this );
+        w->setLayout( layout );
+
+        return w;
+
+    }
+
+    /// ------------------------------------------------------------------------
+    /// init_4th_line( )
+    /// ------------------------------------------------------------------------
+    QWidget* widget_violation::init_4th_line( )
     {
         QHBoxLayout *layout = new QHBoxLayout;
 
@@ -295,9 +330,9 @@ namespace vcamdb
     }
 
     /// ------------------------------------------------------------------------
-    /// init_4th_line( )
+    /// init_5th_line( )
     /// ------------------------------------------------------------------------
-    QWidget *widget_violation::init_4th_line( )
+    QWidget *widget_violation::init_5th_line( )
     {
         QHBoxLayout *layout = new QHBoxLayout;
 

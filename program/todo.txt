@@ -1,0 +1,8 @@
+2015-02-18
+------------
+1.alter violation table(contractor, response)
+2.combobox_response
+3.combobox_contractor
+4.import response
+5.import contractor
+6.import violation_types

@@ -158,4 +158,7 @@ RC_FILE = res/winres/app_icon.rc
 
 OTHER_FILES += \
     sql/TABLE_VIOLATION_ALTER.sql \
-    sql/t_violation_attachment.sql
+    sql/t_violation_attachment.sql \
+    sql/t_contractor.sql \
+    sql/db_vcam.sql \
+    todo.txt

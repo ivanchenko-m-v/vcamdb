@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 18-11-2014
+///		Date update	: 17-02-2015
 ///		Comment		:
 /// ============================================================================
 #ifndef __WIDGET_VIOLATION_H__
@@ -61,10 +61,11 @@ class combobox_violation_object;
         void init_connections( );
 
         QWidget* init_0_line( );
-        QWidget* init_1st_line( );
         QWidget* init_2nd_line( );
+        QWidget* init_1st_line( );
         QWidget* init_3rd_line( );
         QWidget* init_4th_line( );
+        QWidget* init_5th_line( );
         QWidget* init_buttons( );
 
         /// --------------------------------------------------------------------
@@ -132,15 +133,22 @@ class combobox_violation_object;
     /// ========================================================================
     private:
         QLabel                      *_lbl_user;
-        QLineEdit                   *_txt_regnum;
-        combobox_camera_search      *_cbx_cam_name;
-        QLabel                      *_lbl_cam_address;
-        combobox_violation_type     *_cbx_violation_type;
+
         combobox_object_type        *_cbx_object_type;
         combobox_violation_object   *_cbx_object_name;
         QLabel                      *_lbl_id_object;
+
+        combobox_violation_type     *_cbx_violation_type;
+        QLineEdit                   *_txt_regnum;
+        combobox_camera_search      *_cbx_cam_name;
+        QLabel                      *_lbl_cam_address;
+
+        QComboBox                   *_cbx_response;
+        QComboBox                   *_cbx_contractor;
+
         QDateEdit                   *_dte_violation;
         QLineEdit                   *_txt_url;
+
         QLineEdit                   *_txt_note;
         QPushButton                 *_btn_attachment;
 
