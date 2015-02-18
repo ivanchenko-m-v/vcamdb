@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 10-11-2014
-///		Date update	: 13-11-2014
+///		Date update	: 18-02-2015
 ///		Comment		:
 /// ============================================================================
 #ifndef __DATA_ADAPTER_VIOLATION_H__
@@ -41,12 +41,14 @@ namespace vcamdb
             num_field_object_type = 7,   //OBJECT_TYPE VARCHAR(256),
             num_field_object_id = 8,     //OBJECT_ID VARCHAR(256),
             num_field_object_name = 9,   //OBJECT_NAME VARCHAR(256),
-            num_field_date = 10,         //VIOLATION_DATE VARCHAR(32),
-            num_field_date_record = 11,  //RECORD_DATE VARCHAR(32),
-            num_field_URL = 12,          //URL VARCHAR(256),
-            num_field_user = 13,         //USER_CREATED VARCHAR(256),
-            num_field_note = 14,         //NOTE VARCHAR(256)
-            fields_count = 15
+            num_field_response = 10,     //RESPONSE VARCHAR(256),
+            num_field_contractor = 11,   //CONTRACTOR VARCHAR(256),
+            num_field_date = 12,         //VIOLATION_DATE VARCHAR(32),
+            num_field_date_record = 13,  //RECORD_DATE VARCHAR(32),
+            num_field_URL = 14,          //URL VARCHAR(256),
+            num_field_user = 15,         //USER_CREATED VARCHAR(256),
+            num_field_note = 16,         //NOTE VARCHAR(256)
+            fields_count = 17
         };
     /// ========================================================================
     ///		CONSTRUCTORS/DESTRUCTOR
@@ -64,6 +66,8 @@ namespace vcamdb
             _x_object_type(""),
             _x_object_id(""),
             _x_object_name(""),
+            _x_response(""),
+            _x_contractor(""),
             _x_date(""),
             _x_date_record(""),
             _x_URL(""),
@@ -84,6 +88,8 @@ namespace vcamdb
             _x_object_type(rhs._x_object_type),
             _x_object_id(rhs._x_object_id),
             _x_object_name(rhs._x_object_name),
+            _x_response(rhs._x_response),
+            _x_contractor(rhs._x_contractor),
             _x_date(rhs._x_date),
             _x_date_record(rhs._x_date_record),
             _x_URL(rhs._x_URL),
@@ -109,6 +115,8 @@ namespace vcamdb
             this->_x_object_type = row[num_field_object_type].toString( );
             this->_x_object_id = row[num_field_object_id].toString( );
             this->_x_object_name = row[num_field_object_name].toString( );
+            this->_x_response = row[num_field_response].toString( );
+            this->_x_contractor = row[num_field_contractor].toString( );
             this->_x_date = row[num_field_date].toString( );
             this->_x_date_record = row[num_field_date_record].toString( );
             this->_x_URL = row[num_field_URL].toString( );
@@ -134,6 +142,8 @@ namespace vcamdb
             this->_x_object_type = (*p_row)[num_field_object_type].toString( );
             this->_x_object_id = (*p_row)[num_field_object_id].toString( );
             this->_x_object_name = (*p_row)[num_field_object_name].toString( );
+            this->_x_response = (*p_row)[num_field_response].toString( );
+            this->_x_contractor = (*p_row)[num_field_contractor].toString( );
             this->_x_date = (*p_row)[num_field_date].toString( );
             this->_x_date_record = (*p_row)[num_field_date_record].toString( );
             this->_x_URL = (*p_row)[num_field_URL].toString( );
@@ -163,6 +173,8 @@ namespace vcamdb
             this->_x_object_type.clear( );
             this->_x_object_id.clear( );
             this->_x_object_name.clear( );
+            this->_x_response.clear( );
+            this->_x_contractor.clear( );
             this->_x_date.clear( );
             this->_x_date_record.clear( );
             this->_x_URL.clear( );
@@ -255,6 +267,22 @@ namespace vcamdb
         { this->_x_object_name = x_object_name; }
 
     /// ------------------------------------------------------------------------
+    ///	response
+        const QString& response( ) const
+        { return this->_x_response; }
+
+        void response( const QString &x_response )
+        { this->_x_response = x_response; }
+
+    /// ------------------------------------------------------------------------
+    ///	contractor
+        const QString& contractor( ) const
+        { return this->_x_contractor; }
+
+        void contractor( const QString &x_contractor )
+        { this->_x_contractor = x_contractor; }
+
+    /// ------------------------------------------------------------------------
     ///	date_violation
         const QString& date_violation( ) const
         { return this->_x_date; }
@@ -327,6 +355,8 @@ namespace vcamdb
             this->_x_object_type = rhs._x_object_type;
             this->_x_object_id = rhs._x_object_id;
             this->_x_object_name = rhs._x_object_name;
+            this->_x_response = rhs._x_response;
+            this->_x_contractor = rhs._x_contractor;
             this->_x_date = rhs._x_date;
             this->_x_date_record = rhs._x_date_record;
             this->_x_URL = rhs._x_URL;
@@ -350,6 +380,8 @@ namespace vcamdb
         QString _x_object_type; //OBJECT_TYPE VARCHAR(256),
         QString _x_object_id;   //OBJECT_ID VARCHAR(256),
         QString _x_object_name; //OBJECT_NAME VARCHAR(256),
+        QString _x_response;    //RESPONSE VARCHAR(256),
+        QString _x_contractor;  //CONTRACTOR VARCHAR(256),
         QString _x_date;        //VIOLATION_DATE VARCHAR(32),
         QString _x_date_record; //RECORD_DATE VARCHAR(32),
         QString _x_URL;         //URL VARCHAR(256),

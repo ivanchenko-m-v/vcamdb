@@ -64,7 +64,9 @@ SOURCES += \
     dbmodule/data_adapter_import_CA.cpp \
     dbmodule/data_adapter_import_ODH.cpp \
     dbmodule/data_adapter_import_DT.cpp \
-    gui/listview_violation_type.cpp
+    gui/listview_violation_type.cpp \
+    gui/combobox_contractor.cpp \
+    dbmodule/data_adapter_contractor.cpp
 
 HEADERS  += \
     app/application.h \
@@ -113,7 +115,9 @@ HEADERS  += \
     dbmodule/data_adapter_import_CA.h \
     dbmodule/data_adapter_import_ODH.h \
     dbmodule/data_adapter_import_DT.h \
-    gui/listview_violation_type.h
+    gui/listview_violation_type.h \
+    gui/combobox_contractor.h \
+    dbmodule/data_adapter_contractor.h
 
 INCLUDEPATH += ./app \
 				./dbmodule \
@@ -161,4 +165,5 @@ OTHER_FILES += \
     sql/t_violation_attachment.sql \
     sql/t_contractor.sql \
     sql/db_vcam.sql \
-    todo.txt
+    todo.txt \
+    sql/TABLE_VIOLATION_ALTER_20150218.sql

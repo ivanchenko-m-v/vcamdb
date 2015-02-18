@@ -1,8 +1,14 @@
 2015-02-18
 ------------
 1.alter violation table(contractor, response)
+	-data_adapter_violation
+	-data_adapter_contractor
+	-data_adapter_response
 2.combobox_response
 3.combobox_contractor
 4.import response
+	-data_adapter_import_response
 5.import contractor
+	-data_adapter_import_contractor
 6.import violation_types
+	-data_adapter_import_violation_type

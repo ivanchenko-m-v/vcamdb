@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 10-11-2014
-///		Date update	: 19-11-2014
+///		Date update	: 18-02-2015
 ///		Comment		:
 /// ============================================================================
 #include <stdexcept>
@@ -30,6 +30,8 @@ namespace vcamdb
 //OBJECT_TYPE VARCHAR(256),
 //OBJECT_ID VARCHAR(256),
 //OBJECT_NAME VARCHAR(256),
+//RESPONSE VARCHAR(256),
+//CONTRACTOR VARCHAR(256),
 //VIOLATION_DATE VARCHAR(32),
 //RECORD_DATE VARCHAR(32),
 //URL VARCHAR(256),
@@ -40,13 +42,13 @@ namespace vcamdb
                                 "INSERT INTO TABLE_VIOLATION "
                                 "(ID_VIOLATION, REGNUM, VIOLATION_TYPE, OKRUG, "
                                 "PREF, DISTRICT, CAM_NAME, "
-                                "OBJECT_TYPE, OBJECT_ID, OBJECT_NAME,"
-                                "VIOLATION_DATE, RECORD_DATE, URL,"
+                                "OBJECT_TYPE, OBJECT_ID, OBJECT_NAME,RESPONSE,"
+                                "CONTRACTOR,VIOLATION_DATE, RECORD_DATE, URL,"
                                 "USER_CREATED, NOTE) "
                                 "   SELECT MAX(ID_VIOLATION)+1, :x_regnum, :x_type, :x_okrug,"
                                           ":x_pref, :x_district, :x_cam_name, "
-                                          ":x_obj_type, :x_obj_id, :x_obj_name,"
-                                          ":x_dt, :x_dt_rec, :x_url, :x_user, :x_note "
+                                          ":x_obj_type, :x_obj_id, :x_obj_name, :x_response,"
+                                          ":x_contractor, :x_dt, :x_dt_rec, :x_url, :x_user, :x_note "
                                     "FROM TABLE_VIOLATION;"
 									);
     const QString data_adapter_violation::_s_sql_update(
@@ -60,6 +62,8 @@ namespace vcamdb
                                        "OBJECT_TYPE=:x_obj_type, "
                                        "OBJECT_ID=:x_obj_id, "
                                        "OBJECT_NAME=:x_obj_name, "
+                                       "RESPONSE=:x_response, "
+                                       "CONTRACTOR=:x_contractor, "
                                        "VIOLATION_DATE=:x_dt, "
                                        "RECORD_DATE=:x_dt_rec, "
                                        "URL=:x_url, "
@@ -74,8 +78,8 @@ namespace vcamdb
     const QString data_adapter_violation::_s_sql_select(
                                 "SELECT ID_VIOLATION, REGNUM, VIOLATION_TYPE, OKRUG, "
                                     "PREF, DISTRICT, CAM_NAME, "
-                                    "OBJECT_TYPE, OBJECT_ID, OBJECT_NAME,"
-                                    "VIOLATION_DATE, RECORD_DATE, URL, "
+                                    "OBJECT_TYPE, OBJECT_ID, OBJECT_NAME, RESPONSE,"
+                                    "CONTRACTOR, VIOLATION_DATE, RECORD_DATE, URL, "
                                     "USER_CREATED, NOTE "
                                 "FROM TABLE_VIOLATION "
 									);
@@ -132,6 +136,8 @@ namespace vcamdb
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.object_type( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.object_id( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.object_name( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.response( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.contractor( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.date_violation( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.date_record( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.URL( ) ) );
@@ -156,6 +162,8 @@ namespace vcamdb
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.object_type( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.object_id( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.object_name( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.response( ) ) );
+        pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.contractor( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.date_violation( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.date_record( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.URL( ) ) );
