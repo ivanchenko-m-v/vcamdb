@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 29-12-2014
+///		Date update	: 18-02-2015
 ///		Comment		:
 /// ============================================================================
 #include <QDebug>
@@ -17,6 +17,7 @@
 #include "data_model_camera_object.h"
 #include "data_model_object_type.h"
 #include "data_model_violation_type.h"
+#include "data_model_contractor.h"
 
 #include "data_adapter_object_type.h"
 #include "data_adapter_camera.h"
@@ -26,6 +27,7 @@
 #include "data_adapter_DT.h"
 #include "data_adapter_ODH.h"
 #include "data_adapter_violation.h"
+#include "data_adapter_contractor.h"
 
 #include "data_adapter_import_CA.h"
 #include "data_adapter_import_ODH.h"
@@ -82,6 +84,11 @@ namespace vcamdb
         {
             delete _model_violation_type;
         }
+        if( this->_model_contractor )
+        {
+            delete _model_contractor;
+        }
+
     }
 
 	/// ------------------------------------------------------------------------
@@ -139,6 +146,8 @@ namespace vcamdb
         this->init_model_object_type( );
 
         this->init_model_violation_type( );
+
+        this->init_model_contractor( );
     }
 
     /// ------------------------------------------------------------------------
@@ -172,6 +181,14 @@ namespace vcamdb
     void business_logic::init_model_camera_object( )
     {
         this->_model_camera_object = new data_model_camera_object;
+    }
+
+    /// ------------------------------------------------------------------------
+    ///	init_model_contractor( )
+    /// ------------------------------------------------------------------------
+    void business_logic::init_model_contractor( )
+    {
+        this->_model_contractor = new data_model_contractor;
     }
 
     /// ------------------------------------------------------------------------
@@ -395,6 +412,66 @@ namespace vcamdb
         }
 
         return camera;
+    }
+
+///|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+///
+/// BLOCK contractor
+///
+///|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    /// ------------------------------------------------------------------------
+    ///	contractor_select( )
+    /// ------------------------------------------------------------------------
+    data_contractor_collection*
+                  business_logic::contractor_select(
+                                                    const QString &s_object_type,
+                                                    const QString &s_filter
+                                                   )
+    {
+        const int MIN_FILTER_LENGTH = 5;
+        data_contractor_collection *p_coll = 0;
+
+        if( s_filter.length( ) < MIN_FILTER_LENGTH )
+        {
+            return p_coll;
+        }
+
+        try
+        {
+            data_adapter_contractor adap;
+            //select data
+            p_coll = adap.select( s_object_type, s_filter );
+        }
+        catch( std::exception &ex )
+        {
+            if( p_coll )
+            {
+                delete p_coll;
+                p_coll = 0;
+            }
+            QString s_msg(
+                            "business_logic::contractor_select( )"
+                            ":\n\t" + QString::fromUtf8( ex.what( ) )
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+        catch( ... )
+        {
+            if( p_coll )
+            {
+                delete p_coll;
+                p_coll = 0;
+            }
+            QString s_msg(
+                        "business_logic::contractor_select( )"
+                        ":\n\t unknown error while CONTRACTOR select"
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+
+        return p_coll;
     }
 
 ///|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

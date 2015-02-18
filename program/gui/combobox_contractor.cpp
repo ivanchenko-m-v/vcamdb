@@ -39,11 +39,9 @@ namespace vcamdb
     ///		PROPERTIES
     /// ========================================================================
     /// ------------------------------------------------------------------------
-    ///	camera( ) get
+    ///	contractor( ) get
     /// ------------------------------------------------------------------------
-    /*
-
-    const data_violation_object* combobox_contractor::violation_object( )
+    const data_contractor* combobox_contractor::contractor( )
     {
         int index = this->currentIndex( );
         if( index < 0 || index >= this->count( ) )
@@ -55,33 +53,18 @@ namespace vcamdb
         {
             return 0;
         }
-        return this->_objects.find( val.toInt( ) );
+        //return this->_objects.find( val.toInt( ) );
+        return 0;
     }
 
     /// ------------------------------------------------------------------------
-    ///	camera( ) set
+    ///	contractor( ) set
     /// ------------------------------------------------------------------------
-    void combobox_contractor::violation_object( const data_violation_object *cam )
+    void combobox_contractor::contractor( const data_contractor *data )
     {
 
     }
-    /// ------------------------------------------------------------------------
-    ///	camera_address( int index ) get
-    /// ------------------------------------------------------------------------
-    int combobox_contractor::object_id( int index ) const
-    {
-        if( index < 0 || index >= this->count( ) )
-        {
-            return -1;
-        }
-        QVariant val = this->itemData( index );
-        if( !val.isValid( ) )
-        {
-            return -1;
-        }
-        return val.toInt( );
-    }
-*/
+
     /// ========================================================================
     ///		FUNCTIONS
     /// ========================================================================
@@ -103,7 +86,7 @@ namespace vcamdb
         //empty text list
         this->clear( );
         //remove previous data
-        //this->_objects.free( );
+        this->_objects.free( );
     }
 
 

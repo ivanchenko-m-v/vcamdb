@@ -116,6 +116,32 @@ namespace vcamdb
     }
 
     ///------------------------------------------------------------------------
+    ///	make_select_filter
+    ///------------------------------------------------------------------------
+    QString data_adapter_contractor::make_select_filter(
+                                                        const QString &s_object_type,
+                                                        const QString &s_filter
+                                                        ) const
+    {
+        if( !s_filter.length( ) )
+        {
+            return QString(";");
+        }
+        QString s_where(" WHERE ");
+        s_where += "(((instr(x_contractor,'" + s_filter + "')>0)OR";
+        s_where += "(instr(x_contractor,'" + s_filter.toUpper( ) + "')>0)OR";
+        s_where += "(instr(x_contractor,'" +
+                     s_filter.right(s_filter.length( ) - 1 ).
+                                        prepend( s_filter[0].toUpper( ) ) +
+                    "')>0)) ";
+        s_where += "AND(OBJECT_TYPE='" + s_object_type +"'))";
+
+        s_where += "ORDER BY x_contractor;";
+
+        return s_where;
+    }
+
+    ///------------------------------------------------------------------------
 	///	select( ) const
 	///
     data_contractor_collection*
@@ -185,6 +211,81 @@ namespace vcamdb
 
         return ad_coll;
 	}
+
+    ///------------------------------------------------------------------------
+    ///	select( const QString &s_filter/* = QString( )*/ ) const
+    ///------------------------------------------------------------------------
+    data_contractor_collection*
+                 data_adapter_contractor::select(
+                                                 const QString &s_object_type,
+                                                 const QString &s_filter/*=QString( )*/
+                                                ) const
+    {
+        //make select query
+        QString s_qry( data_adapter_contractor::_s_sql_select );
+        s_qry += this->make_select_filter( s_object_type, s_filter );
+
+        qDebug()<<"preparing: " <<s_qry;
+
+        //run query
+        espira::db::qt_sqlite_connection cnn;
+        espira::db::qt_sqlite_command *pcmd = 0;
+        data_contractor_collection *p_coll = 0;
+        try
+        {
+            const QString &db_path = application::the_business_logic( ).db_path( );
+            cnn.db_path( db_path );
+            //cnn open
+            cnn.open( );
+            //create command
+            pcmd = cnn.create_command( s_qry );
+            //open cmd
+            pcmd->open( );
+            //exec
+            pcmd->execute( );
+            //close command
+            pcmd->close( );
+            //cnn close
+            cnn.close( );
+
+            //output result
+            espira::db::qt_data_row_collection &rows = pcmd->result( );
+            if( rows.size( ) )
+            {
+                p_coll = new data_contractor_collection;
+                espira::db::qt_data_row_collection::iterator iter = rows.begin( );
+                for( ;iter < rows.end(); ++iter )
+                {
+                    espira::db::qt_data_row *r = *iter;
+                    p_coll->append( new data_contractor( r ) );
+                }
+            }
+
+            //free memory
+            delete pcmd;
+        }
+        catch( std::exception &ex )
+        {
+            if( pcmd )
+            {
+                pcmd->close( );
+                pcmd = 0;
+            }
+            if( p_coll )
+            {
+                p_coll->free( );
+                delete p_coll;
+            }
+            cnn.close( );
+
+            QString s_err( QString::fromStdString( ex.what( ) ) );
+            qDebug( ) << s_err;
+
+            this->throw_error( s_err.toStdString( ).c_str( ) );
+        }
+
+        return p_coll;
+    }
 
 	///------------------------------------------------------------------------
     ///	insert( const data_contractor &ad ) const

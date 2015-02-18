@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 29-12-2014
+///		Date update	: 18-02-2015
 ///		Comment		:
 /// ============================================================================
 #ifndef __BUSINESS_LOGIC_H__
@@ -19,12 +19,14 @@ class data_model_camera;
 class data_model_camera_object;
 class data_model_object_type;
 class data_model_violation_type;
+class data_model_contractor;
 
 class data_camera;
 class data_camera_collection;
 class data_violation_object_collection;
 class data_violation;
 class data_violation_collection;
+class data_contractor_collection;
 /// ############################################################################
 ///			class business_logic
 /// ############################################################################
@@ -46,7 +48,8 @@ class data_violation_collection;
             _model_camera(0),
             _model_camera_object(0),
             _model_object_type(0),
-            _model_violation_type(0)
+            _model_violation_type(0),
+            _model_contractor(0)
 		{ }
 
 	/// ========================================================================
@@ -84,6 +87,9 @@ class data_violation_collection;
     /// ------------------------------------------------------------------------
         data_model_violation_type* model_violation_type( ) const
         { return this->_model_violation_type; }
+    /// ------------------------------------------------------------------------
+        data_model_contractor* model_contractor( ) const
+        { return this->_model_contractor; }
 
     /// ========================================================================
 	///		FUNCTIONS
@@ -103,6 +109,8 @@ class data_violation_collection;
         void init_model_object_type( );
     /// ------------------------------------------------------------------------
         void init_model_violation_type( );
+    /// ------------------------------------------------------------------------
+        void init_model_contractor( );
     /// ------------------------------------------------------------------------
         void free_memory( );
 
@@ -126,6 +134,12 @@ class data_violation_collection;
                                                         const QString &s_type,
                                                         const QString &s_filter
                                                       );
+    /// ------------------------------------------------------------------------
+        data_contractor_collection*
+                               contractor_select(
+                                                 const QString &s_object_type,
+                                                 const QString &s_filter
+                                                );
     /// ------------------------------------------------------------------------
         data_violation_object_collection* CA_select( const QString &s_filter );
     /// ------------------------------------------------------------------------
@@ -168,6 +182,7 @@ class data_violation_collection;
         data_model_camera_object    *_model_camera_object;
         data_model_object_type      *_model_object_type;
         data_model_violation_type   *_model_violation_type;
+        data_model_contractor       *_model_contractor;
 
 	};//class business_logic
 

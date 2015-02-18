@@ -276,10 +276,20 @@ namespace vcamdb
                                 espira::db::qt_sqlite_command *pcmd,
                                 const data_contractor &r
                                ) const;
+    /// ------------------------------------------------------------------------
+        QString make_select_filter(
+                                    const QString &s_object_type,
+                                    const QString &s_filter
+                                  ) const;
 
     public:
     /// ------------------------------------------------------------------------
         data_contractor_collection* select( ) const;
+    /// ------------------------------------------------------------------------
+        data_contractor_collection* select(
+                                            const QString &s_object_type,
+                                            const QString &s_filter/*=QString( )*/
+                                          ) const;
     /// ------------------------------------------------------------------------
         void insert( const data_contractor &record ) const;
     /// ------------------------------------------------------------------------

@@ -66,7 +66,8 @@ SOURCES += \
     dbmodule/data_adapter_import_DT.cpp \
     gui/listview_violation_type.cpp \
     gui/combobox_contractor.cpp \
-    dbmodule/data_adapter_contractor.cpp
+    dbmodule/data_adapter_contractor.cpp \
+    logic/data_model_contractor.cpp
 
 HEADERS  += \
     app/application.h \
@@ -117,7 +118,8 @@ HEADERS  += \
     dbmodule/data_adapter_import_DT.h \
     gui/listview_violation_type.h \
     gui/combobox_contractor.h \
-    dbmodule/data_adapter_contractor.h
+    dbmodule/data_adapter_contractor.h \
+    logic/data_model_contractor.h
 
 INCLUDEPATH += ./app \
 				./dbmodule \

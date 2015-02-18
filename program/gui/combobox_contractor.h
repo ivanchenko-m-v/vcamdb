@@ -11,6 +11,8 @@
 #include <QComboBox>
 #include <QKeyEvent>
 
+#include "data_adapter_contractor.h"
+
 namespace vcamdb
 {
 
@@ -37,11 +39,9 @@ namespace vcamdb
     ///		PROPERTIES
     /// ========================================================================
         /// --------------------------------------------------------------------
-        //const data_violation_object* violation_object( );
+        const data_contractor* contractor( );
         /// --------------------------------------------------------------------
-        //void violation_object(  const data_violation_object *cam );
-        /// --------------------------------------------------------------------
-        //int object_id(int index) const;
+        void contractor(  const data_contractor *data );
 
     /// ========================================================================
     ///		FUNCTIONS
@@ -54,7 +54,7 @@ namespace vcamdb
 
 	public:
         /// --------------------------------------------------------------------
-        void refresh( const QString &violation_type, const QString &text );
+        void refresh( const QString &contractor, const QString &text );
 
     /// ========================================================================
     ///		OPERATORS
@@ -73,13 +73,13 @@ namespace vcamdb
     ///		SIGNALS
     /// ========================================================================
     signals:
-        //void violation_type_request( const QString &text );
+        void contractor_request( const QString &text );
 
     /// ========================================================================
     ///			FIELDS
     /// ========================================================================
     private:
-        //data_violation_object_collection _objects;
+        data_contractor_collection _objects;
 
     };//class combobox_contractor
 /// ############################################################################

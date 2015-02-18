@@ -443,6 +443,8 @@ namespace vcamdb
         this->_violation.object_type( this->_cbx_object_type->currentText( ) );
         this->_violation.object_name( this->_cbx_object_name->currentText( ) );
         this->_violation.object_id( this->_lbl_id_object->text( ) );
+        this->_violation.response( this->_cbx_response->currentText( ) );
+        this->_violation.contractor( this->_cbx_contractor->currentText( ) );
         this->_violation.date_violation( this->_dte_violation->date( ) );
         if( this->_violation.id_violation() == 0 )
         {
@@ -473,6 +475,8 @@ namespace vcamdb
         this->_cbx_violation_type->violation_type( v.violation_type( ) );
         this->_cbx_object_type->object_type( v.object_type( ) );
         this->_cbx_object_name->refresh( v.object_type( ), v.object_name( ) );
+        //this->_cbx_response
+        //this->_cbx_contractor
         this->_dte_violation->setDate( v.dt_violation( ) );
         this->_txt_url->setText( v.URL( ) );
         this->_txt_note->setText( v.note( ) );
