@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 04-11-2014
-///		Date update	: 17-11-2014
+///		Date update	: 20-02-2015
 ///		Comment		:
 /// ============================================================================
 #include "combobox_violation_type.h"
@@ -10,8 +10,7 @@
 #include "application.h"
 #include "business_logic.h"
 
-#include "data_model_violation_type.h"
-#include "data_adapter_violation_type.h"
+//#include "data_model_violation_type.h"
 
 namespace vcamdb
 {
@@ -76,6 +75,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     void combobox_violation_type::initialize( )
     {
+        /*
         data_model_violation_type *model = application::the_business_logic( ).
                                                             model_violation_type( );
         if( !model )
@@ -94,8 +94,48 @@ namespace vcamdb
             const data_violation_type *rec = list.at( i );
             this->addItem( rec->violation_type( ), rec->violation_type( ) );
         }
-
+*/
         this->setEditable( true );
     }
+
+    /// ------------------------------------------------------------------------
+    ///	clear_data( )
+    /// ------------------------------------------------------------------------
+    void combobox_violation_type::clear_data( )
+    {
+        //empty text list
+        this->clear( );
+        //remove previous data
+        this->_objects.free( );
+    }
+
+    /// ------------------------------------------------------------------------
+    ///	refresh( )
+    /// ------------------------------------------------------------------------
+    void combobox_violation_type::refresh(const QString &object_type )
+    {
+        this->clear( );
+
+        business_logic &logic = application::the_business_logic( );
+        data_violation_type_collection *p_coll = logic.violation_type_select( object_type );
+        if( !p_coll )
+        {
+            return;
+        }
+
+        data_violation_type_collection::iterator it = p_coll->begin( );
+        for( ; it < p_coll->end( ); ++it )
+        {
+            data_violation_type *vobj = *it;
+
+            if( !vobj ) continue;
+
+            this->addItem( vobj->violation_type( ) );
+            this->_objects.append( vobj );
+        }
+
+        p_coll->free_data_pointer( );
+    }
+
 
 }//namespace vcamdb

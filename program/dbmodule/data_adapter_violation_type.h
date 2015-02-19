@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 04-10-2014
-///		Date update	: 04-11-2014
+///		Date update	: 20-02-2015
 ///		Comment		:
 /// ============================================================================
 #ifndef __DATA_ADAPTER_VIOLATION_TYPE_H__
@@ -30,9 +30,10 @@ namespace vcamdb
     public:
         enum field_data_violation_type : int
         {
-            num_field_type = 0,
-            num_field_description = 1,
-            fields_count = 2
+            num_field_object_type = 0,
+            num_field_violation_type = 1,
+            num_field_status = 2,
+            fields_count = 3
         };
     /// ========================================================================
     ///		CONSTRUCTORS/DESTRUCTOR
@@ -40,15 +41,17 @@ namespace vcamdb
 	public:
     /// ------------------------------------------------------------------------
         data_violation_type( ) :
-            _x_type(""),
-            _x_description("")
+            _x_object_type(""),
+            _x_violation_type(""),
+            _n_status(-1)
         { }
 
     /// ------------------------------------------------------------------------
 		explicit
         data_violation_type( const data_violation_type &rhs ) :
-            _x_type(rhs._x_type),
-            _x_description(rhs._x_description)
+            _x_object_type(rhs._x_object_type),
+            _x_violation_type(rhs._x_violation_type),
+            _n_status(rhs._n_status)
         { }
 
     /// ------------------------------------------------------------------------
@@ -59,8 +62,9 @@ namespace vcamdb
             {
                 this->clear_data( );
             }
-            this->_x_type = row[num_field_type].toString( );
-            this->_x_description = row[num_field_description].toString( );
+            this->_x_object_type = row[num_field_object_type].toString( );
+            this->_x_violation_type = row[num_field_violation_type].toString( );
+            this->_n_status = row[num_field_status].toInt( );
         }
 
     /// ------------------------------------------------------------------------
@@ -71,14 +75,15 @@ namespace vcamdb
             {
                 this->clear_data( );
             }
-            this->_x_type = (*p_row)[num_field_type].toString( );
-            this->_x_description = (*p_row)[num_field_description].toString( );
-		}
+            this->_x_object_type = (*p_row)[num_field_object_type].toString( );
+            this->_x_violation_type = (*p_row)[num_field_violation_type].toString( );
+            this->_n_status = (*p_row)[num_field_status].toInt( );
+        }
     /// ------------------------------------------------------------------------
         ~data_violation_type( )
 		{
-            qDebug( ) << "deleted : " << this->_x_type << " " +
-                                         this->_x_description;
+            qDebug( ) << "deleted : " << this->_x_object_type << " " +
+                                         this->_x_violation_type;
 		}
 
     /// ========================================================================
@@ -88,8 +93,9 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
 		void clear_data( )
 		{
-            this->_x_type.clear();
-            this->_x_description.clear();
+            this->_x_object_type.clear( );
+            this->_x_violation_type.clear( );
+            this->_n_status = -1;
         }
 
     /// ========================================================================
@@ -97,20 +103,28 @@ namespace vcamdb
     /// ========================================================================
 	public:
     /// ------------------------------------------------------------------------
-    ///	violation_type
-        const QString& violation_type( ) const
-        { return this->_x_type; }
+    ///	object_type
+        const QString& object_type( ) const
+        { return this->_x_object_type; }
 
-        void violation_type( const QString &x_type )
-        { this->_x_type = x_type; }
+        void object_type( const QString &x_type )
+        { this->_x_object_type = x_type; }
 
     /// ------------------------------------------------------------------------
-    ///	description
-        const QString& description( ) const
-        { return this->_x_description; }
+    ///	violation_type
+        const QString& violation_type( ) const
+        { return this->_x_violation_type; }
 
-        void description( const QString &x_description )
-        { this->_x_description = x_description; }
+        void violation_type( const QString &x_violation_type )
+        { this->_x_violation_type = x_violation_type; }
+
+    /// ------------------------------------------------------------------------
+    ///	status
+        int status( ) const
+        { return this->_n_status; }
+
+        void status( const int n_status )
+        { this->_n_status = n_status; }
 
     /// ========================================================================
     ///		OPERATORS
@@ -122,8 +136,9 @@ namespace vcamdb
 			{
 				return *this;
 			}
-            this->_x_type = rhs._x_type;
-            this->_x_description = rhs._x_description;
+            this->_x_object_type = rhs._x_object_type;
+            this->_x_violation_type = rhs._x_violation_type;
+            this->_n_status = rhs._n_status;
 
 			return *this;
 		}
@@ -132,12 +147,15 @@ namespace vcamdb
     ///			FIELDS
     /// ========================================================================
 	private:
-        QString _x_type;       //--тип нарушения на объекте видеонаблюдения
-        QString _x_description;//--описание типа нарушения
+        QString _x_object_type;       //--тип объекта видеонаблюдения
+        QString _x_violation_type;    //--тип нарушения на объекте видеонаблюдения
+        int     _n_status;            //--статус типа нарушения
 
     };//class data_violation_type
 /// ############################################################################
 /// ----------------------------------------------------------------------------
+
+    typedef QList<data_violation_type *> list_data_violation_type;
 
 /// ############################################################################
 ///			data_violation_type_collection
@@ -217,8 +235,22 @@ namespace vcamdb
 		}
 
     /// ------------------------------------------------------------------------
-        QList<data_violation_type *>* list( )
+        list_data_violation_type* list( )
 		{ return this->_data; }
+
+    /// ------------------------------------------------------------------------
+        typedef list_data_violation_type::iterator iterator;
+    /// ------------------------------------------------------------------------
+        iterator begin( )
+        {
+            return this->_data->begin( );
+        }
+
+    /// ------------------------------------------------------------------------
+        iterator end( )
+        {
+            return this->_data->end( );
+        }
 
     /// ========================================================================
     ///		OPERATORS
@@ -231,7 +263,7 @@ namespace vcamdb
     ///			FIELDS
     /// ========================================================================
 	private:
-        QList<data_violation_type *>	*_data;
+        list_data_violation_type	*_data;
 
     };//class data_violation_type_collection
 /// ############################################################################
@@ -280,9 +312,14 @@ namespace vcamdb
                                 const data_violation_type &r
                                ) const;
 
+    ///------------------------------------------------------------------------
+        QString make_select_filter( const QString &s_object_type ) const;
+
     public:
     /// ------------------------------------------------------------------------
         data_violation_type_collection* select( ) const;
+    /// ------------------------------------------------------------------------
+        data_violation_type_collection* select( const QString &s_object_type ) const;
     /// ------------------------------------------------------------------------
         void insert( const data_violation_type &record ) const;
     /// ------------------------------------------------------------------------

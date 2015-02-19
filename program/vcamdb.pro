@@ -178,4 +178,5 @@ OTHER_FILES += \
     sql/t_contractor.sql \
     sql/db_vcam.sql \
     todo.txt \
-    sql/TABLE_VIOLATION_ALTER_20150218.sql
+    sql/TABLE_VIOLATION_ALTER_20150218.sql \
+    sql/TABLE_VIOLATION_TYPE_ALTER_20150219.sql

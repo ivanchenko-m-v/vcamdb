@@ -11,8 +11,13 @@
 5.import contractor +
 	-data_adapter_import_contractor +
 6.import violation_types
-	-alter violation_type table
-	-data_adapter_violation_type
-	-data_model_violation_type
-	-data_adapter_import_violation_type
+        -alter violation_type table +
+        -data_adapter_violation_type +
+        -data_model_violation_type +
+        -data_adapter_import_violation_type +
 
+2015-02-20
+------------
+1. business_logic::violation_type_select +
+2. combobox_violation_type::initialize, ::refresh +
+3. widget_violation::slot_object_type_changed, combobox_object_type::signal_changed

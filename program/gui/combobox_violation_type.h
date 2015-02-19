@@ -2,13 +2,15 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 04-11-2014
-///		Date update	: 17-11-2014
+///		Date update	: 20-02-2015
 ///		Comment		:
 /// ============================================================================
 #ifndef __COMBOBOX_VIOLATION_TYPE_H__
 #define __COMBOBOX_VIOLATION_TYPE_H__
 
 #include <QComboBox>
+
+#include "data_adapter_violation_type.h"
 
 namespace vcamdb
 {
@@ -46,7 +48,12 @@ namespace vcamdb
     private:
         /// --------------------------------------------------------------------
         void initialize( );
-	public:
+        /// --------------------------------------------------------------------
+        void clear_data( );
+
+    public:
+        /// --------------------------------------------------------------------
+        void refresh( const QString &object_type );
 
     /// ========================================================================
     ///		OPERATORS
@@ -61,6 +68,7 @@ namespace vcamdb
     ///			FIELDS
     /// ========================================================================
     private:
+        data_violation_type_collection _objects;
 
     };//class combobox_violation_type
 /// ############################################################################

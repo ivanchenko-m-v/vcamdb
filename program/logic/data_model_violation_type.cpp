@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 04-11-2014
-///		Date update	: 04-11-2014
+///		Date update	: 20-02-2015
 ///		Comment		:
 /// ============================================================================
 #include <QDebug>
@@ -155,11 +155,13 @@ namespace vcamdb
 
 		switch( index.column( ) )
 		{
-            case data_violation_type::num_field_type:
+            case data_violation_type::num_field_object_type:
+                return record->object_type( );
+            case data_violation_type::num_field_violation_type:
                 return record->violation_type( );
-            case data_violation_type::num_field_description:
-                return record->description( );
-			default:
+            case data_violation_type::num_field_status:
+                return record->status( );
+            default:
 				return QVariant( );
 		}
 		return QVariant( );

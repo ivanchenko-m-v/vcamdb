@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 19-02-2015
+///		Date update	: 20-02-2015
 ///		Comment		:
 /// ============================================================================
 #include <QDebug>
@@ -308,6 +308,50 @@ namespace vcamdb
             qDebug( ) << s_msg;
             QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
         }
+    }
+
+    /// ------------------------------------------------------------------------
+    ///	violation_type_select( const QString &s_object_type )
+    /// ------------------------------------------------------------------------
+    data_violation_type_collection*
+            business_logic::violation_type_select( const QString &s_object_type )
+    {
+        data_violation_type_collection *p_coll = 0;
+        try
+        {
+            data_adapter_violation_type adap;
+            //select data
+            p_coll = adap.select( s_object_type );
+        }
+        catch( std::exception &ex )
+        {
+            if( p_coll )
+            {
+                delete p_coll;
+                p_coll = 0;
+            }
+            QString s_msg(
+                            "business_logic::violation_type_select( )"
+                            ":\n\t" + QString::fromUtf8( ex.what( ) )
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+        catch( ... )
+        {
+            if( p_coll )
+            {
+                delete p_coll;
+                p_coll = 0;
+            }
+            QString s_msg(
+                        "business_logic::violation_type_select( )"
+                        ":\n\t unknown error while VIOLATION_TYPE select"
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+        return p_coll;
     }
 
 ///|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
