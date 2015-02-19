@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 18-02-2015
+///		Date update	: 19-02-2015
 ///		Comment		:
 /// ============================================================================
 #ifndef __BUSINESS_LOGIC_H__
@@ -27,6 +27,7 @@ class data_violation_object_collection;
 class data_violation;
 class data_violation_collection;
 class data_contractor_collection;
+class data_response_collection;
 /// ############################################################################
 ///			class business_logic
 /// ############################################################################
@@ -141,6 +142,12 @@ class data_contractor_collection;
                                                  const QString &s_filter
                                                 );
     /// ------------------------------------------------------------------------
+        data_response_collection*
+                               response_select(
+                                                 const QString &s_object_type,
+                                                 const QString &s_filter
+                                                );
+    /// ------------------------------------------------------------------------
         data_violation_object_collection* CA_select( const QString &s_filter );
     /// ------------------------------------------------------------------------
         data_violation_object_collection* DT_select( const QString &s_filter );
@@ -160,6 +167,10 @@ class data_contractor_collection;
         void DT_import( const QString &f_file_from );
     /// ------------------------------------------------------------------------
         void CA_import( const QString &f_file_from );
+    /// ------------------------------------------------------------------------
+        void response_import( const QString &f_file_from );
+    /// ------------------------------------------------------------------------
+        void contractor_import( const QString &f_file_from );
 
 	/// ========================================================================
 	///		OPERATORS

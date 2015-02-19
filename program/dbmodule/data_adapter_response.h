@@ -1,12 +1,12 @@
 ///$Header
 /// ============================================================================
 ///		Author		: M. Ivanchenko
-///		Date create	: 18-02-2015
+///		Date create	: 19-02-2015
 ///		Date update	: 19-02-2015
 ///		Comment		:
 /// ============================================================================
-#ifndef __DATA_ADAPTER_CONTRACTOR_H__
-#define __DATA_ADAPTER_CONTRACTOR_H__
+#ifndef __DATA_ADAPTER_RESPONSE_H__
+#define __DATA_ADAPTER_RESPONSE_H__
 
 #include <QDebug>
 #include <QString>
@@ -20,15 +20,15 @@ namespace vcamdb
 {
 
 /// ############################################################################
-///			class data_contractor
+///			class data_response
 /// ############################################################################
-    class data_contractor
+    class data_response
 	{
     public:
-        enum field_data_contractor : int
+        enum field_data_response : int
         {
             num_field_object_type = 0,
-            num_field_contractor = 1,
+            num_field_response = 1,
             fields_count = 2
         };
     /// ========================================================================
@@ -36,46 +36,46 @@ namespace vcamdb
     /// ========================================================================
 	public:
     /// ------------------------------------------------------------------------
-        data_contractor( ) :
+        data_response( ) :
             _x_object_type(""),
-            _x_contractor("")
+            _x_response("")
         { }
 
     /// ------------------------------------------------------------------------
 		explicit
-        data_contractor( const data_contractor &rhs ) :
+        data_response( const data_response &rhs ) :
             _x_object_type(rhs._x_object_type),
-            _x_contractor(rhs._x_contractor)
+            _x_response(rhs._x_response)
         { }
 
     /// ------------------------------------------------------------------------
 		explicit
-        data_contractor( const QVector<QVariant> &row )
+        data_response( const QVector<QVariant> &row )
         {
             if( row.size( ) < fields_count )
             {
                 this->clear_data( );
             }
             this->_x_object_type = row[num_field_object_type].toString( );
-            this->_x_contractor = row[num_field_contractor].toString( );
+            this->_x_response = row[num_field_response].toString( );
         }
 
     /// ------------------------------------------------------------------------
 		explicit
-        data_contractor( espira::db::qt_data_row *p_row )
+        data_response( espira::db::qt_data_row *p_row )
 		{
             if( p_row->columns_count( ) < fields_count )
             {
                 this->clear_data( );
             }
             this->_x_object_type = (*p_row)[num_field_object_type].toString( );
-            this->_x_contractor = (*p_row)[num_field_contractor].toString( );
+            this->_x_response = (*p_row)[num_field_response].toString( );
 		}
     /// ------------------------------------------------------------------------
-        ~data_contractor( )
+        ~data_response( )
 		{
             qDebug( ) << "deleted : " << this->_x_object_type << " " +
-                                         this->_x_contractor;
+                                         this->_x_response;
 		}
 
     /// ========================================================================
@@ -86,7 +86,7 @@ namespace vcamdb
 		void clear_data( )
 		{
             this->_x_object_type.clear();
-            this->_x_contractor.clear();
+            this->_x_response.clear();
         }
 
     /// ========================================================================
@@ -103,24 +103,24 @@ namespace vcamdb
 
     /// ------------------------------------------------------------------------
     ///	description
-        const QString& contractor( ) const
-        { return this->_x_contractor; }
+        const QString& response( ) const
+        { return this->_x_response; }
 
-        void contractor( const QString &x_contractor )
-        { this->_x_contractor = x_contractor; }
+        void response( const QString &x_response )
+        { this->_x_response = x_response; }
 
     /// ========================================================================
     ///		OPERATORS
     /// ========================================================================
 	public:
-        data_contractor& operator=( const data_contractor &rhs )
+        data_response& operator=( const data_response &rhs )
 		{
 			if( this == &rhs )
 			{
 				return *this;
 			}
             this->_x_object_type = rhs._x_object_type;
-            this->_x_contractor = rhs._x_contractor;
+            this->_x_response = rhs._x_response;
 
 			return *this;
 		}
@@ -130,30 +130,30 @@ namespace vcamdb
     /// ========================================================================
 	private:
         QString _x_object_type; //--тип объекта видеонаблюдения
-        QString _x_contractor;  //--подрядчик
+        QString _x_response;    //--ответственный
 
-    };//class data_contractor
+    };//class data_response
 /// ############################################################################
 /// ----------------------------------------------------------------------------
 
 /// ############################################################################
-///			data_contractor_collection
+///			data_response_collection
 /// ############################################################################
-    typedef QList<data_contractor *> list_data_contractor;
-    class data_contractor_collection
+    typedef QList<data_response *> list_data_response;
+    class data_response_collection
 	{
     /// ========================================================================
     ///		CONSTRUCTORS/DESTRUCTOR
     /// ========================================================================
     /// ------------------------------------------------------------------------
-        data_contractor_collection( const data_contractor_collection &rhs );
+        data_response_collection( const data_response_collection &rhs );
 	public:
     /// ------------------------------------------------------------------------
-        data_contractor_collection( ) :
+        data_response_collection( ) :
 			_data( 0 )
 		{ }
     /// ------------------------------------------------------------------------
-        virtual ~data_contractor_collection( )
+        virtual ~data_response_collection( )
 		{ this->free( ); }
 
     /// ========================================================================
@@ -193,7 +193,7 @@ namespace vcamdb
 			while( this->_data->size( ) )
 			{
 				//get last element
-                data_contractor *r = this->_data->last( );
+                data_response *r = this->_data->last( );
 				//remove last element from list
 				this->_data->removeLast( );
 				//delete last element
@@ -205,20 +205,20 @@ namespace vcamdb
 		}
 
     /// ------------------------------------------------------------------------
-        void append( data_contractor *r )
+        void append( data_response *r )
 		{
 			if( !this->_data )
 			{
-                this->_data = new list_data_contractor;
+                this->_data = new list_data_response;
 			}
 			this->_data->append( r );
 		}
 
     /// ------------------------------------------------------------------------
-        list_data_contractor* list( )
+        list_data_response* list( )
 		{ return this->_data; }
     /// ------------------------------------------------------------------------
-        typedef list_data_contractor::iterator iterator;
+        typedef list_data_response::iterator iterator;
     /// ------------------------------------------------------------------------
         iterator begin( )
         {
@@ -235,38 +235,38 @@ namespace vcamdb
     ///		OPERATORS
     /// ========================================================================
 	private:
-        data_contractor_collection& operator=(
-                                        const data_contractor_collection &rhs
+        data_response_collection& operator=(
+                                        const data_response_collection &rhs
 											);
     /// ========================================================================
     ///			FIELDS
     /// ========================================================================
 	private:
-        list_data_contractor	*_data;
+        list_data_response	*_data;
 
-    };//class data_contractor_collection
+    };//class data_response_collection
 /// ############################################################################
 /// ----------------------------------------------------------------------------
 
 /// ############################################################################
-///			class data_adapter_contractor
+///			class data_adapter_response
 /// ############################################################################
-    class data_adapter_contractor
+    class data_adapter_response
 	{
     /// ========================================================================
     ///		CONSTRUCTORS/DESTRUCTOR
     /// ========================================================================
 	private:
     /// ------------------------------------------------------------------------
-        data_adapter_contractor( const data_adapter_contractor &rhs );
+        data_adapter_response( const data_adapter_response &rhs );
 
 	public:
     /// ------------------------------------------------------------------------
-        explicit data_adapter_contractor( espira::db::qt_sqlite_connection *pdbms = 0 ) :
+        explicit data_adapter_response( espira::db::qt_sqlite_connection *pdbms = 0 ) :
 			_dbms( pdbms )
 		 { }
     /// ------------------------------------------------------------------------
-        ~data_adapter_contractor( );
+        ~data_adapter_response( );
 
     /// ========================================================================
     ///		FUNCTIONS
@@ -277,18 +277,18 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
         void make_params_insert(
                                 espira::db::qt_sqlite_command *pcmd,
-                                const data_contractor &r
+                                const data_response &r
                                ) const;
     /// ------------------------------------------------------------------------
         void make_params_update(
                                 espira::db::qt_sqlite_command *pcmd,
-                                const data_contractor &old_rec,
-                                const data_contractor &new_rec
+                                const data_response &old_rec,
+                                const data_response &new_rec
                                ) const;
     /// ------------------------------------------------------------------------
         void make_params_delete(
                                 espira::db::qt_sqlite_command *pcmd,
-                                const data_contractor &r
+                                const data_response &r
                                ) const;
     /// ------------------------------------------------------------------------
         QString make_select_filter(
@@ -298,21 +298,21 @@ namespace vcamdb
 
     public:
     /// ------------------------------------------------------------------------
-        data_contractor_collection* select( ) const;
+        data_response_collection* select( ) const;
     /// ------------------------------------------------------------------------
-        data_contractor_collection* select(
+        data_response_collection* select(
                                             const QString &s_object_type,
                                             const QString &s_filter/*=QString( )*/
                                           ) const;
     /// ------------------------------------------------------------------------
-        void insert( const data_contractor &record ) const;
+        void insert( const data_response &record ) const;
     /// ------------------------------------------------------------------------
         void update(
-                    const data_contractor &old_record,
-                    const data_contractor &new_record
+                    const data_response &old_record,
+                    const data_response &new_record
                    ) const;
     /// ------------------------------------------------------------------------
-        void del( const data_contractor &record ) const;
+        void del( const data_response &record ) const;
 
     /// ========================================================================
     ///		PROPERTIES
@@ -325,7 +325,7 @@ namespace vcamdb
     ///		OPERATORS
     /// ========================================================================
     private:
-        data_adapter_contractor& operator=( const data_adapter_contractor &rhs );
+        data_adapter_response& operator=( const data_adapter_response &rhs );
 
     /// ========================================================================
     ///			FIELDS
@@ -337,11 +337,11 @@ namespace vcamdb
 		static const QString _s_sql_select;
 
         espira::db::qt_sqlite_connection *_dbms;
-    };//class data_adapter_contractor
+    };//class data_adapter_response
 
 /// ############################################################################
 /// ----------------------------------------------------------------------------
 
 }//namespace vcamdb
 
-#endif // __DATA_ADAPTER_CONTRACTOR_H__
+#endif // __DATA_ADAPTER_RESPONSE_H__

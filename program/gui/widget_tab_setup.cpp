@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 29-12-2014
-///		Date update	: 06-01-2015
+///		Date update	: 19-02-2015
 ///		Comment		:
 /// ============================================================================
 #include <QVBoxLayout>
@@ -88,6 +88,18 @@ namespace vcamdb
                         this->_btn_import_ODH, SIGNAL( clicked( ) ),
                         this, SLOT( slot_import_ODH( ) )
                      );
+        this->connect(
+                        this->_btn_import_response, SIGNAL( clicked( ) ),
+                        this, SLOT( slot_import_response( ) )
+                     );
+        this->connect(
+                        this->_btn_import_contractor, SIGNAL( clicked( ) ),
+                        this, SLOT( slot_import_contractor( ) )
+                     );
+        this->connect(
+                        this->_btn_import_violation_type, SIGNAL( clicked( ) ),
+                        this, SLOT( slot_import_violation_type( ) )
+                     );
     }
 
     /// ------------------------------------------------------------------------
@@ -100,34 +112,52 @@ namespace vcamdb
         //
         //_btn_import_CA
         //
-        layout->addWidget( new QLabel("TABLE_CONTAINER_AREA" ), 0, 0 );
-
+        layout->addWidget( new QLabel( tr("TABLE_CONTAINER_AREA") ), 0, 0 );
         this->_btn_import_CA = new QPushButton( tr( "Import..." ) );
         layout->addWidget( this->_btn_import_CA, 0, 1 );
-
         layout->addWidget( new QWidget, 0, 2 );
 
         //
         //_btn_import_DT
         //
-        layout->addWidget( new QLabel("TABLE_DT" ), 1, 0 );
-
+        layout->addWidget( new QLabel( tr("TABLE_DT") ), 1, 0 );
         this->_btn_import_DT = new QPushButton( tr( "Import..." ) );
         layout->addWidget( this->_btn_import_DT, 1, 1 );
-
         layout->addWidget( new QWidget, 1, 2 );
 
         //
         //_btn_import_ODH
         //
-        layout->addWidget( new QLabel("TABLE_ODH" ), 2, 0 );
-
+        layout->addWidget( new QLabel(tr("TABLE_ODH") ), 2, 0 );
         this->_btn_import_ODH = new QPushButton( tr( "Import..." ) );
         layout->addWidget( this->_btn_import_ODH, 2, 1 );
-
         layout->addWidget( new QWidget, 2, 2 );
 
-        layout->setColumnStretch( 2, 1000 );
+        //
+        //_btn_import_response
+        //
+        layout->addWidget( new QLabel( tr("table_response") ), 0, 3 );
+        this->_btn_import_response = new QPushButton( tr( "Import..." ) );
+        layout->addWidget( this->_btn_import_response, 0, 4 );
+        layout->addWidget( new QWidget, 0, 5 );
+
+        //
+        //_btn_import_contractor
+        //
+        layout->addWidget( new QLabel( tr("table_contractor") ), 1, 3 );
+        this->_btn_import_contractor = new QPushButton( tr( "Import..." ) );
+        layout->addWidget( this->_btn_import_contractor, 1, 4 );
+        layout->addWidget( new QWidget, 1, 5 );
+
+        //
+        //_btn_import_violation_type
+        //
+        layout->addWidget( new QLabel( tr("table_violation_type") ), 2, 3 );
+        this->_btn_import_violation_type = new QPushButton( tr( "Import..." ) );
+        layout->addWidget( this->_btn_import_violation_type, 2, 4 );
+        layout->addWidget( new QWidget, 2, 5 );
+
+        layout->setColumnStretch( 5, 1000 );
 
         QWidget  *widget = new QWidget( this );
         widget->setLayout( layout );
@@ -239,6 +269,48 @@ namespace vcamdb
             return;
         }
         application::the_business_logic( ).ODH_import( s_file );
+    }
+
+    /// ------------------------------------------------------------------------
+    /// slot_import_response( )
+    /// ------------------------------------------------------------------------
+    void widget_tab_setup::slot_import_response( )
+    {
+        QString s_file = this->file_select( "t_response" );
+
+        if( s_file.isEmpty( ) )
+        {
+            return;
+        }
+        application::the_business_logic( ).response_import( s_file );
+    }
+
+    /// ------------------------------------------------------------------------
+    /// slot_import_contractor( )
+    /// ------------------------------------------------------------------------
+    void widget_tab_setup::slot_import_contractor( )
+    {
+        QString s_file = this->file_select( "t_contractor" );
+
+        if( s_file.isEmpty( ) )
+        {
+            return;
+        }
+        application::the_business_logic( ).contractor_import( s_file );
+    }
+
+    /// ------------------------------------------------------------------------
+    /// slot_import_violation_type( )
+    /// ------------------------------------------------------------------------
+    void widget_tab_setup::slot_import_violation_type( )
+    {
+        QString s_file = this->file_select( "t_violation_type" );
+
+        if( s_file.isEmpty( ) )
+        {
+            return;
+        }
+        //application::the_business_logic( ).contractor_import( s_file );
     }
 
 }//namespace vcamdb

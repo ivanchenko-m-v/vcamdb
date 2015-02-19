@@ -1,11 +1,11 @@
 /// $Header
 /// ============================================================================
 ///		Author		: M. Ivanchenko
-///		Date create	: 18-02-2015
+///		Date create	: 19-02-2015
 ///		Date update	: 19-02-2015
 ///		Comment		:
 /// ============================================================================
-#include "combobox_contractor.h"
+#include "combobox_response.h"
 
 #include "application.h"
 #include "business_logic.h"
@@ -14,7 +14,7 @@ namespace vcamdb
 {
 
 /// ############################################################################
-///			class combobox_contractor
+///			class combobox_response
 /// ############################################################################
 
     /// ========================================================================
@@ -22,26 +22,26 @@ namespace vcamdb
     /// ========================================================================
 
     /// ------------------------------------------------------------------------
-    ///	combobox_contractor( )
+    ///	combobox_response( )
     /// ------------------------------------------------------------------------
-    combobox_contractor::combobox_contractor(QWidget *parent) :
+    combobox_response::combobox_response(QWidget *parent) :
         QComboBox(parent)
     {
         this->initialize( );
     }
     /// ------------------------------------------------------------------------
-    ///	~combobox_contractor( )
+    ///	~combobox_response( )
     /// ------------------------------------------------------------------------
-    combobox_contractor::~combobox_contractor( )
+    combobox_response::~combobox_response( )
     {
     }
     /// ========================================================================
     ///		PROPERTIES
     /// ========================================================================
     /// ------------------------------------------------------------------------
-    ///	contractor( ) get
+    ///	response( ) get
     /// ------------------------------------------------------------------------
-    const data_contractor* combobox_contractor::contractor( )
+    const data_response* combobox_response::response( )
     {
         int index = this->currentIndex( );
         if( index < 0 || index >= this->count( ) )
@@ -58,9 +58,9 @@ namespace vcamdb
     }
 
     /// ------------------------------------------------------------------------
-    ///	contractor( ) set
+    ///	response( ) set
     /// ------------------------------------------------------------------------
-    void combobox_contractor::contractor( const data_contractor *data )
+    void combobox_response::response( const data_response *data )
     {
 
     }
@@ -72,7 +72,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
 	///	initialize( )
     /// ------------------------------------------------------------------------
-    void combobox_contractor::initialize( )
+    void combobox_response::initialize( )
     {
         this->setEditable( true );
         //this->setSizeAdjustPolicy( AdjustToContents );
@@ -81,7 +81,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     ///	clear_data( )
     /// ------------------------------------------------------------------------
-    void combobox_contractor::clear_data( )
+    void combobox_response::clear_data( )
     {
         //empty text list
         this->clear( );
@@ -93,25 +93,25 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     ///	refresh( )
     /// ------------------------------------------------------------------------
-    void combobox_contractor::refresh(const QString &object_type, const QString &text )
+    void combobox_response::refresh(const QString &object_type, const QString &text )
     {
         this->clear( );
 
         business_logic &logic = application::the_business_logic( );
-        data_contractor_collection *p_coll = logic.contractor_select( object_type, text );
+        data_response_collection *p_coll = logic.response_select( object_type, text );
         if( !p_coll )
         {
             return;
         }
 
-        data_contractor_collection::iterator it = p_coll->begin( );
+        data_response_collection::iterator it = p_coll->begin( );
         for( ; it < p_coll->end( ); ++it )
         {
-            data_contractor *vobj = *it;
+            data_response *vobj = *it;
 
             if( !vobj ) continue;
 
-            this->addItem( vobj->contractor( ) );
+            this->addItem( vobj->response( ) );
             this->_objects.append( vobj );
         }
 
@@ -125,7 +125,7 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     ///	keyPressEvent(QKeyEvent *e)
     /// ------------------------------------------------------------------------
-    void combobox_contractor::keyPressEvent( QKeyEvent *e )
+    void combobox_response::keyPressEvent( QKeyEvent *e )
     {
         int n_key = e->key( );
         if(
@@ -150,7 +150,7 @@ namespace vcamdb
 
         //Посылаем сигнал для определения типа
         //фиксируемого нарушения
-        emit contractor_request( text );
+        emit response_request( text );
 
         QComboBox::keyPressEvent( e );
     }

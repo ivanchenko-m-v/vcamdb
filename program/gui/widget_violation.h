@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 17-02-2015
+///		Date update	: 19-02-2015
 ///		Comment		:
 /// ============================================================================
 #ifndef __WIDGET_VIOLATION_H__
@@ -24,6 +24,8 @@ class combobox_object_type;
 class combobox_camera_search;
 class combobox_violation_type;
 class combobox_violation_object;
+class combobox_contractor;
+class combobox_response;
 
 /// ############################################################################
 ///			class widget_violation
@@ -112,6 +114,8 @@ class combobox_violation_object;
         /// --------------------------------------------------------------------
         void slot_set_camera_address( int current_cam_index );
         void slot_refresh_violation_object( const QString &text );
+        void slot_refresh_contractor(const QString &text);
+        void slot_refresh_response(const QString &text);
         void slot_set_object_id( int );
 
         void new_data_violation( );
@@ -143,8 +147,8 @@ class combobox_violation_object;
         combobox_camera_search      *_cbx_cam_name;
         QLabel                      *_lbl_cam_address;
 
-        QComboBox                   *_cbx_response;
-        QComboBox                   *_cbx_contractor;
+        combobox_response           *_cbx_response;
+        combobox_contractor         *_cbx_contractor;
 
         QDateEdit                   *_dte_violation;
         QLineEdit                   *_txt_url;

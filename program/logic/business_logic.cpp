@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 05-10-2014
-///		Date update	: 18-02-2015
+///		Date update	: 19-02-2015
 ///		Comment		:
 /// ============================================================================
 #include <QDebug>
@@ -28,10 +28,13 @@
 #include "data_adapter_ODH.h"
 #include "data_adapter_violation.h"
 #include "data_adapter_contractor.h"
+#include "data_adapter_response.h"
 
 #include "data_adapter_import_CA.h"
 #include "data_adapter_import_ODH.h"
 #include "data_adapter_import_DT.h"
+#include "data_adapter_import_contractor.h"
+#include "data_adapter_import_response.h"
 
 namespace vcamdb
 {
@@ -428,7 +431,7 @@ namespace vcamdb
                                                     const QString &s_filter
                                                    )
     {
-        const int MIN_FILTER_LENGTH = 5;
+        const int MIN_FILTER_LENGTH = 3;
         data_contractor_collection *p_coll = 0;
 
         if( s_filter.length( ) < MIN_FILTER_LENGTH )
@@ -466,6 +469,66 @@ namespace vcamdb
             QString s_msg(
                         "business_logic::contractor_select( )"
                         ":\n\t unknown error while CONTRACTOR select"
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+
+        return p_coll;
+    }
+
+///|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+///
+/// BLOCK response
+///
+///|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    /// ------------------------------------------------------------------------
+    ///	response_select( )
+    /// ------------------------------------------------------------------------
+    data_response_collection*
+                  business_logic::response_select(
+                                                    const QString &s_object_type,
+                                                    const QString &s_filter
+                                                   )
+    {
+        const int MIN_FILTER_LENGTH = 3;
+        data_response_collection *p_coll = 0;
+
+        if( s_filter.length( ) < MIN_FILTER_LENGTH )
+        {
+            return p_coll;
+        }
+
+        try
+        {
+            data_adapter_response adap;
+            //select data
+            p_coll = adap.select( s_object_type, s_filter );
+        }
+        catch( std::exception &ex )
+        {
+            if( p_coll )
+            {
+                delete p_coll;
+                p_coll = 0;
+            }
+            QString s_msg(
+                            "business_logic::response_select( )"
+                            ":\n\t" + QString::fromUtf8( ex.what( ) )
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+        catch( ... )
+        {
+            if( p_coll )
+            {
+                delete p_coll;
+                p_coll = 0;
+            }
+            QString s_msg(
+                        "business_logic::response_select( )"
+                        ":\n\t unknown error while RESPONSE select"
                          );
             qDebug( ) << s_msg;
             QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
@@ -935,6 +998,77 @@ namespace vcamdb
 
         QApplication::restoreOverrideCursor( );
     }
+
+    /// ------------------------------------------------------------------------
+    ///	response_import( const QString &f_file_from )
+    /// ------------------------------------------------------------------------
+    void business_logic::response_import( const QString &f_file_from )
+    {
+        QApplication::setOverrideCursor( QCursor( Qt::WaitCursor ) );
+
+        try
+        {
+            data_adapter_import_response adap;
+            adap.import_file( f_file_from );
+            QMessageBox::information( 0, QObject::tr( "info" ), QObject::tr( "response import complete" ) );
+        }
+        catch( std::exception &ex )
+        {
+            QString s_msg(
+                            "business_logic::response_import( )"
+                            ":\n\t" + QString::fromUtf8( ex.what( ) )
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+        catch( ... )
+        {
+            QString s_msg(
+                        "business_logic::response_import( )"
+                        ":\n\t unknown error while importing response"
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+
+        QApplication::restoreOverrideCursor( );
+    }
+
+    /// ------------------------------------------------------------------------
+    ///	contractor_import( const QString &f_file_from )
+    /// ------------------------------------------------------------------------
+    void business_logic::contractor_import( const QString &f_file_from )
+    {
+        QApplication::setOverrideCursor( QCursor( Qt::WaitCursor ) );
+
+        try
+        {
+            data_adapter_import_contractor adap;
+            adap.import_file( f_file_from );
+            QMessageBox::information( 0, QObject::tr( "info" ), QObject::tr( "contractor import complete" ) );
+        }
+        catch( std::exception &ex )
+        {
+            QString s_msg(
+                            "business_logic::contractor_import( )"
+                            ":\n\t" + QString::fromUtf8( ex.what( ) )
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+        catch( ... )
+        {
+            QString s_msg(
+                        "business_logic::contractor_import( )"
+                        ":\n\t unknown error while importing response"
+                         );
+            qDebug( ) << s_msg;
+            QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+        }
+
+        QApplication::restoreOverrideCursor( );
+    }
+
 
 /// ############################################################################
 

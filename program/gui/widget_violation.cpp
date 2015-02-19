@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 17-02-2015
+///		Date update	: 19-02-2015
 ///		Comment		:
 /// ============================================================================
 #include <QLabel>
@@ -25,6 +25,8 @@
 #include "combobox_camera_search.h"
 #include "combobox_violation_type.h"
 #include "combobox_violation_object.h"
+#include "combobox_contractor.h"
+#include "combobox_response.h"
 
 namespace ew = espira::widgets;
 
@@ -108,6 +110,14 @@ namespace vcamdb
         this->connect(
                     this->_cbx_object_name, SIGNAL(currentIndexChanged(int)),
                     this, SLOT(slot_set_object_id(int))
+                     );
+        this->connect(
+                    this->_cbx_contractor, SIGNAL(contractor_request(QString)),
+                    this, SLOT( slot_refresh_contractor( QString ) )
+                     );
+        this->connect(
+                    this->_cbx_response, SIGNAL(response_request(QString)),
+                    this, SLOT( slot_refresh_response( QString ) )
                      );
         this->connect(
                     this->_btn_save, SIGNAL( clicked( ) ),
@@ -267,7 +277,7 @@ namespace vcamdb
         //
         //_cbx_response
         //
-        this->_cbx_response = new QComboBox;
+        this->_cbx_response = new combobox_response;
         layout->addWidget(
                     new ew::vertical_box( this->_cbx_response,
                                           QObject::tr( "response:" ),
@@ -277,7 +287,7 @@ namespace vcamdb
         //
         //_cbx_contractor
         //
-        this->_cbx_contractor = new QComboBox;
+        this->_cbx_contractor = new combobox_contractor;
         layout->addWidget(
                     new ew::vertical_box( this->_cbx_contractor,
                                           QObject::tr( "contractor:" ),
@@ -788,6 +798,38 @@ namespace vcamdb
                         this->_cbx_object_name->object_id( current_object_index )
                                    )
                     );
+    }
+
+    /// ------------------------------------------------------------------------
+    /// slot_refresh_contractor(const QString &text)
+    /// ------------------------------------------------------------------------
+    void widget_violation::slot_refresh_contractor(const QString &text)
+    {
+        QString s_type( this->_cbx_object_type->object_type( ) );
+        if( !s_type.length( ) )
+        {
+            QMessageBox::warning(
+                                    0, "warning",
+                                    tr( "Violation type must be selected!" )
+                                );
+        }
+        this->_cbx_contractor->refresh( s_type, text );
+    }
+
+    /// ------------------------------------------------------------------------
+    /// slot_refresh_response(const QString &text)
+    /// ------------------------------------------------------------------------
+    void widget_violation::slot_refresh_response(const QString &text)
+    {
+        QString s_type( this->_cbx_object_type->object_type( ) );
+        if( !s_type.length( ) )
+        {
+            QMessageBox::warning(
+                                    0, "warning",
+                                    tr( "Violation type must be selected!" )
+                                );
+        }
+        this->_cbx_response->refresh( s_type, text );
     }
 
     /// ------------------------------------------------------------------------

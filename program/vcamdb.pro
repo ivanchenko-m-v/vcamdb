@@ -67,7 +67,12 @@ SOURCES += \
     gui/listview_violation_type.cpp \
     gui/combobox_contractor.cpp \
     dbmodule/data_adapter_contractor.cpp \
-    logic/data_model_contractor.cpp
+    logic/data_model_contractor.cpp \
+    dbmodule/data_adapter_response.cpp \
+    gui/combobox_response.cpp \
+    dbmodule/data_adapter_import_contractor.cpp \
+    dbmodule/data_adapter_import_response.cpp \
+    dbmodule/data_adapter_import_violation_type.cpp
 
 HEADERS  += \
     app/application.h \
@@ -119,7 +124,12 @@ HEADERS  += \
     gui/listview_violation_type.h \
     gui/combobox_contractor.h \
     dbmodule/data_adapter_contractor.h \
-    logic/data_model_contractor.h
+    logic/data_model_contractor.h \
+    dbmodule/data_adapter_response.h \
+    gui/combobox_response.h \
+    dbmodule/data_adapter_import_contractor.h \
+    dbmodule/data_adapter_import_response.h \
+    dbmodule/data_adapter_import_violation_type.h
 
 INCLUDEPATH += ./app \
 				./dbmodule \
