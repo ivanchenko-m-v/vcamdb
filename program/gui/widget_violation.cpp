@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 19-02-2015
+///		Date update	: 23-02-2015
 ///		Comment		:
 /// ============================================================================
 #include <QLabel>
@@ -118,6 +118,10 @@ namespace vcamdb
         this->connect(
                     this->_cbx_response, SIGNAL(response_request(QString)),
                     this, SLOT( slot_refresh_response( QString ) )
+                     );
+        this->connect(
+                    this->_cbx_object_type, SIGNAL(currentIndexChanged(int)),
+                    this, SLOT( slot_refresh_violation_type( ) )
                      );
         this->connect(
                     this->_btn_save, SIGNAL( clicked( ) ),
@@ -661,6 +665,10 @@ namespace vcamdb
         this->_cbx_object_type->setEnabled( false );
         //_cbx_object_name
         this->_cbx_object_name->setEnabled( false );
+        //_cbx_response
+        this->_cbx_response->setEnabled( false );
+        //_cbx_contractor
+        this->_cbx_contractor->setEnabled( false );
         //_lbl_id_object
         this->_lbl_id_object->setEnabled( false );
         //_dte_violation
@@ -690,6 +698,10 @@ namespace vcamdb
         this->_cbx_object_type->setEnabled( true );
         //_cbx_object_name
         this->_cbx_object_name->setEnabled( true );
+        //_cbx_response
+        this->_cbx_response->setEnabled( true );
+        //_cbx_contractor
+        this->_cbx_contractor->setEnabled( true );
         //_lbl_id_object
         this->_lbl_id_object->setEnabled( true );
         //_dte_violation
@@ -714,11 +726,15 @@ namespace vcamdb
          //_lbl_cam_address
         this->_lbl_cam_address->clear( );
         //_cbx_violation_type
-        this->_cbx_violation_type->setCurrentIndex( 0 );
+        this->_cbx_violation_type->clear( );
         //_cbx_object_type
         this->_cbx_object_type->setCurrentIndex( 0 );
         //_cbx_object_name
         this->_cbx_object_name->clear( );
+        //_cbx_response
+        this->_cbx_response->clear( );
+        //_cbx_contractor
+        this->_cbx_contractor->clear( );
         //_lbl_id_object
         this->_lbl_id_object->clear( );
         //_dte_violation
@@ -830,6 +846,24 @@ namespace vcamdb
                                 );
         }
         this->_cbx_response->refresh( s_type, text );
+    }
+
+    /// ------------------------------------------------------------------------
+    /// slot_refresh_violation_type( )
+    /// ------------------------------------------------------------------------
+    void widget_violation::slot_refresh_violation_type( )
+    {
+        QString s_type( this->_cbx_object_type->object_type( ) );
+        /*
+        if( !s_type.length( ) )
+        {
+            QMessageBox::warning(
+                                    0, "warning",
+                                    tr( "Violation type must be selected!" )
+                                );
+        }
+        */
+        this->_cbx_violation_type->refresh( s_type );
     }
 
     /// ------------------------------------------------------------------------

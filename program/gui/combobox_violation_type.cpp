@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 04-11-2014
-///		Date update	: 20-02-2015
+///		Date update	: 23-02-2015
 ///		Comment		:
 /// ============================================================================
 #include "combobox_violation_type.h"
@@ -123,6 +123,7 @@ namespace vcamdb
             return;
         }
 
+        this->addItem( "" );
         data_violation_type_collection::iterator it = p_coll->begin( );
         for( ; it < p_coll->end( ); ++it )
         {

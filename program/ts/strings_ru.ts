@@ -443,6 +443,30 @@
         <source>CA import complete</source>
         <translation>Импорт КП завершён</translation>
     </message>
+    <message>
+        <source>response:</source>
+        <translation>Ответственный:</translation>
+    </message>
+    <message>
+        <source>contractor:</source>
+        <translation>Подрядчик:</translation>
+    </message>
+    <message>
+        <source>response import complete</source>
+        <translation>Импорт таблицы ответственных по объектам выполнен</translation>
+    </message>
+    <message>
+        <source>contractor import complete</source>
+        <translation>Импорт таблицы подрядчиков выполнен</translation>
+    </message>
+    <message>
+        <source>x_contractor</source>
+        <translation>подрядчик</translation>
+    </message>
+    <message>
+        <source>status</source>
+        <translation>статус</translation>
+    </message>
 </context>
 <context>
     <name>espira::widgets::dialog_authorization</name>
@@ -852,6 +876,34 @@
     <message>
         <source>Data file didn&apos;t selected</source>
         <translation>Файл данных не был выбран</translation>
+    </message>
+    <message>
+        <source>TABLE_CONTAINER_AREA</source>
+        <translation>Контейнерные площадки</translation>
+    </message>
+    <message>
+        <source>TABLE_DT</source>
+        <translation>Дворовые территории</translation>
+    </message>
+    <message>
+        <source>TABLE_ODH</source>
+        <translation>ОДХ</translation>
+    </message>
+    <message>
+        <source>table_response</source>
+        <translation>Ответственные</translation>
+    </message>
+    <message>
+        <source>table_contractor</source>
+        <translation>Подрядчики</translation>
+    </message>
+    <message>
+        <source>table_violation_type</source>
+        <translation>Типы нарушений</translation>
+    </message>
+    <message>
+        <source>violation types:</source>
+        <translation>Типы нарушений:</translation>
     </message>
 </context>
 <context>

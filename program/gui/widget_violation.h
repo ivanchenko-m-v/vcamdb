@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 14-10-2014
-///		Date update	: 19-02-2015
+///		Date update	: 23-02-2015
 ///		Comment		:
 /// ============================================================================
 #ifndef __WIDGET_VIOLATION_H__
@@ -116,6 +116,7 @@ class combobox_response;
         void slot_refresh_violation_object( const QString &text );
         void slot_refresh_contractor(const QString &text);
         void slot_refresh_response(const QString &text);
+        void slot_refresh_violation_type( );
         void slot_set_object_id( int );
 
         void new_data_violation( );

@@ -20,4 +20,15 @@
 ------------
 1. business_logic::violation_type_select +
 2. combobox_violation_type::initialize, ::refresh +
-3. widget_violation::slot_object_type_changed, combobox_object_type::signal_changed
+3. widget_violation::slot_object_type_changed -> combobox_violation_type::refresh +
+
+2015-02-24
+------------
+1. violation insert, update, delete - TEST
+2. widget_violation::
+    -extract_violation
+    -fill_controls
+    -controls_disable +
+    -controls_enable +
+    -controls_clear +
+3. translation +
