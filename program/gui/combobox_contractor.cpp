@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 18-02-2015
-///		Date update	: 19-02-2015
+///		Date update	: 24-02-2015
 ///		Comment		:
 /// ============================================================================
 #include "combobox_contractor.h"
@@ -39,30 +39,17 @@ namespace vcamdb
     ///		PROPERTIES
     /// ========================================================================
     /// ------------------------------------------------------------------------
-    ///	contractor( ) get
-    /// ------------------------------------------------------------------------
-    const data_contractor* combobox_contractor::contractor( )
-    {
-        int index = this->currentIndex( );
-        if( index < 0 || index >= this->count( ) )
-        {
-            return 0;
-        }
-        QVariant val = this->itemData( index );
-        if( !val.isValid( ) )
-        {
-            return 0;
-        }
-        //return this->_objects.find( val.toInt( ) );
-        return 0;
-    }
-
-    /// ------------------------------------------------------------------------
     ///	contractor( ) set
     /// ------------------------------------------------------------------------
-    void combobox_contractor::contractor( const data_contractor *data )
+    void combobox_contractor::contractor( const QString &s_contractor )
     {
-
+        int index = this->findText( s_contractor );
+        if( index < 0 )
+        {
+            this->addItem( s_contractor );
+            index = this->findText( s_contractor );
+        }
+        this->setCurrentIndex( index );
     }
 
     /// ========================================================================

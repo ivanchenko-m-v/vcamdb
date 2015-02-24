@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>QObject</name>
     <message>
@@ -914,7 +914,7 @@
     </message>
     <message>
         <source>camera&apos;s name or object&apos;s name field must be filled</source>
-        <translation>Поле названия камеры должно быть заполнено</translation>
+        <translation>Поле названия камеры или названия объекта должны быть заполнены</translation>
     </message>
     <message>
         <source>URL field must be filled</source>
@@ -926,7 +926,19 @@
     </message>
     <message>
         <source>Violation type must be selected!</source>
-        <translation>Тип нарушения должен быть выбран</translation>
+        <translation type="obsolete">Тип нарушения должен быть выбран!</translation>
+    </message>
+    <message>
+        <source>object&apos;s type field must be filled</source>
+        <translation>Тип объекта должен быть обязательно выбран</translation>
+    </message>
+    <message>
+        <source>Violation type must be selected</source>
+        <translation type="obsolete">Тип нарушения должен быть выбран</translation>
+    </message>
+    <message>
+        <source>Object type must be selected</source>
+        <translation>Тип объекта должен быть выбран</translation>
     </message>
 </context>
 </TS>

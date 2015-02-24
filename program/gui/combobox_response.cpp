@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 19-02-2015
-///		Date update	: 19-02-2015
+///		Date update	: 24-02-2015
 ///		Comment		:
 /// ============================================================================
 #include "combobox_response.h"
@@ -39,30 +39,17 @@ namespace vcamdb
     ///		PROPERTIES
     /// ========================================================================
     /// ------------------------------------------------------------------------
-    ///	response( ) get
-    /// ------------------------------------------------------------------------
-    const data_response* combobox_response::response( )
-    {
-        int index = this->currentIndex( );
-        if( index < 0 || index >= this->count( ) )
-        {
-            return 0;
-        }
-        QVariant val = this->itemData( index );
-        if( !val.isValid( ) )
-        {
-            return 0;
-        }
-        //return this->_objects.find( val.toInt( ) );
-        return 0;
-    }
-
-    /// ------------------------------------------------------------------------
     ///	response( ) set
     /// ------------------------------------------------------------------------
-    void combobox_response::response( const data_response *data )
+    void combobox_response::response( const QString &s_response )
     {
-
+        int index = this->findText( s_response );
+        if( index < 0 )
+        {
+            this->addItem( s_response );
+            index = this->findText( s_response );
+        }
+        this->setCurrentIndex( index );
     }
 
     /// ========================================================================

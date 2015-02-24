@@ -485,12 +485,12 @@ namespace vcamdb
     {
         this->_lbl_user->setText( v.user( ) );
         this->_txt_regnum->setText( v.reg_number( ) );
-        this->_cbx_cam_name->camera( v.cam_name( ) );
-        this->_cbx_violation_type->violation_type( v.violation_type( ) );
         this->_cbx_object_type->object_type( v.object_type( ) );
         this->_cbx_object_name->refresh( v.object_type( ), v.object_name( ) );
-        //this->_cbx_response
-        //this->_cbx_contractor
+        this->_cbx_cam_name->camera( v.cam_name( ) );
+        this->_cbx_violation_type->violation_type( v.violation_type( ) );
+        this->_cbx_response->response( v.response( ) );
+        this->_cbx_contractor->contractor( v.contractor( ) );
         this->_dte_violation->setDate( v.dt_violation( ) );
         this->_txt_url->setText( v.URL( ) );
         this->_txt_note->setText( v.note( ) );
@@ -502,6 +502,8 @@ namespace vcamdb
     bool widget_violation::data_valid( )
     {
         if( !this->user_valid( ) ) return false;
+
+        if( !this->object_type_valid( ) ) return false;
 
         if( !this->camera_valid( ) && !this->object_name_valid( ) )
         {
@@ -541,12 +543,10 @@ namespace vcamdb
         QString text_obj_type( this->_cbx_object_type->currentText( ).simplified( ).remove( ' ' ) );
         if( !text_obj_type.length( ) )
         {
-        /*
             QMessageBox::warning(
                                 this, tr( "warning" ),
                                 tr( "object\'s type field must be filled" )
                                 );
-                                */
             return false;
         }
         return true;
@@ -793,7 +793,7 @@ namespace vcamdb
         {
             QMessageBox::warning(
                                     0, "warning",
-                                    tr( "Violation type must be selected!" )
+                                    tr( "Object type must be selected" )
                                 );
         }
         this->_cbx_object_name->refresh( s_type, text );
@@ -826,7 +826,7 @@ namespace vcamdb
         {
             QMessageBox::warning(
                                     0, "warning",
-                                    tr( "Violation type must be selected!" )
+                                    tr( "Object type must be selected" )
                                 );
         }
         this->_cbx_contractor->refresh( s_type, text );
@@ -842,7 +842,7 @@ namespace vcamdb
         {
             QMessageBox::warning(
                                     0, "warning",
-                                    tr( "Violation type must be selected!" )
+                                    tr( "Object type must be selected" )
                                 );
         }
         this->_cbx_response->refresh( s_type, text );
@@ -854,15 +854,6 @@ namespace vcamdb
     void widget_violation::slot_refresh_violation_type( )
     {
         QString s_type( this->_cbx_object_type->object_type( ) );
-        /*
-        if( !s_type.length( ) )
-        {
-            QMessageBox::warning(
-                                    0, "warning",
-                                    tr( "Violation type must be selected!" )
-                                );
-        }
-        */
         this->_cbx_violation_type->refresh( s_type );
     }
 

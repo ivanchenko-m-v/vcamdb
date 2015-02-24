@@ -2,15 +2,13 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 04-11-2014
-///		Date update	: 23-02-2015
+///		Date update	: 24-02-2015
 ///		Comment		:
 /// ============================================================================
 #include "combobox_violation_type.h"
 
 #include "application.h"
 #include "business_logic.h"
-
-//#include "data_model_violation_type.h"
 
 namespace vcamdb
 {
@@ -75,26 +73,6 @@ namespace vcamdb
     /// ------------------------------------------------------------------------
     void combobox_violation_type::initialize( )
     {
-        /*
-        data_model_violation_type *model = application::the_business_logic( ).
-                                                            model_violation_type( );
-        if( !model )
-        {
-            return;
-        }
-        const data_violation_type_list& list = model->list( );
-        if( !list.size() )
-        {
-            return;
-        }
-
-        this->addItem( "", "" );
-        for( int i=0; i<list.size( );++i)
-        {
-            const data_violation_type *rec = list.at( i );
-            this->addItem( rec->violation_type( ), rec->violation_type( ) );
-        }
-*/
         this->setEditable( true );
     }
 
@@ -131,7 +109,7 @@ namespace vcamdb
 
             if( !vobj ) continue;
 
-            this->addItem( vobj->violation_type( ) );
+            this->addItem( vobj->violation_type( ), vobj->violation_type( ) );
             this->_objects.append( vobj );
         }
 
